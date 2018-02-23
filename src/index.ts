@@ -2,7 +2,7 @@
 // -----------------------------------------------------------------
 
 // Allocate a new array.
-export const alloc = <T>() : T[] => [];
+export const alloc = <T>() : T[] => new Array<T>();
 
 // Clone the array, returning a copy of the array.
 export const clone = <T>(input:T[]) : T[] => {
