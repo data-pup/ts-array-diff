@@ -6,7 +6,11 @@ export const alloc = <T>() : T[] => new Array<T>();
 
 // Clone the array, returning a copy of the array.
 export const clone = <T>(input:T[]) : T[] => {
-    throw new Error('Not Implemented');
+    const output = alloc<T>();
+    for (const curr of input) {
+        output.push(curr);
+    }
+    return output;
 };
 
 // Define the diff function.
