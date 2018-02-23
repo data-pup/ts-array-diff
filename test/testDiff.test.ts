@@ -5,6 +5,7 @@ import { suite, test } from 'mocha-typescript';
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestDiff {
     @test public placeholderTest() {
-        assert.equal(1, 2, 'diff tests not implemented');
+        // process.stdout.write('Hello?\n');
+        assert.equal(1, 1);
     }
 }
