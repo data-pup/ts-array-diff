@@ -2,31 +2,19 @@
 // -----------------------------------------------------------------
 
 // Allocate a new array.
-const alloc = <T>() : T[] => { return []; };
+export const alloc = <T>() : T[] => [];
 
 // Clone the array, returning a copy of the array.
-const clone = <T>(input:T[]) : T[] => {
+export const clone = <T>(input:T[]) : T[] => {
     throw new Error('Not Implemented');
 };
 
 // Define the diff function.
-const diff = <T>(base:T[], target:T[]) : void => {
+export const diff = <T>(base:T[], target:T[]) : void => {
     process.stdout.write('Hello from diff!\n');
 };
 
 // Define the patch function.
-const patch = <T>(base:T[], p:any) : void => {
+export const patch = <T>(base:T[], p:any) : void => {
     process.stdout.write('Hello from patch!\n');
 };
-
-// Define the main function.
-const main = () => {
-    const a:number[] = [];
-    const b:number[] = [];
-
-    diff(a, b);
-    patch([], undefined);
-};
-
-// Invoke the main function.
-main();

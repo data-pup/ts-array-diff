@@ -7,8 +7,6 @@
     "build": "npm run build-ts && npm run lint-ts",
     "build-ts": "tsc",
     "lint-ts": "tslint -c tslint.json -p tsconfig.json",
-    "prestart": "npm run build",
-    "start": "node dist/index.js ",
     "pretest": "npm run build",
     "test": "nyc mocha"
   },
