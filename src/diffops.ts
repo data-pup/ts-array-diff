@@ -5,39 +5,52 @@
 // on an array to edit it to move from a given base to a target state.
 // -------------------------------------------------------------------------
 
-// Union type for the various diff operations.
-export type diffOp<T> =
-    splice<T>
-    | shiftOp<T> | unshiftOp<T>
-    | popOp<T> | pushOp<T>;
-
-// Union type to represent the different diff operation names.
-export type diffOpName = 'splice' | 'shift' | 'unshift' | 'pop' | 'push';
-
-// Remove a
-export class splice<T> {
-    type:diffOpName;
-    startIndex:number;
-    count:number;
-    items?:T[]
+export interface IDiffOp<T> {
+    type:DiffOpName;
+    run(arr:T[]) : void;
 }
 
-export class shiftOp<T> {
-    type:diffOpName;
-    count?:number
-};
+// Union type for the various diff operations.
+export type DiffOp<T> =
+      DiffOpSplice<T>
+    | DiffOpShift<T> | DiffOpUnshift<T>
+    | DiffOpPop<T>   | DiffOpPush<T>;
 
-export class unshiftOp<T> {
-    type:diffOpName;
-    items:T[]
-};
+// Union type to represent the different diff operation names.
+export type DiffOpName =
+      'splice'
+    | 'shift' | 'unshift'
+    | 'pop' | 'push';
 
-export class popOp<T> {
-    type:diffOpName;
-    count?:number
-};
+// Remove a [...]
+export class DiffOpSplice<T> implements IDiffOp<T> {
+    public type:DiffOpName;
+    public startIndex:number;
+    public count:number;
+    public items?:T[];
+    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
+}
 
-export class pushOp<T> {
-    type:diffOpName;
-    count?:number
-};
+export class DiffOpShift<T> implements IDiffOp<T> {
+    public type:DiffOpName;
+    public count?:number;
+    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
+}
+
+export class DiffOpUnshift<T> implements IDiffOp<T> {
+    public type:DiffOpName;
+    public items:T[];
+    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
+}
+
+export class DiffOpPop<T> implements IDiffOp<T> {
+    public type:DiffOpName;
+    public count?:number;
+    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
+}
+
+export class DiffOpPush<T> implements IDiffOp<T> {
+    public type:DiffOpName;
+    public count?:number;
+    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
+}

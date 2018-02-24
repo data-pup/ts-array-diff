@@ -14,7 +14,6 @@ export const clone = <T>(input:T[]) : T[] => {
     return output;
 };
 
-
 // Define the diff function.
 export const diff = <T>(base:T[], target:T[]) : void => {
     process.stdout.write('Hello from diff!\n');
