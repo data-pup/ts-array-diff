@@ -5,14 +5,20 @@
 // on an array to edit it to move from a given base to a target state.
 // -------------------------------------------------------------------------
 
+export const runOps = <T>(arr:T[], ops:DiffOpBase<T>[]) : void => {
+    ops.forEach((op) : void => {
+        op.runOp(arr);
+    });
+};
+
 export interface IDiffOp {
     readonly type:DiffOpName;
 }
 
 export type DiffOp<T> =
       DiffOpSplice<T>
-    | DiffOpShift | DiffOpUnshift<T>
-    | DiffOpPop   | DiffOpPush<T>;
+    | DiffOpShift<T> | DiffOpUnshift<T>
+    | DiffOpPop<T>   | DiffOpPush<T>;
 
 export type DiffOpName =
       'splice'
@@ -20,7 +26,7 @@ export type DiffOpName =
     | 'pop' | 'push';
 
 abstract class DiffOpBase<T> {
-    abstract runOp(arr:T[]) : void;
+    public abstract runOp(arr:T[]) : void;
 }
 
 export class DiffOpSplice<T> implements IDiffOp {
@@ -28,27 +34,52 @@ export class DiffOpSplice<T> implements IDiffOp {
     public startIndex:number;
     public count:number;
     public items?:T[];
+    public runOp(arr:T[]) : void {
+        throw new Error('Not Implemented!');
+    }
 }
 
-export class DiffOpShift implements IDiffOp {
+export class DiffOpShift<T> implements IDiffOp {
     public type:DiffOpName;
     public count?:number;
+    public runOp(arr:T[]) : void {
+        throw new Error('Not Implemented!');
+    }
 }
 
 export class DiffOpUnshift<T> implements IDiffOp {
     public type:DiffOpName;
     public items:T[];
+    public runOp(arr:T[]) : void {
+        throw new Error('Not Implemented!');
+    }
 }
 
-export class DiffOpPop implements IDiffOp {
-    public type:DiffOpName;
-    public count?:number;
+export class DiffOpPop<T> extends DiffOpBase<T> implements IDiffOp {
+    public readonly type:DiffOpName;
+    public readonly count:number;
+    public runOp(arr:T[]) : void {
+        const i = 0;
+        while (i < this.count) { arr.pop(); }
+    }
+    constructor(count?:number) {
+        super();
+        this.count = (count || 1);
+        this.type = 'pop';
+    }
 }
 
 export class DiffOpPush<T> extends DiffOpBase<T> implements IDiffOp {
     public readonly type:DiffOpName;
     public readonly items:T[];
     public runOp(arr:T[]) : void {
-        process.stdout.write('Hello from DiffOpPush\'s runOp procedure!');
+        for (const item of this.items) {
+            arr.push(item);
+        }
+    }
+    constructor(i:T[]) {
+        super();
+        this.items = i;
+        this.type = 'push';
     }
 }
