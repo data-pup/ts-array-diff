@@ -25,11 +25,12 @@ export type DiffOpName =
     | 'shift' | 'unshift'
     | 'pop' | 'push';
 
-abstract class DiffOpBase<T> {
+abstract class DiffOpBase<T> implements IDiffOp {
+    public abstract readonly type:DiffOpName;
     public abstract runOp(arr:T[]) : void;
 }
 
-export class DiffOpSplice<T> implements IDiffOp {
+export class DiffOpSplice<T> extends DiffOpBase<T> {
     public type:DiffOpName;
     public startIndex:number;
     public count:number;
@@ -37,25 +38,37 @@ export class DiffOpSplice<T> implements IDiffOp {
     public runOp(arr:T[]) : void {
         throw new Error('Not Implemented!');
     }
+    constructor() {
+        super();
+        throw new Error('Not Implemented Yet!');
+    }
 }
 
-export class DiffOpShift<T> implements IDiffOp {
+export class DiffOpShift<T> extends DiffOpBase<T> {
     public type:DiffOpName;
     public count?:number;
     public runOp(arr:T[]) : void {
         throw new Error('Not Implemented!');
     }
+    constructor() {
+        super();
+        throw new Error('Not Implemented Yet!');
+    }
 }
 
-export class DiffOpUnshift<T> implements IDiffOp {
+export class DiffOpUnshift<T> extends DiffOpBase<T> {
     public type:DiffOpName;
     public items:T[];
     public runOp(arr:T[]) : void {
         throw new Error('Not Implemented!');
     }
+    constructor() {
+        super();
+        throw new Error('Not Implemented Yet!');
+    }
 }
 
-export class DiffOpPop<T> extends DiffOpBase<T> implements IDiffOp {
+export class DiffOpPop<T> extends DiffOpBase<T> {
     public readonly type:DiffOpName;
     public readonly count:number;
     public runOp(arr:T[]) : void {
@@ -72,7 +85,7 @@ export class DiffOpPop<T> extends DiffOpBase<T> implements IDiffOp {
     }
 }
 
-export class DiffOpPush<T> extends DiffOpBase<T> implements IDiffOp {
+export class DiffOpPush<T> extends DiffOpBase<T> {
     public readonly type:DiffOpName;
     public readonly items:T[];
     public runOp(arr:T[]) : void {
