@@ -7,7 +7,6 @@ import {
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestDiffOpPop {
-
     @test public testDefaultPopObject() {
         const defaultPop = new DiffOpPop();
         assert.equal(defaultPop.count, 1);

@@ -66,7 +66,7 @@ export class DiffOpUnshift<T> implements IDiffOp<T> {
         }
     }
     constructor(items:T[]) {
-        this.items = items;
+        this.items = items.reverse();
         this.type = 'unshift';
     }
 }

@@ -8,7 +8,6 @@ import {
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestDiffOpPush {
-
     @test public typeNameIsCorrect() {
         const pushOp = new DiffOpPush([]);
         assert.equal(pushOp.type, 'push');
