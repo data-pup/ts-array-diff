@@ -5,31 +5,36 @@
 // on an array to edit it to move from a given base to a target state.
 // -------------------------------------------------------------------------
 
+// Run a series of operations on the array in sequence.
 export const runOps = <T>(arr:T[], ops:DiffOpBase<T>[]) : void => {
     ops.forEach((op) : void => {
         op.runOp(arr);
     });
 };
 
+// The interface for the diff operations. These objects must have a type field.
 export interface IDiffOp {
     readonly type:DiffOpName;
 }
 
+// Union type so tagged unions of operations can be defined.
 export type DiffOp<T> =
       DiffOpSplice<T>
     | DiffOpShift<T> | DiffOpUnshift<T>
     | DiffOpPop<T>   | DiffOpPush<T>;
 
-export type DiffOpName =
-      'splice'
-    | 'shift' | 'unshift'
-    | 'pop' | 'push';
+// Operation name type, this specifies acceptable values for the type field.
+export type DiffOpName = 'splice' | 'shift' | 'unshift' | 'pop' | 'push';
 
+// Base class that the operation classes will extend.
 abstract class DiffOpBase<T> implements IDiffOp {
     public abstract readonly type:DiffOpName;
     public abstract runOp(arr:T[]) : void;
 }
 
+// This class is used to invoke the splice method on a given array. Splice
+// is used to remove a number of items from an array, starting at a specific
+// index, and optionally replacing the deleted values with a new set of items.
 export class DiffOpSplice<T> extends DiffOpBase<T> {
     public type:DiffOpName;
     public startIndex:number;
@@ -44,30 +49,41 @@ export class DiffOpSplice<T> extends DiffOpBase<T> {
     }
 }
 
+// Pop items off of the front of a given array.
 export class DiffOpShift<T> extends DiffOpBase<T> {
     public type:DiffOpName;
-    public count?:number;
+    public count:number;
     public runOp(arr:T[]) : void {
-        throw new Error('Not Implemented!');
+        let i = 0;
+        while (i < this.count) {
+            arr.shift();
+            i++;
+        }
     }
-    constructor() {
+    constructor(count?:number) {
         super();
-        throw new Error('Not Implemented Yet!');
+        this.count = (count || 1);
+        this.type = 'shift';
     }
 }
 
+// Insert items into the front of a given array.
 export class DiffOpUnshift<T> extends DiffOpBase<T> {
     public type:DiffOpName;
     public items:T[];
     public runOp(arr:T[]) : void {
-        throw new Error('Not Implemented!');
+        for (const item of this.items) {
+            arr.unshift(item);
+        }
     }
-    constructor() {
+    constructor(items:T[]) {
         super();
-        throw new Error('Not Implemented Yet!');
+        this.items = items;
+        this.type = 'unshift';
     }
 }
 
+// Pop a number of items off of the end of a given array.
 export class DiffOpPop<T> extends DiffOpBase<T> {
     public readonly type:DiffOpName;
     public readonly count:number;
@@ -85,6 +101,7 @@ export class DiffOpPop<T> extends DiffOpBase<T> {
     }
 }
 
+// Push a set of items on to the end of a given array.
 export class DiffOpPush<T> extends DiffOpBase<T> {
     public readonly type:DiffOpName;
     public readonly items:T[];
@@ -93,9 +110,9 @@ export class DiffOpPush<T> extends DiffOpBase<T> {
             arr.push(item);
         }
     }
-    constructor(i:T[]) {
+    constructor(items:T[]) {
         super();
-        this.items = i;
+        this.items = items;
         this.type = 'push';
     }
 }
