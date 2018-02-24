@@ -5,52 +5,47 @@
 // on an array to edit it to move from a given base to a target state.
 // -------------------------------------------------------------------------
 
-export interface IDiffOp<T> {
+export interface IDiffOp {
     type:DiffOpName;
-    run(arr:T[]) : void;
 }
 
-// Union type for the various diff operations.
+export const runDiffOp = () : void => {
+    throw new Error('Not Implemented');
+};
+
 export type DiffOp<T> =
       DiffOpSplice<T>
-    | DiffOpShift<T> | DiffOpUnshift<T>
-    | DiffOpPop<T>   | DiffOpPush<T>;
+    | DiffOpShift | DiffOpUnshift<T>
+    | DiffOpPop   | DiffOpPush<T>;
 
-// Union type to represent the different diff operation names.
 export type DiffOpName =
       'splice'
     | 'shift' | 'unshift'
     | 'pop' | 'push';
 
-// Remove a [...]
-export class DiffOpSplice<T> implements IDiffOp<T> {
+export class DiffOpSplice<T> implements IDiffOp {
     public type:DiffOpName;
     public startIndex:number;
     public count:number;
     public items?:T[];
-    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
 }
 
-export class DiffOpShift<T> implements IDiffOp<T> {
+export class DiffOpShift implements IDiffOp {
     public type:DiffOpName;
     public count?:number;
-    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
 }
 
-export class DiffOpUnshift<T> implements IDiffOp<T> {
+export class DiffOpUnshift<T> implements IDiffOp {
     public type:DiffOpName;
     public items:T[];
-    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
 }
 
-export class DiffOpPop<T> implements IDiffOp<T> {
+export class DiffOpPop implements IDiffOp {
     public type:DiffOpName;
     public count?:number;
-    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
 }
 
-export class DiffOpPush<T> implements IDiffOp<T> {
+export class DiffOpPush<T> implements IDiffOp {
     public type:DiffOpName;
-    public count?:number;
-    public run(arr:T[]) : void { throw new Error('Not Implemented'); }
+    public items:T[];
 }

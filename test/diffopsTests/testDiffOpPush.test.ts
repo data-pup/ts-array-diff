@@ -6,6 +6,8 @@ import { suite, test } from 'mocha-typescript';
 @suite class TestDiffOpPush {
 
     @test public placeholderTest() {
-        assert.equal(1, 1);
+        assert.equal(1, 1); // PLACEHOLDER
+        // const a = [];
+        // a
     }
 }
