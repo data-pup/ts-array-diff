@@ -6,12 +6,8 @@
 // -------------------------------------------------------------------------
 
 export interface IDiffOp {
-    type:DiffOpName;
+    readonly type:DiffOpName;
 }
-
-export const runDiffOp = () : void => {
-    throw new Error('Not Implemented');
-};
 
 export type DiffOp<T> =
       DiffOpSplice<T>
@@ -22,6 +18,10 @@ export type DiffOpName =
       'splice'
     | 'shift' | 'unshift'
     | 'pop' | 'push';
+
+abstract class DiffOpBase<T> {
+    abstract runOp(arr:T[]) : void;
+}
 
 export class DiffOpSplice<T> implements IDiffOp {
     public type:DiffOpName;
@@ -45,7 +45,10 @@ export class DiffOpPop implements IDiffOp {
     public count?:number;
 }
 
-export class DiffOpPush<T> implements IDiffOp {
-    public type:DiffOpName;
-    public items:T[];
+export class DiffOpPush<T> extends DiffOpBase<T> implements IDiffOp {
+    public readonly type:DiffOpName;
+    public readonly items:T[];
+    public runOp(arr:T[]) : void {
+        process.stdout.write('Hello from DiffOpPush\'s runOp procedure!');
+    }
 }

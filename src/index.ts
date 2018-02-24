@@ -1,6 +1,8 @@
 // Implement functions to allocate, clone, diff, and patch an array.
 // -----------------------------------------------------------------
-// import {}
+import {
+    DiffOpPush
+} from './diffops';
 
 // Allocate a new array.
 export const alloc = <T>() : T[] => new Array<T>();
@@ -22,4 +24,12 @@ export const diff = <T>(base:T[], target:T[]) : void => {
 // Define the patch function.
 export const patch = <T>(base:T[], p:any) : void => {
     process.stdout.write('Hello from patch!\n');
+};
+
+export const temp = () => {
+    const arr_i = [1,  2];
+    const arr_s = ["hello", "there"];
+    process.stdout.write(`arr_i: ${arr_i.toString()}\n`);
+    process.stdout.write(`arr_s: ${arr_s.toString()}\n`);
+    const op = new DiffOpPush();
 };
