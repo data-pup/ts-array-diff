@@ -39,13 +39,15 @@ export class DiffOpSplice<T> extends DiffOpBase<T> {
     public type:DiffOpName;
     public startIndex:number;
     public count:number;
-    public items?:T[];
+    public items:T[];
     public runOp(arr:T[]) : void {
-        throw new Error('Not Implemented!');
+        arr.splice(this.startIndex, this.count, ...this.items);
     }
-    constructor() {
+    constructor(start:number, count:number, items?:T[]) {
         super();
-        throw new Error('Not Implemented Yet!');
+        this.startIndex = start;
+        this.count = count;
+        this.items = (items || []);
     }
 }
 
