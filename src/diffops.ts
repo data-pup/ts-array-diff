@@ -59,8 +59,11 @@ export class DiffOpPop<T> extends DiffOpBase<T> implements IDiffOp {
     public readonly type:DiffOpName;
     public readonly count:number;
     public runOp(arr:T[]) : void {
-        const i = 0;
-        while (i < this.count) { arr.pop(); }
+        let i = 0;
+        while (i < this.count) {
+            arr.pop();
+            i++;
+        }
     }
     constructor(count?:number) {
         super();
