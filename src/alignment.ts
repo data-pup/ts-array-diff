@@ -21,12 +21,20 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
         // ---------------------------------------------------------------------------------
         const elementsAreEqual = currBaseElem === currTargetElem;
         if (elementsAreEqual) {
+            alignmentResults.push([currBaseElem, currTargetElem]);
             currBaseIndex++;
             currTargetIndex++;
-            alignmentResults.push([currBaseElem, currTargetElem]);
         } else {
-            currTargetIndex++;
-            alignmentResults.push([undefined, currTargetElem]);
+            if (baseInBounds && targetInBounds) {
+                alignmentResults.push([undefined, currTargetElem]);
+                currTargetIndex++;
+            } else if (baseInBounds && (!targetInBounds)) {
+                alignmentResults.push([currBaseElem, undefined]);
+                currBaseIndex++;
+            } else if ((!baseInBounds) && targetInBounds) {
+                alignmentResults.push([undefined, currTargetElem]);
+                currTargetIndex++;
+            }
         }
         // ---------------------------------------------------------------------------------
 

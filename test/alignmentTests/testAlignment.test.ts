@@ -38,16 +38,16 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertArraysAreEqual';
     //     assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
     // }
 
-    // @test public testBaseHasExtraTail() {
-    //     const base = [1, 2];
-    //     const target = [1];
-    //     const actualAlignment:[number, number][] = getAlignment(base, target);
-    //     const expectedAlignment:[number, number][] = [
-    //         [1, undefined],
-    //         [2, 2],
-    //     ];
-    //     assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
-    // }
+    @test public testBaseHasExtraTail() {
+        const base = [1, 2];
+        const target = [1];
+        const actualAlignment:[number, number][] = getAlignment(base, target);
+        const expectedAlignment:[number, number][] = [
+            [1, 1],
+            [2, undefined],
+        ];
+        assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
+    }
 
     // @test public testBaseHasExtraMiddleElement() {
     //     const base = [1, 2, 3];
