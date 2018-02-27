@@ -1,6 +1,6 @@
 export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 
-// export { findLargestLength } from '../src/alignment';
+export { getAlignment } from '../src/alignment';
 
 export {
     PopDiffOp,

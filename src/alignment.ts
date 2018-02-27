@@ -9,10 +9,8 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
     // Declare index and element variables for the base and target arrays.
     let [currBaseIndex, currTargetIndex] = [0, 0];
     let [currBaseElem, currTargetElem]:[T, T] = [undefined, undefined];
-    let [baseInBounds, targetInBounds] = [ // Bounds flags for base and target.
-        currBaseIndex < baseLength,
-        currTargetIndex < targetLength,
-    ];
+    let baseInBounds = currBaseIndex < baseLength;
+    let targetInBounds = (currTargetIndex < targetLength);
 
     // This is the main logic loop used to calculate the base and target alignment.
     while (baseInBounds || targetInBounds) {
@@ -20,6 +18,17 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
         currTargetElem = targetInBounds ? target[currTargetIndex] : undefined;
 
         // TODO: Equality check, update the current index values. Push to alignment results.
+        // ---------------------------------------------------------------------------------
+        const elementsAreEqual = currBaseElem === currTargetElem;
+        if (elementsAreEqual) {
+            currBaseIndex++;
+            currTargetIndex++;
+            alignmentResults.push([currBaseElem, currTargetElem]);
+        } else {
+            currTargetIndex++;
+            alignmentResults.push([undefined, currTargetElem]);
+        }
+        // ---------------------------------------------------------------------------------
 
         [baseInBounds, targetInBounds] = [ // Update the bounds flags.
             currBaseIndex < baseLength,
@@ -27,5 +36,5 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
         ];
     }
 
-    throw new Error(''); // TODO: Not implemented yet.
+    return alignmentResults;
 };
