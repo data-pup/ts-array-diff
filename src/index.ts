@@ -1,9 +1,5 @@
 // Implement functions to allocate, clone, diff, and patch an array.
 // -----------------------------------------------------------------
-// import {
-//     DiffOpPush
-// } from './diffops';
-
 // Allocate a new array.
 export const alloc = <T>() : T[] => new Array<T>();
 

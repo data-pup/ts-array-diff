@@ -8,7 +8,9 @@
     "build-ts": "tsc",
     "lint-ts": "tslint -c tslint.json -p tsconfig.json",
     "pretest": "npm run build",
-    "test": "nyc mocha"
+    "test": "nyc mocha",
+    "prestart": "npm run build",
+    "start": "node dist/src/tempDebugging.js"
   },
   "keywords": [],
   "author": "",
