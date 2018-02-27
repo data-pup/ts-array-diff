@@ -2,22 +2,22 @@ import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 import {
     assertArraysAreEqual,
-    DiffOpPush,
+    PushDiffOp,
     runOps,
 } from '../importDependencies';
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestDiffOpPush {
     @test public typeNameIsCorrect() {
-        const pushOp = new DiffOpPush([]);
+        const pushOp = new PushDiffOp([]);
         assert.equal(pushOp.type, 'push');
     }
 
     @test public canPushOntoEmptyArray() {
         const arr:number[] = [];
-        const pushOps:DiffOpPush<number>[] = [
-            new DiffOpPush([1, 2]),
-            new DiffOpPush([3, 4]),
+        const pushOps:PushDiffOp<number>[] = [
+            new PushDiffOp([1, 2]),
+            new PushDiffOp([3, 4]),
         ];
         runOps(arr, pushOps);
         const expectedArray = [1, 2, 3, 4];

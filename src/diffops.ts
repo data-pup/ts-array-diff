@@ -16,8 +16,8 @@ export const runOps = <T>(arr:T[], ops:IDiffOp<T>[]) : void => {
 
 // Export diff operation interface, classes, and name type.
 export { DiffOpName, IDiffOp } from './diffOps/IDiffOp';
-export { DiffOpPop } from './diffOps/PopDiffOp';
-export { DiffOpPush } from './diffOps/PushDiffOp';
-export { DiffOpShift } from './diffOps/ShiftDiffOp';
-export { DiffOpSplice } from './diffOps/SpliceDiffOp';
-export { DiffOpUnshift } from './diffOps/UnshiftDiffOp';
+export { PopDiffOp } from './diffOps/PopDiffOp';
+export { PushDiffOp } from './diffOps/PushDiffOp';
+export { ShiftDiffOp } from './diffOps/ShiftDiffOp';
+export { SpliceDiffOp } from './diffOps/SpliceDiffOp';
+export { UnshiftDiffOp } from './diffOps/UnshiftDiffOp';

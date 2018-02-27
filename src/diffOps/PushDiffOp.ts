@@ -1,7 +1,7 @@
 import { DiffOpName, IDiffOp } from './IDiffOp';
 
 // Push a set of items on to the end of a given array.
-export class DiffOpPush<T> implements IDiffOp<T> {
+export class PushDiffOp<T> implements IDiffOp<T> {
     public readonly type:DiffOpName;
     public readonly items:T[];
     public runOp(arr:T[]) : void {

@@ -1,11 +1,10 @@
 export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 
 export {
-    DiffOpPop,
-    DiffOpPush,
-    DiffOpShift,
-    // DiffOpSplice,
-    DiffOpUnshift,
+    PopDiffOp,
+    PushDiffOp,
+    ShiftDiffOp,
+    UnshiftDiffOp,
     runOps,
 } from '../src/diffops';
 

@@ -1,7 +1,7 @@
 import { DiffOpName, IDiffOp } from './IDiffOp';
 
 // Insert items into the front of a given array.
-export class DiffOpUnshift<T> implements IDiffOp<T> {
+export class UnshiftDiffOp<T> implements IDiffOp<T> {
     public readonly type:DiffOpName;
     public readonly items:T[];
     public runOp(arr:T[]) : void {
