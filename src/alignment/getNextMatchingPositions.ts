@@ -20,10 +20,9 @@ export const getNextMatchingPositions = <T>(base:T[], target:T[],
         } else if (targetInBounds && (target[currTargetIndex] == origBaseElem)) {
             return [baseIndex, currTargetIndex];
         }
-
-        currBaseIndex++;   // Increment the index variables and update the
-        currTargetIndex++; // out-of-bounds flags' values.
-        [baseInBounds, targetInBounds] = [
+        currBaseIndex++;
+        currTargetIndex++; // Increment the index variables and update the
+        [baseInBounds, targetInBounds] = [ // out-of-bounds flags' values.
             (currBaseIndex < base.length), (currTargetIndex < target.length),
         ];
     }
