@@ -27,16 +27,16 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual'
         assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
     }
 
-    // @test public testBaseHasExtraHead() {
-    //     const base = [1, 2];
-    //     const target = [2];
-    //     const actualAlignment:[number, number][] = getAlignment(base, target);
-    //     const expectedAlignment:[number, number][] = [
-    //         [1, undefined],
-    //         [2, 2],
-    //     ];
-    //     assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
-    // }
+    @test public testBaseHasExtraHead() {
+        const base = [1, 2];
+        const target = [2];
+        const actualAlignment:[number, number][] = getAlignment(base, target);
+        const expectedAlignment:[number, number][] = [
+            [1, undefined],
+            [2, 2],
+        ];
+        assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
+    }
 
     @test public testBaseHasExtraTail() {
         const base = [1, 2];

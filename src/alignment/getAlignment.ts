@@ -7,16 +7,14 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
     // Calculate the length of the base and target array parameters.
     const [bLen, tLen] = [base.length, target.length];
     // Declare index and element variables for the base and target arrays.
-    let [bIndex, bCurr]:[number, T] = [0, undefined];
-    let [tIndex, tCurr]:[number, T] = [0, undefined];
-    let [bInBounds, tInBounds]:[boolean, boolean] = getBoundsFlags(
-        bIndex, bLen, tIndex, tLen);
+    let [bIndex, tIndex] = [0, 0];
+    let [bInBounds, tInBounds] = getBoundsFlags(bIndex, bLen, tIndex, tLen);
     // Process the contents of both arrays. Continue to loop while either
     // index is still within the bounds of its array.
     while (bInBounds || tInBounds) {
         // Access an element if the index is still in bounds of the array.
-        bCurr = bInBounds ? base[bIndex] : undefined;
-        tCurr = tInBounds ? target[tIndex] : undefined;
+        const bCurr = bInBounds ? base[bIndex] : undefined;
+        const tCurr = tInBounds ? target[tIndex] : undefined;
         if (bCurr === tCurr) {
             // Process matching elements, increment both counters.
             results.push([bCurr, tCurr]);
