@@ -1,7 +1,7 @@
 // import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 import { getAlignment } from '../importDependencies';
-import { assertAlignmentsAreEqual } from '../testUtils/assertArraysAreEqual';
+import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual';
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestAlignmentFunctions {
