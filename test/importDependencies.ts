@@ -1,6 +1,7 @@
 export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 
 export { getAlignment } from '../src/alignment/getAlignment';
+export { getNextMatchingPositions } from '../src/alignment/getNextMatchingPositions';
 
 export {
     PopDiffOp,
