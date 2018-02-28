@@ -2,7 +2,7 @@ import { getIndicesInRange } from './getIndicesInRange';
 import { getNextMatchingPositions } from './getNextMatchingPositions';
 
 export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
-    if ((!base) || (!target)) { // Check that both arrays are defined.
+    if ((base === undefined) || (target === undefined)) {
         throw new Error('Invalid parameters given to getAlignment(..)');
     }
     // Initialize an alignment result variable that we will fill and return.
@@ -37,12 +37,12 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
                 let [bNextMatch, tNextMatch] = getNextMatchingPositions(
                     base, target, bIndex, tIndex); // Find the next match.
 
-                if (!bNextMatch) { bNextMatch = base.length; }
+                if (bNextMatch === undefined) { bNextMatch = base.length; }
                 const remove:[T, T][] = getIndicesInRange(bIndex, bNextMatch)
                     .map((val:number) : [T, T] => [base[val], undefined]);
                 results.push(...remove); // Mark items for removal from base.
 
-                if (!tNextMatch) { tNextMatch = target.length; }
+                if (tNextMatch === undefined) { tNextMatch = target.length; }
                 const newItems:[T, T][] = getIndicesInRange(tIndex, tNextMatch)
                 .map((val:number) : [T, T] => [undefined, target[val]]);
                 results.push(...newItems); // Mark items to be added.
