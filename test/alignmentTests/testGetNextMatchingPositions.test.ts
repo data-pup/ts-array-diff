@@ -35,4 +35,14 @@ import {
         const expectedMatch:[number, number] = [1, 2];
         assertArraysAreEqual(actualMatch, expectedMatch);
     }
+
+    @test public testArraysWithNoFurtherMatchesReturnUndefined() {
+        const base = [1, 2, 3, 4, 5, 6];
+        const target = [1, 2, 7, 8, 9, 0];
+        const [currBaseIndex, currTargetIndex] = [2, 2];
+        const actualMatch:[number, number] = getNextMatchingPositions(
+            base, target, currBaseIndex, currTargetIndex);
+        const expectedMatch:[number, number] = [undefined, undefined];
+        assertArraysAreEqual(actualMatch, expectedMatch);
+    }
 }
