@@ -1,35 +1,38 @@
 export const getNextMatchingPositions = <T>(base:T[], target:T[],
-                                            baseIndex:number,
-                                            targetIndex:number)
+                                            bStart:number, tStart:number)
                                            : [number, number] => {
     // If the parameters are not valid, return undefined indices.
-    if (!assertParametersAreValid(base, target, baseIndex, targetIndex)) {
+    if (!assertParametersAreValid(base, target, bStart, tStart)) {
         return [undefined, undefined];
     }
 
-    // Initialize loop variables, current base/target index and starting element.
-    let [baseInBounds, targetInBounds] = [true, true];
-    let [currBaseIndex, currTargetIndex] = [baseIndex, targetIndex];
-    const [origBaseElem, origTargetElem] = [base[baseIndex], target[targetIndex]];
+    // Initialize loop variables to store the current base/target index,
+    // whether or not that index is bounds, and the current array element.
+    let [bBounds, tBounds, bIndex, tIndex] = [true, true, bStart, tStart];
+    const [bCurr, tCurr] = [base[bStart], target[tStart]];
+    while (bBounds || tBounds) { // Search for the next match.
 
-    // Search the rest of the target array for a value matching the element at
-    // the original base position, and vice versa. Return a match.
-    while (baseInBounds || targetInBounds) {
-        if (baseInBounds && (base[currBaseIndex] == origTargetElem)) {
-            return [currBaseIndex, targetIndex];
-        } else if (targetInBounds && (target[currTargetIndex] == origBaseElem)) {
-            return [baseIndex, currTargetIndex];
+        // if (baseInBounds) {
+        // }
+
+        // -----------------------------------------------------------------------
+        if (bBounds && (base[bIndex] == tCurr)) {
+            return [bIndex, tStart];
+        } else if (tBounds && (target[tIndex] == bCurr)) {
+            return [bStart, tIndex];
         }
-        currBaseIndex++;
-        currTargetIndex++; // Increment the index variables and update the
-        [baseInBounds, targetInBounds] = [ // out-of-bounds flags' values.
-            (currBaseIndex < base.length), (currTargetIndex < target.length),
+        // -----------------------------------------------------------------------
+
+        // Increment the index variables and update the bounds flags' values.
+        bIndex++; tIndex++;
+        [bBounds, tBounds] = [
+            (bIndex < base.length), (tIndex < target.length),
         ];
     }
 
     // If no match was found by the loop, recurse starting from the next
     // position in the target and base arrays.
-    return getNextMatchingPositions(base, target, baseIndex + 1, targetIndex + 1);
+    return getNextMatchingPositions(base, target, bStart + 1, tStart + 1);
 };
 
 const assertParametersAreValid = <T>(base:T[], target:T[],
