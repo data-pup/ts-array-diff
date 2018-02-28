@@ -49,15 +49,15 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual'
         assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
     }
 
-    // @test public testBaseHasExtraMiddleElement() {
-    //     const base = [1, 2, 3];
-    //     const target = [1, 3];
-    //     const actualAlignment:[number, number][] = getAlignment(base, target);
-    //     const expectedAlignment:[number, number][] = [
-    //         [1, 1],
-    //         [2, undefined],
-    //         [3, 3],
-    //     ];
-    //     assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
-    // }
+    @test public testBaseHasExtraMiddleElement() {
+        const base = [1, 2, 3];
+        const target = [1, 3];
+        const actualAlignment:[number, number][] = getAlignment(base, target);
+        const expectedAlignment:[number, number][] = [
+            [1, 1],
+            [2, undefined],
+            [3, 3],
+        ];
+        assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
+    }
 }
