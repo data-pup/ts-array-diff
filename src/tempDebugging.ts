@@ -1,4 +1,4 @@
-import { getAlignment } from './alignment';
+import { getAlignment } from './alignment/getAlignment';
 
 const temp = () => {
         const base = [1, 2, 3, 4];
