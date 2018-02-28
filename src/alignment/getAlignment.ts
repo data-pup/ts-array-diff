@@ -1,48 +1,51 @@
 export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
+    if ((!base) || (!target)) { // Check that both arrays are defined.
+        throw new Error('Invalid parameters given to getAlignment(..)');
+    }
     // Initialize an alignment result variable that we will fill and return.
-    const alignmentResults = new Array<[T, T]>();
-
+    const results = new Array<[T, T]>();
     // Calculate the length of the base and target array parameters.
-    const baseLength = base ? base.length : 0;
-    const targetLength = target ? target.length : 0;
-
+    const [bLen, tLen] = [base.length, target.length];
     // Declare index and element variables for the base and target arrays.
-    let [currBaseIndex, currTargetIndex] = [0, 0];
-    let [currBaseElem, currTargetElem]:[T, T] = [undefined, undefined];
-    let baseInBounds = currBaseIndex < baseLength;
-    let targetInBounds = (currTargetIndex < targetLength);
-
-    // This is the main logic loop used to calculate the base and target alignment.
-    while (baseInBounds || targetInBounds) {
-        currBaseElem = baseInBounds ? base[currBaseIndex] : undefined;
-        currTargetElem = targetInBounds ? target[currTargetIndex] : undefined;
-
-        // TODO: Equality check, update the current index values. Push to alignment results.
-        // ---------------------------------------------------------------------------------
-        const elementsAreEqual = currBaseElem === currTargetElem;
-        if (elementsAreEqual) {
-            alignmentResults.push([currBaseElem, currTargetElem]);
-            currBaseIndex++;
-            currTargetIndex++;
+    let [bIndex, bCurr]:[number, T] = [0, undefined];
+    let [tIndex, tCurr]:[number, T] = [0, undefined];
+    let [bInBounds, tInBounds]:[boolean, boolean] = getBoundsFlags(
+        bIndex, bLen, tIndex, tLen);
+    // Process the contents of both arrays. Continue to loop while either
+    // index is still within the bounds of its array.
+    while (bInBounds || tInBounds) {
+        // Access an element if the index is still in bounds of the array.
+        bCurr = bInBounds ? base[bIndex] : undefined;
+        tCurr = tInBounds ? target[tIndex] : undefined;
+        if (bCurr === tCurr) {
+            // Process matching elements, increment both counters.
+            results.push([bCurr, tCurr]);
+            bIndex++;
+            tIndex++;
         } else {
-            if (baseInBounds && targetInBounds) {
-                alignmentResults.push([undefined, currTargetElem]);
-                currTargetIndex++;
-            } else if (baseInBounds && (!targetInBounds)) {
-                alignmentResults.push([currBaseElem, undefined]);
-                currBaseIndex++;
-            } else if ((!baseInBounds) && targetInBounds) {
-                alignmentResults.push([undefined, currTargetElem]);
-                currTargetIndex++;
+            // Process differing elements, based on which indices are in bounds.
+            if (bInBounds && tInBounds) {
+                results.push([undefined, tCurr]);
+                tIndex++;
+            } else if (bInBounds) {
+                results.push([bCurr, undefined]);
+                bIndex++;
+            } else {
+                results.push([undefined, tCurr]);
+                tIndex++;
             }
         }
-        // ---------------------------------------------------------------------------------
-
-        [baseInBounds, targetInBounds] = [ // Update the bounds flags.
-            currBaseIndex < baseLength,
-            currTargetIndex < targetLength,
-        ];
+        // Update the bounds flags.
+        [bInBounds, tInBounds] = getBoundsFlags(bIndex, bLen, tIndex, tLen);
     }
+    return results;
+};
 
-    return alignmentResults;
+const getBoundsFlags = (baseIndex:number, baseLength:number,
+                        targetIndex:number, targetLength:number)
+                       : [boolean, boolean] => {
+    return [
+        ((baseIndex >= 0) && (baseIndex < baseLength)),
+        ((targetIndex >= 0) && (targetIndex < targetLength)),
+    ];
 };
