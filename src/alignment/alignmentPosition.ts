@@ -10,11 +10,15 @@ export class AlignmentPosition<T> {
     public static readonly invalidConstructorParamError =
         'Invalid AlignmentPosition constructor parameter given!';
 
-    private _basePosition:number;
-    private _targetPosition:number;
+    // Private readonly variables.
+    private readonly _baseLength:number;
+    private readonly _targetLength:number;
 
-    public readonly baseLength:number;
-    public readonly targetLength:number;
+    private _basePosition:number;
+    private _baseInBounds:number;
+
+    private _targetPosition:number;
+    private _targetInBounds:number;
 
     constructor(base:T[], target:T[],
                 basePosition:number=0, targetPosition:number=0) {
@@ -24,24 +28,29 @@ export class AlignmentPosition<T> {
 
         this._basePosition = basePosition;
         this._targetPosition = targetPosition;
-        this.baseLength = base.length;
-        this.targetLength = target.length;
+
+        this._baseLength = base.length;
+        this._targetLength = target.length;
     }
 
     // Returns a boolean value representing whether the position is in bounds.
     public basePositionIsInBounds() : boolean {
         return AlignmentPosition.checkPosition(
-            this._basePosition, this.baseLength);
+            this._basePosition, this._baseLength);
     }
 
     // Returns a boolean value representing whether the position is in bounds.
     public targetPositionIsInBounds() : boolean {
         return AlignmentPosition.checkPosition(
-            this._targetPosition, this.targetLength);
+            this._targetPosition, this._targetLength);
     }
 
     // Accessor Methods:
     // ------------------------------------------------------------------------
+
+    // These methods are used to get the values of the length properties.
+    public getBaseLength() : number { return this._baseLength; }
+    public getTargetLength() : number { return this._targetLength; }
 
     // Returns the current base position, or `undefined` if the value is not
     // within the bounds of the base array. (i.e. < 0, or >= base.length)
@@ -68,8 +77,8 @@ export class AlignmentPosition<T> {
     // ------------------------------------------------------------------------
 
     public setPositions(newBasePos:number, newTargetPos:number) : void {
-        this._basePosition = newBasePos;
-        this._targetPosition = newTargetPos;
+        this.setBasePosition(newBasePos);
+        this.setTargetPosition(newTargetPos);
     }
 
     public setBasePosition(newPosition:number) : void {
