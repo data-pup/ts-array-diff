@@ -1,91 +1,47 @@
+import { arrDiffTuple, boundsTuple, indexTuple } from './diffTuples';
+export { arrDiffTuple, boundsTuple, indexTuple };
 export class AlignmentPosition<T> {
+    public static readonly undefinedParamError = 'AlignmentPosition constructor was given an undefined parameter!';
+
+    // private readonly arrDiffTuple
+    private readonly _baseArr:T[];
+    private readonly _targetArr:T[];
+
+    private _positions:indexTuple;
+
+    constructor(arrs:arrDiffTuple<T>, positions:indexTuple=[0, 0]) {
+        if (arrs.some((arr) => arr == undefined)) {
+            throw new Error(AlignmentPosition.undefinedParamError);
+        }
+        [this._baseArr, this._targetArr] = [arrs[0], arrs[1]];
+        this.setPositions(positions);
+    }
 
     // This private static function is used by the constructor and mutator
     // methods to check that an index seems valid. Returns false if not.
-    private static checkPosition(pos:number, length:number) : boolean {
-        return (length != undefined) && (length >= 0)
-            && (pos != undefined) && (pos >= 0) && (pos < length);
+    private boundsCheck(pos:number, length:number) : boolean {
+        return (pos != undefined) && (pos >= 0) && (pos < length);
     }
 
-    public static readonly invalidConstructorParamError =
-        'Invalid AlignmentPosition constructor parameter given!';
-
-    // Private readonly variables.
-    private readonly _baseLength:number;
-    private readonly _targetLength:number;
-
-    private _basePosition:number;
-    private _baseInBounds:number;
-
-    private _targetPosition:number;
-    private _targetInBounds:number;
-
-    constructor(base:T[], target:T[],
-                basePosition:number=0, targetPosition:number=0) {
-        if (base == undefined || target == undefined) {
-            throw new Error(AlignmentPosition.invalidConstructorParamError);
-        }
-
-        this._basePosition = basePosition;
-        this._targetPosition = targetPosition;
-
-        this._baseLength = base.length;
-        this._targetLength = target.length;
+    // This function will attempt to set the base and target positions using
+    // a tuple containing the [base position, target position] respectively.
+    public setPositions(positions:indexTuple) : void {
+        const inBounds:boundsTuple = this.getBoundsTuple(positions);
+        this._positions = positions.map(
+            (pos, i) : number => inBounds[i] ? pos : undefined,
+        ) as indexTuple;
     }
 
-    // Returns a boolean value representing whether the position is in bounds.
-    public basePositionIsInBounds() : boolean {
-        return AlignmentPosition.checkPosition(
-            this._basePosition, this._baseLength);
+    // Get bounds flags, positions, and lengths in the form of index tuples.
+    public getBoundsTuple(positions?:indexTuple) : boundsTuple {
+        const lengths:indexTuple = this.getLengthTuple();
+        const indices:indexTuple = (positions == undefined)
+            ? this.getPositionTuple() : positions;
+        return indices.map(
+            (index, i) => this.boundsCheck(index, lengths[i]),
+        ) as boundsTuple;
     }
 
-    // Returns a boolean value representing whether the position is in bounds.
-    public targetPositionIsInBounds() : boolean {
-        return AlignmentPosition.checkPosition(
-            this._targetPosition, this._targetLength);
-    }
-
-    // Accessor Methods:
-    // ------------------------------------------------------------------------
-
-    // These methods are used to get the values of the length properties.
-    public getBaseLength() : number { return this._baseLength; }
-    public getTargetLength() : number { return this._targetLength; }
-
-    // Returns the current base position, or `undefined` if the value is not
-    // within the bounds of the base array. (i.e. < 0, or >= base.length)
-    public getBasePosition() : number {
-        return this.basePositionIsInBounds()
-            ? this._basePosition
-            : undefined;
-    }
-
-    // Returns the current target position, or `undefined` if the value is not
-    // within the bounds of the target array. (i.e. < 0, or >= target.length)
-    public getTargetPosition() : number {
-        return this.targetPositionIsInBounds()
-            ? this._targetPosition
-            : undefined;
-    }
-
-    // Return both the base and target positions in a number tuple.
-    public getPositionTuple() : [number, number] {
-        return [this.getBasePosition(), this.getTargetPosition()];
-    }
-
-    // Mutator Methods:
-    // ------------------------------------------------------------------------
-
-    public setPositions(newBasePos:number, newTargetPos:number) : void {
-        this.setBasePosition(newBasePos);
-        this.setTargetPosition(newTargetPos);
-    }
-
-    public setBasePosition(newPosition:number) : void {
-        this._basePosition = newPosition;
-    }
-
-    public setTargetPosition(newPosition:number) : void {
-            this._targetPosition = newPosition;
-    }
+    public getPositionTuple() : indexTuple { return this._positions; }
+    public getLengthTuple() : indexTuple { return [this._baseArr.length, this._targetArr.length]; }
 }

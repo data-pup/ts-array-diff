@@ -2,10 +2,14 @@ export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 
 export { getAlignment } from '../src/alignment/getAlignment';
 export { getIndicesInRange } from '../src/alignment/getIndicesInRange';
-export { AlignmentPosition } from '../src/alignment/position/alignmentPosition';
+export { getNextMatchingPositions } from '../src/alignment/getNextMatchingPositions';
+
 export {
-    getNextMatchingPositions,
-} from '../src/alignment/getNextMatchingPositions';
+    AlignmentPosition,
+    arrDiffTuple,
+    boundsTuple,
+    indexTuple,
+} from '../src/alignment/position/alignmentPosition';
 
 export {
     PopDiffOp,
