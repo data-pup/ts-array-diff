@@ -1,8 +1,8 @@
 export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 
-export { AlignmentPosition } from '../src/alignment/alignmentPosition';
 export { getAlignment } from '../src/alignment/getAlignment';
 export { getIndicesInRange } from '../src/alignment/getIndicesInRange';
+export { AlignmentPosition } from '../src/alignment/position/alignmentPosition';
 export {
     getNextMatchingPositions,
 } from '../src/alignment/getNextMatchingPositions';
