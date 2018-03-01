@@ -9,30 +9,24 @@ export const getNextMatchingPositions = <T>(base:T[], target:T[],
     // Initialize loop variables to store the current base/target index,
     // whether or not that index is bounds, and the current array element.
     let [bBounds, tBounds, bIndex, tIndex] = [true, true, bStart, tStart];
-    const [bCurr, tCurr] = [base[bStart], target[tStart]];
+    let bNextMatchWithT:number = undefined;
+    let tNextMatchWithB:number = undefined;
     while (bBounds || tBounds) { // Search for the next match.
+        // See if there are any matches for the current base/target positions.
+        if (bBounds) { tNextMatchWithB = target.indexOf(base[bIndex], bIndex); }
+        if (tBounds) { bNextMatchWithT = base.indexOf(target[tIndex], tIndex); }
 
-        // if (baseInBounds) {
-        // }
-
-        // -----------------------------------------------------------------------
-        if (bBounds && (base[bIndex] == tCurr)) {
-            return [bIndex, tStart];
-        } else if (tBounds && (target[tIndex] == bCurr)) {
-            return [bStart, tIndex];
+        // If any match(es) were found, return whichever match is closest
+        // to the original base/target position given.
+        if ((bNextMatchWithT >= 0) || (tNextMatchWithB >= 0)) {
+            return chooseMatch(bIndex, tIndex, bNextMatchWithT, tNextMatchWithB);
         }
-        // -----------------------------------------------------------------------
 
-        // Increment the index variables and update the bounds flags' values.
-        bIndex++; tIndex++;
-        [bBounds, tBounds] = [
-            (bIndex < base.length), (tIndex < target.length),
-        ];
+        bIndex++; tIndex++; // Increment positions and update the bounds flags.
+        [bBounds, tBounds] = [(bIndex < base.length), (tIndex < target.length)];
     }
 
-    // If no match was found by the loop, recurse starting from the next
-    // position in the target and base arrays.
-    return getNextMatchingPositions(base, target, bStart + 1, tStart + 1);
+    return [undefined, undefined]; // Return undefined if no matches exist.
 };
 
 const assertParametersAreValid = <T>(base:T[], target:T[],
@@ -46,4 +40,34 @@ const assertParametersAreValid = <T>(base:T[], target:T[],
     } else {
         return true;
     }
+};
+
+const chooseMatch = (bStart:number, tStart:number,
+                     bNextMatchWithT:number, tNextMatchWithB:number)
+                    : [number, number] => {
+    // Initialize a return value, variables for base/target match distance,
+    // and boolean flags to represent whether any matches were found.
+    let bestMatch:[number, number] = [undefined, undefined];
+    let [bDelta, tDelta]:[number, number] = [undefined, undefined];
+    const bHasMatch = bNextMatchWithT >= 0;
+    const tHasMatch = tNextMatchWithB >= 0;
+    const bothHaveMatch = bHasMatch && tHasMatch;
+
+    // Calculate the distance from the starting point if a match was found.
+    if (bHasMatch) { bDelta = bNextMatchWithT - bStart; }
+    if (tHasMatch) { tDelta = tNextMatchWithB - tStart; }
+
+    if (bothHaveMatch) { // Select the closest match if two were found.
+        bestMatch = (bDelta < tDelta)
+            ? [bNextMatchWithT, tStart]
+            : [bStart, tNextMatchWithB];
+    } else if (bHasMatch) {
+        bestMatch = [bNextMatchWithT, tStart];
+    } else if (tHasMatch) {
+        bestMatch = [bStart, tNextMatchWithB];
+    } else {
+        throw new Error('Unexpected error while choosing next position!');
+    }
+
+    return bestMatch; // Return the new position that was selected.
 };
