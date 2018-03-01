@@ -1,24 +1,5 @@
 export class AlignmentPosition<T> {
 
-    private static validateParameters<T>(base:T[], target:T[],
-                                         basePosition:number=0,
-                                         targetPosition:number=0) : boolean {
-        // Check that both array parameters are defined.
-        const bothArraysAreDefined = [base, target]
-            .every((arr:T[]) : boolean => arr != undefined);
-        if (!bothArraysAreDefined) { return false; }
-
-        // Check that both the base and target positions are valid.
-        if (!AlignmentPosition.checkPosition(basePosition, base.length)) {
-            return false;
-        }
-        if (!AlignmentPosition.checkPosition(targetPosition, target.length)) {
-            return false;
-        }
-
-        return true; // Return true if none of the other checks failed.
-    }
-
     // This private static function is used by the constructor and mutator
     // methods to check that an index seems valid. Returns false if not.
     private static checkPosition(pos:number, length:number) : boolean {
@@ -37,9 +18,8 @@ export class AlignmentPosition<T> {
 
     constructor(base:T[], target:T[],
                 basePosition:number=0, targetPosition:number=0) {
-        if (!AlignmentPosition.validateParameters(
-            base, target, basePosition, targetPosition)) {
-                throw new Error(AlignmentPosition.invalidConstructorParamError);
+        if (base == undefined || target == undefined) {
+            throw new Error(AlignmentPosition.invalidConstructorParamError);
         }
 
         this._basePosition = basePosition;
@@ -48,11 +28,13 @@ export class AlignmentPosition<T> {
         this.targetLength = target.length;
     }
 
+    // Returns a boolean value representing whether the position is in bounds.
     public basePositionIsInBounds() : boolean {
         return AlignmentPosition.checkPosition(
             this._basePosition, this.baseLength);
     }
 
+    // Returns a boolean value representing whether the position is in bounds.
     public targetPositionIsInBounds() : boolean {
         return AlignmentPosition.checkPosition(
             this._targetPosition, this.targetLength);
@@ -61,20 +43,34 @@ export class AlignmentPosition<T> {
     // Accessor Methods:
     // ------------------------------------------------------------------------
 
+    // Returns the current base position, or `undefined` if the value is not
+    // within the bounds of the base array. (i.e. < 0, or >= base.length)
     public getBasePosition() : number {
         return this.basePositionIsInBounds()
             ? this._basePosition
             : undefined;
     }
 
+    // Returns the current target position, or `undefined` if the value is not
+    // within the bounds of the target array. (i.e. < 0, or >= target.length)
     public getTargetPosition() : number {
         return this.targetPositionIsInBounds()
             ? this._targetPosition
             : undefined;
     }
 
+    // Return both the base and target positions in a number tuple.
+    public getPositionTuple() : [number, number] {
+        return [this.getBasePosition(), this.getTargetPosition()];
+    }
+
     // Mutator Methods:
     // ------------------------------------------------------------------------
+
+    public setPositions(newBasePos:number, newTargetPos:number) : void {
+        this._basePosition = newBasePos;
+        this._targetPosition = newTargetPos;
+    }
 
     public setBasePosition(newPosition:number) : void {
         this._basePosition = newPosition;
