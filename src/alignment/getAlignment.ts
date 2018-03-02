@@ -11,9 +11,10 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
     // index is still within the bounds of its array.
     while (position.somePositionInBounds()) {
         const [bCurr, tCurr]:[T, T] = position.getCurrentElems();
+        const bothInBounds:boolean = position.bothPositionsInBounds();
 
         // Process matching elements, increment both counters.
-        if (position.bothPositionsInBounds() && bCurr === tCurr) {
+        if (bothInBounds && bCurr === tCurr) {
             results.push([bCurr, tCurr]);
             position.incrementPositions();
         } else {
@@ -24,7 +25,7 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
             // to the results array accordingly. If only one array is still
             // in bounds, add the element and increment the corresponding index.
             // -----------------------------------------------------------------
-            if (position.bothPositionsInBounds()) {
+            if (bothInBounds) {
                 const [bIndex, tIndex] = position.getPositionTuple();
                 let [bNextMatch, tNextMatch] = getNextMatchingPositions(
                     base, target, bIndex, tIndex); // Find the next match.
