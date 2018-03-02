@@ -1,30 +1,21 @@
 import { getIndicesInRange } from './getIndicesInRange';
 import { getNextMatchingPositions } from './getNextMatchingPositions';
+import { AlignmentPosition } from './position/alignmentPosition';
 
 export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
-    if ((base === undefined) || (target === undefined)) {
-        throw new Error('Invalid parameters given to getAlignment(..)');
-    }
-    // Initialize an alignment result variable that we will fill and return.
+    // Initialize an position object and the results array that we will return.
+    const position = new AlignmentPosition<T>([base, target]);
     const results = new Array<[T, T]>();
-
-    // Calculate the length of the base and target array parameters, and
-    // declare index and element variables for the base and target arrays.
-    const [bLen, tLen] = [base.length, target.length];
-    let [bIndex, tIndex] = [0, 0];
-    let [bInBounds, tInBounds] = getBoundsFlags(bIndex, bLen, tIndex, tLen);
 
     // Process the contents of both arrays. Continue to loop while either
     // index is still within the bounds of its array.
-    while (bInBounds || tInBounds) {
-        // Access an element if the index is still in bounds of the array.
-        const bCurr = bInBounds ? base[bIndex] : undefined;
-        const tCurr = tInBounds ? target[tIndex] : undefined;
+    while (position.somePositionInBounds()) {
+        const [bCurr, tCurr]:[T, T] = position.getCurrentElems();
+
         // Process matching elements, increment both counters.
-        if (bCurr === tCurr) {
+        if (position.bothPositionsInBounds() && bCurr === tCurr) {
             results.push([bCurr, tCurr]);
-            bIndex++;
-            tIndex++;
+            position.incrementPositions();
         } else {
             // Process differing elements, based on which indices are in bounds.
             // -----------------------------------------------------------------
@@ -33,7 +24,8 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
             // to the results array accordingly. If only one array is still
             // in bounds, add the element and increment the corresponding index.
             // -----------------------------------------------------------------
-            if (bInBounds && tInBounds) {
+            if (position.bothPositionsInBounds()) {
+                const [bIndex, tIndex] = position.getPositionTuple();
                 let [bNextMatch, tNextMatch] = getNextMatchingPositions(
                     base, target, bIndex, tIndex); // Find the next match.
 
@@ -47,26 +39,16 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
                 .map((val:number) : [T, T] => [undefined, target[val]]);
                 results.push(...newItems); // Mark items to be added.
 
-                [bIndex, tIndex] = [bNextMatch, tNextMatch]; // Update position.
-            } else if (bInBounds) {
+                position.setPositions([bNextMatch, tNextMatch]);
+            } else if (bCurr != undefined) {
                 results.push([bCurr, undefined]);
-                bIndex++;
+                position.incrementBasePosition();
             } else {
                 results.push([undefined, tCurr]);
-                tIndex++;
+                position.incrementTargetPosition();
             }
         }
-        // Update the bounds flags before checking whether to continue.
-        [bInBounds, tInBounds] = getBoundsFlags(bIndex, bLen, tIndex, tLen);
     }
-    return results;
-};
 
-const getBoundsFlags = (baseIndex:number, baseLength:number,
-                        targetIndex:number, targetLength:number)
-                       : [boolean, boolean] => {
-    return [
-        ((baseIndex >= 0) && (baseIndex < baseLength)),
-        ((targetIndex >= 0) && (targetIndex < targetLength)),
-    ];
+    return results;
 };

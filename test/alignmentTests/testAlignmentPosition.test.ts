@@ -39,8 +39,6 @@ import {
     }
 
     @test public testPositionAccessorsForValidArray() {
-        // const base = [1, 2, 3, 4, 5];
-        // const target = [1, 2, 3, 4, 5];
         const arrs:[number[], number[]] = [
             [1, 2, 3, 4, 5],
             [1, 2, 3, 4, 5],
@@ -50,6 +48,24 @@ import {
         for (let i = 0; i < loopMax; i++) {
             pos.setPositions([i, i]);
             assertArraysAreEqual(pos.getPositionTuple(), [i, i]);
+        }
+        const invalidPosition = loopMax;
+        pos.setPositions([invalidPosition, invalidPosition]);
+        assertArraysAreEqual(pos.getPositionTuple(), [undefined, undefined]);
+    }
+
+    @test public testElementAccessors() {
+        const arrs:[number[], number[]] = [
+            [1, 2, 3],
+            [2, 3, 4],
+        ];
+        const pos = new AlignmentPosition(arrs);
+        const loopMax = arrs[0].length;
+        for (let i = 0; i < loopMax; i++) {
+            pos.setPositions([i, i]);
+            assertArraysAreEqual(pos.getPositionTuple(), [i, i]);
+            const expectedElements = [i + 1, i + 2];
+            assertArraysAreEqual(pos.getCurrentElems(), expectedElements);
         }
         const invalidPosition = loopMax;
         pos.setPositions([invalidPosition, invalidPosition]);
