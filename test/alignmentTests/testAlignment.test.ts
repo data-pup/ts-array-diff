@@ -60,4 +60,19 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual'
         ];
         assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
     }
+
+    @test public testBaseAndTargetWithVariousChanges() {
+        const base = [2, 3, 3, 4];
+        const target = [1, 2, 3, 4, 5];
+        const actualAlignment:[number, number][] = getAlignment(base, target);
+        const expectedAlignment:[number, number][] = [
+            [undefined, 1],
+            [2, 2],
+            [3, 3],
+            [3, undefined],
+            [4, 4],
+            [undefined, 5],
+        ];
+        assertAlignmentsAreEqual(actualAlignment, expectedAlignment);
+    }
 }
