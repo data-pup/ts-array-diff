@@ -1,9 +1,8 @@
 export const getNextMatchingPositions = <T>(base:T[], target:T[],
                                             bStart:number, tStart:number)
                                            : [number, number] => {
-    // If the parameters are not valid, return undefined indices.
     if (!assertParametersAreValid(base, target, bStart, tStart)) {
-        return [undefined, undefined];
+        return [base.length, target.length];
     }
 
     // Initialize loop variables to store the current base/target index,
@@ -26,22 +25,27 @@ export const getNextMatchingPositions = <T>(base:T[], target:T[],
         [bBounds, tBounds] = [(bIndex < base.length), (tIndex < target.length)];
     }
 
-    return [undefined, undefined]; // Return undefined if no matches exist.
+    // If no match positions were found, return a tuple containing the lengths
+    // of each array to signify that there is no matching position.
+    return [base.length, target.length];
 };
 
+// Helper function used to check that the arrays are defined, and that their
+// respective  positions are within bounds. Returns a boolean.
 const assertParametersAreValid = <T>(base:T[], target:T[],
                                      baseIndex:number,
                                      targetIndex:number) : boolean => {
-    if ((!base) || (!target) // Arrays must exist.
-        || (baseIndex >= base.length) // Base index must be < the base length.
-        || (targetIndex >= target.length) // Target index must be < length.
-        || (baseIndex < 0) || (targetIndex < 0)) { // Indices must be >= 0.
-        return false;
-    } else {
-        return true;
+    if ([base, target].some((arr) => arr == undefined)) {
+        throw new Error('getNextMatchingPositions received an undefined array!');
     }
+    return ( // Both indices must be greater than or equal to 0, and less than
+        (baseIndex >= 0) && (targetIndex >= 0) // the lenth of their array.
+        && (baseIndex < base.length) && (targetIndex < target.length)
+    );
 };
 
+// Helper function used to decide between two matches, if a match in both the
+// base and target array is found while looking for a matching position.
 const chooseMatch = (bStart:number, tStart:number,
                      bNextMatchWithT:number, tNextMatchWithB:number)
                     : [number, number] => {

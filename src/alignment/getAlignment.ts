@@ -27,15 +27,13 @@ export const getAlignment = <T>(base:T[], target:T[]) : [T, T][] => {
             // -----------------------------------------------------------------
             if (bothInBounds) {
                 const [bIndex, tIndex] = position.getPositionTuple();
-                let [bNextMatch, tNextMatch] = getNextMatchingPositions(
+                const [bNextMatch, tNextMatch] = getNextMatchingPositions(
                     base, target, bIndex, tIndex); // Find the next match.
 
-                if (bNextMatch === undefined) { bNextMatch = base.length; }
                 const remove:[T, T][] = getIndicesInRange(bIndex, bNextMatch)
                     .map((val:number) : [T, T] => [base[val], undefined]);
                 results.push(...remove); // Mark items for removal from base.
 
-                if (tNextMatch === undefined) { tNextMatch = target.length; }
                 const newItems:[T, T][] = getIndicesInRange(tIndex, tNextMatch)
                 .map((val:number) : [T, T] => [undefined, target[val]]);
                 results.push(...newItems); // Mark items to be added.
