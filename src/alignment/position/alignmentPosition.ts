@@ -23,15 +23,6 @@ export class AlignmentPosition<T> {
         return (pos != undefined) && (pos >= 0) && (pos < length);
     }
 
-    // This function will attempt to set the base and target positions using
-    // a tuple containing the [base position, target position] respectively.
-    public setPositions(positions:indexTuple) : void {
-        const inBounds:boundsTuple = this.getBoundsTuple(positions);
-        this._positions = positions.map(
-            (pos, i) : number => inBounds[i] ? pos : undefined,
-        ) as indexTuple;
-    }
-
     // Get bounds flags, positions, and lengths in the form of index tuples.
     public getBoundsTuple(positions?:indexTuple) : boundsTuple {
         const lengths:indexTuple = this.getLengthTuple();
@@ -40,6 +31,15 @@ export class AlignmentPosition<T> {
         return indices.map(
             (index, i) => this.boundsCheck(index, lengths[i]),
         ) as boundsTuple;
+    }
+
+    // This function will attempt to set the base and target positions using
+    // a tuple containing the [base position, target position] respectively.
+    public setPositions(positions:indexTuple) : void {
+        const inBounds:boundsTuple = this.getBoundsTuple(positions);
+        this._positions = positions.map(
+            (pos, i) : number => inBounds[i] ? pos : undefined,
+        ) as indexTuple;
     }
 
     public getPositionTuple() : indexTuple { return this._positions; }
