@@ -13,8 +13,8 @@ export const getNextMatchingPositions = <T>(base:T[], target:T[],
     let tNextMatchWithB:number = undefined;
     while (bBounds || tBounds) { // Search for the next match.
         // See if there are any matches for the current base/target positions.
-        if (bBounds) { tNextMatchWithB = target.indexOf(base[bIndex], bIndex); }
-        if (tBounds) { bNextMatchWithT = base.indexOf(target[tIndex], tIndex); }
+        if (bBounds) { tNextMatchWithB = target.indexOf(base[bIndex], tIndex); }
+        if (tBounds) { bNextMatchWithT = base.indexOf(target[tIndex], bIndex); }
 
         // If any match(es) were found, return whichever match is closest
         // to the original base/target position given.
