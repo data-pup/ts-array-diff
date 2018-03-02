@@ -1,9 +1,5 @@
 import { IAlignmentPosition } from './IAlignmentPosition';
-
-export type arrDiffTuple<T> = [T[], T[]];
-export type diffElemTuple<T> = [T, T];
-export type boundsTuple = [boolean, boolean];
-export type indexTuple = [number, number];
+import { arrDiffTuple, boundsTuple, diffElemTuple, indexTuple } from './positionTypes';
 
 export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     public static readonly undefinedParamError = 'AlignmentPosition constructor was given an undefined parameter!';

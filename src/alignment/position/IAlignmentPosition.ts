@@ -1,8 +1,4 @@
-import {
-    boundsTuple,
-    diffElemTuple,
-    indexTuple,
- } from './alignmentPosition';
+import { boundsTuple, diffElemTuple, indexTuple } from './positionTypes';
 
 export interface IAlignmentPosition<T> {
 
