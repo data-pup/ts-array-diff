@@ -3,13 +3,12 @@ export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 export { getAlignment } from '../src/alignment/getAlignment';
 export { getIndicesInRange } from '../src/alignment/getIndicesInRange';
 export { getNextMatchingPositions } from '../src/alignment/getNextMatchingPositions';
-
+export { AlignmentPosition } from '../src/alignment/position/alignmentPosition';
 export {
-    AlignmentPosition,
     arrDiffTuple,
     boundsTuple,
     indexTuple,
-} from '../src/alignment/position/alignmentPosition';
+} from '../src/alignment/position/positionTypes';
 
 export {
     PopDiffOp,

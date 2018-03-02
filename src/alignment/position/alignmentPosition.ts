@@ -30,50 +30,61 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
         ) as indexTuple;
     }
 
+    // Increment both the base and target positions.
     public incrementPositions() : void {
         const newBasePos = this._positions[0] + 1;
         const newTargetPos = this._positions[1] + 1;
         this.setPositions([newBasePos, newTargetPos]);
     }
 
+    // Increment only the base position.
     public incrementBasePosition() : void {
         const newBasePos = this._positions[0] + 1;
         const newTargetPos = this._positions[1];
         this.setPositions([newBasePos, newTargetPos]);
     }
 
+    // Increment only the target position.
     public incrementTargetPosition() : void {
         const newBasePos = this._positions[0];
         const newTargetPos = this._positions[1] + 1;
         this.setPositions([newBasePos, newTargetPos]);
     }
 
+    // Fetch a tuple containing the base and target positions.
     public getPositionTuple() : indexTuple { return this._positions; }
 
+    // Fetch a tuple containing the length of the base and target array.
     public getLengthTuple() : indexTuple {
         return this._arrs.map((arr) : number => arr.length) as [number, number];
     }
 
+    // Fetch the elements in the base and target arrays at the current position.
     public getCurrentElems() : diffElemTuple<T> {
-        return this._positions.map(
-            (pos, i) => pos == undefined ? undefined : this._arrs[i][pos],
-        ) as diffElemTuple<T>;
+        return [0, 1].map( // Check if the position is in bounds before accessing.
+            (i) => this._positions[i] == undefined
+                ? undefined // Return undefined if the position is out of bounds.
+                : this._arrs[i][this._positions[i]], // Access the element.
+        ) as diffElemTuple<T>; // Cast into an element tuple and return.
     }
 
     // Get bounds flags, positions, and lengths in the form of index tuples.
     public getBoundsTuple(positions?:indexTuple) : boundsTuple {
-        const lengths:indexTuple = this.getLengthTuple();
+        const lens:indexTuple = this.getLengthTuple();
         const indices:indexTuple = (positions == undefined)
-            ? this.getPositionTuple() : positions;
-        return indices.map(
-            (index, i) => this.boundsCheck(index, lengths[i]),
+            ? this.getPositionTuple() // If no parameter given, use the internal position.
+            : positions; // If a position was given, use the position values.
+        return [0, 1].map( // Apply a bounds check to the base and target positions.
+            (i) : boolean => this.boundsCheck(indices[i], lens[i]),
         ) as boundsTuple;
     }
 
+    // Returns true if every position is within the bounds of its array.
     public bothPositionsInBounds() : boolean {
         return this.getBoundsTuple().every((b) => b == true);
     }
 
+    // Returns true if at least one position is within the bounds of its array.
     public somePositionInBounds() : boolean {
         return this.getBoundsTuple().some((b) => b == true);
     }
