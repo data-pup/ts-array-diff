@@ -12,6 +12,7 @@ export interface IAlignmentPosition<T> {
     getPositionTuple() : indexTuple;
     getLengthTuple() : indexTuple;
     getCurrentElems() : diffElemTuple<T>;
+    atMatch() : boolean;
     getBoundsTuple(positions?:indexTuple) : boundsTuple;
 
     // Bounds check methods

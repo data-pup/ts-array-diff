@@ -68,6 +68,11 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
         ) as diffElemTuple<T>; // Cast into an element tuple and return.
     }
 
+    public atMatch() : boolean {
+        const [currBaseElem, currTargetElem]:diffElemTuple<T> = this.getCurrentElems();
+        return currBaseElem === currTargetElem;
+    }
+
     // Get bounds flags, positions, and lengths in the form of index tuples.
     public getBoundsTuple(positions?:indexTuple) : boundsTuple {
         const lens:indexTuple = this.getLengthTuple();
@@ -105,30 +110,28 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     }
 
     public getNextMatchPosition() : AlignmentPosition<T> {
+        // First, check that both positions are in bounds, or if the current position is a match.
         if (!this.bothPositionsInBounds()) {
-            return new AlignmentPosition(this._arrs, this.getLengthTuple());
+            const lens:indexTuple = this.getLengthTuple();
+            const tailPositions:indexTuple = lens.map((len) => len > 0 ? len - 1 : 0) as indexTuple;
+            return new AlignmentPosition(this._arrs, tailPositions);
+        } else if (this.atMatch()) {
+            return new AlignmentPosition(this._arrs, this.getPositionTuple());
         }
 
-        const [base, target]:arrDiffTuple<T> = this._arrs;
-        const [bStartPos, tStartPos]:indexTuple = this.getPositionTuple();
-        const [bCurrPos, tCurrPos] = [bStartPos, tStartPos];
-        let bNextMatchWithT:number = undefined;
-        let tNextMatchWithB:number = undefined;
-
-        while (this.somePositionInBounds()) { // Search for the next match.
-            const [bBounds, tBounds]:boundsTuple = this.getBoundsTuple();
-            if (bBounds) { tNextMatchWithB = target.indexOf(base[bCurrPos], tCurrPos); }
-            if (tBounds) { bNextMatchWithT = base.indexOf(target[tCurrPos], bCurrPos); }
-
-            // Choose whichever match is closest to the original position.
-            if ((bNextMatchWithT >= 0) || (tNextMatchWithB >= 0)) {
-                // return chooseMatch(bCurrPos, tCurrPos, bNextMatchWithT, tNextMatchWithB);
-                throw new Error('Not Implemented Yet!');
-            }
-
-        }
-
-        throw new Error('Not Implemented Yet!');
+        const [currBaseIndex, currTargetIndex]:indexTuple = this.getPositionTuple();
+        const possiblePaths:AlignmentPosition<T>[] = [
+            new AlignmentPosition(this._arrs, [currBaseIndex + 1, currTargetIndex]),
+            new AlignmentPosition(this._arrs, [currBaseIndex, currTargetIndex + 1]),
+        ];
+        const pathMatches = possiblePaths.map((pos) => pos.getNextMatchPosition());
+        const pathMatchDistances:number[] =
+            pathMatches
+            .map((pos:AlignmentPosition<T>) : number =>
+                 this.getDistance(pos.getPositionTuple()));
+        const shortestDistance:number = Math.min(...pathMatchDistances);
+        const bestPathIndex = pathMatchDistances.indexOf(shortestDistance);
+        return pathMatches[bestPathIndex];
     }
 
 }

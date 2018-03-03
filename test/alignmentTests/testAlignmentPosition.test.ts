@@ -71,4 +71,16 @@ import {
         pos.setPositions([invalidPosition, invalidPosition]);
         assertArraysAreEqual(pos.getPositionTuple(), [undefined, undefined]);
     }
+
+    @test public testNextMatchCanBeFoundInSimpleCase() {
+        const arrs:[number[], number[]] = [
+            [1, 2, 0],
+            [3, 4, 0],
+        ];
+        const startPos = new AlignmentPosition(arrs);
+        const matchPos:AlignmentPosition<number> = startPos.getNextMatchPosition();
+        const actualMatchPos:[number, number] = matchPos.getPositionTuple();
+        const expectedMatchPos = [2, 2];
+        assertArraysAreEqual(actualMatchPos, expectedMatchPos);
+    }
 }
