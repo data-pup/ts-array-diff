@@ -83,4 +83,28 @@ import {
         const expectedMatchPos = [2, 2];
         assertArraysAreEqual(actualMatchPos, expectedMatchPos);
     }
+
+    @test public testGetNextMatchReturnsTailWhenNoMatchExists() {
+        const arrs:[number[], number[]] = [
+            [1, 2, 3],
+            [4, 5, 6],
+        ];
+        const startPos = new AlignmentPosition(arrs);
+        const matchPos:AlignmentPosition<number> = startPos.getNextMatchPosition();
+        const actualMatchPos:[number, number] = matchPos.getPositionTuple();
+        const expectedMatchPos = [2, 2];
+        assertArraysAreEqual(actualMatchPos, expectedMatchPos);
+    }
+
+    @test public testGetNextMatchReturnsCurrentPositionIfAtMatch() {
+        const arrs:[number[], number[]] = [
+            [1, 2, 3],
+            [1, 2, 3],
+        ];
+        const startPos = new AlignmentPosition(arrs);
+        const matchPos:AlignmentPosition<number> = startPos.getNextMatchPosition();
+        const actualMatchPos:[number, number] = matchPos.getPositionTuple();
+        const expectedMatchPos = [0, 0];
+        assertArraysAreEqual(actualMatchPos, expectedMatchPos);
+    }
 }
