@@ -88,4 +88,47 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     public somePositionInBounds() : boolean {
         return this.getBoundsTuple().some((b) => b == true);
     }
+
+    public getDistance(newPos:indexTuple) : number {
+        if (!this.bothPositionsInBounds()) {
+            throw new Error('Original position is not in bounds, cannot calculate distance!');
+        }
+
+        const lens:indexTuple = this.getLengthTuple();
+        const newBounds:boundsTuple = this.getBoundsTuple(newPos);
+        return [0, 1]
+            .map((i) : number =>
+                newBounds[i] && newPos[i] >= this._positions[i]
+                    ? newPos[i] - this._positions[i]
+                    : lens[i] - this._positions[i])
+            .reduce((prev, curr) => prev + curr);
+    }
+
+    public getNextMatchPosition() : AlignmentPosition<T> {
+        if (!this.bothPositionsInBounds()) {
+            return new AlignmentPosition(this._arrs, this.getLengthTuple());
+        }
+
+        const [base, target]:arrDiffTuple<T> = this._arrs;
+        const [bStartPos, tStartPos]:indexTuple = this.getPositionTuple();
+        const [bCurrPos, tCurrPos] = [bStartPos, tStartPos];
+        let bNextMatchWithT:number = undefined;
+        let tNextMatchWithB:number = undefined;
+
+        while (this.somePositionInBounds()) { // Search for the next match.
+            const [bBounds, tBounds]:boundsTuple = this.getBoundsTuple();
+            if (bBounds) { tNextMatchWithB = target.indexOf(base[bCurrPos], tCurrPos); }
+            if (tBounds) { bNextMatchWithT = base.indexOf(target[tCurrPos], bCurrPos); }
+
+            // Choose whichever match is closest to the original position.
+            if ((bNextMatchWithT >= 0) || (tNextMatchWithB >= 0)) {
+                // return chooseMatch(bCurrPos, tCurrPos, bNextMatchWithT, tNextMatchWithB);
+                throw new Error('Not Implemented Yet!');
+            }
+
+        }
+
+        throw new Error('Not Implemented Yet!');
+    }
+
 }

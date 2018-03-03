@@ -17,4 +17,8 @@ export interface IAlignmentPosition<T> {
     // Bounds check methods
     bothPositionsInBounds() : boolean;
     somePositionInBounds() : boolean;
+
+    // This function will return an object at the next matching position.
+    getDistance(newPos:indexTuple) : number;
+    getNextMatchPosition() : IAlignmentPosition<T>;
 }
