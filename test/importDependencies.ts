@@ -1,11 +1,11 @@
 export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 
-export { AlignmentPosition } from '../src/alignment/alignmentPosition';
+export { AlignmentPosition } from '../src/alignmentPosition/alignmentPosition';
 export {
     arrDiffTuple,
     boundsTuple,
     indexTuple,
-} from '../src/alignment/positionTypes';
+} from '../src/alignmentPosition/positionTypes';
 
 export {
     PopDiffOp,
