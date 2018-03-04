@@ -10,7 +10,7 @@
 // };
 // testGetAlignment();
 
-import { AlignmentPosition } from './alignment/position/alignmentPosition';
+import { AlignmentPosition } from './alignment/alignmentPosition';
 const temp = () => {
     const arrs:[number[], number[]] = [
         [   2],
