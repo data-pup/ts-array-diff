@@ -13,12 +13,14 @@
 import { AlignmentPosition } from './alignment/position/alignmentPosition';
 const temp = () => {
     const arrs:[number[], number[]] = [
-        [1, 2, 0],
-        [3, 4, 0],
+        [   2],
+        [1, 2],
     ];
     const startPos = new AlignmentPosition(arrs);
-    const matchPos:AlignmentPosition<number> = startPos.getNextMatchPosition();
-    const [a, b]:[number, number] = matchPos.getPositionTuple();
-    process.stdout.write(`Best match found at: [${a}, ${b}]`);
+    const actualAlignment = startPos.getAlignment();
+    process.stdout.write('Alignment:\n');
+    for (const elem of actualAlignment) {
+        process.stdout.write(`\t[${elem[0]}, ${elem[1]}]\n`);
+    }
 };
 temp();

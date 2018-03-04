@@ -3,6 +3,7 @@ import { arrDiffTuple, boundsTuple, diffElemTuple, indexTuple } from './position
 
 export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     public static readonly undefinedParamError = 'AlignmentPosition constructor was given an undefined parameter!';
+    public static readonly invalidIndexRangeError = 'getIndicesInRange given invalid parameters.';
 
     private readonly _arrs:arrDiffTuple<T>;
     private _positions:indexTuple;
@@ -69,6 +70,7 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     }
 
     public atMatch() : boolean {
+        if (!this.bothPositionsInBounds()) { return false; }
         const [currBaseElem, currTargetElem]:diffElemTuple<T> = this.getCurrentElems();
         return currBaseElem === currTargetElem;
     }
@@ -113,7 +115,7 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
         // First, check that both positions are in bounds, or if the current position is a match.
         if (!this.bothPositionsInBounds()) {
             const lens:indexTuple = this.getLengthTuple();
-            const tailPositions:indexTuple = lens.map((len) => len > 0 ? len - 1 : 0) as indexTuple;
+            const tailPositions:indexTuple = lens.map((len) => len > 0 ? len : 0) as indexTuple;
             return new AlignmentPosition(this._arrs, tailPositions);
         } else if (this.atMatch()) {
             return new AlignmentPosition(this._arrs, this.getPositionTuple());
@@ -134,4 +136,54 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
         return pathMatches[bestPathIndex];
     }
 
+    public getAlignment() : diffElemTuple<T>[] {
+        const alignment:diffElemTuple<T>[] = new Array();
+        while (this.somePositionInBounds()) {
+            if (this.atMatch()) { // Process a match.
+                alignment.push(this.getCurrentElems());
+                this.incrementPositions();
+            } else { // Process a difference where both positions are in bounds.
+                if (this.bothPositionsInBounds()) {
+                    const nextMatch:AlignmentPosition<T> = this.getNextMatchPosition();
+                    const [bNextMatchIndex, tNextMatchIndex] = nextMatch.getPositionTuple();
+                    alignment.push(...this.getBaseItemsToRemove(bNextMatchIndex));
+                    alignment.push(...this.getTargetItemsToAdd(tNextMatchIndex));
+                    this.setPositions([bNextMatchIndex, tNextMatchIndex]);
+                } else { // Process the rest of an array if one position is out of bounds.
+                    const [baseInBounds, targetInBounds]:boundsTuple = this.getBoundsTuple();
+                    const [currBaseElem, currTargetElem]:diffElemTuple<T> = this.getCurrentElems();
+                    if (baseInBounds) {
+                        alignment.push([currBaseElem, undefined]);
+                        this.incrementBasePosition();
+                    } else if (targetInBounds) {
+                        alignment.push([undefined, currTargetElem]);
+                        this.incrementTargetPosition();
+                    } else { throw new Error ('Unexpected Error occured creating alignment!'); }
+                }
+            }
+        }
+        return alignment;
+    }
+
+    private getBaseItemsToRemove(nextMatchIndex:number) : diffElemTuple<T>[] {
+        const currBaseIndex = this.getPositionTuple()[0];
+        const indexRange:number[] = this.getIndicesInRange(
+            currBaseIndex, nextMatchIndex, this._arrs[0]);
+        return indexRange.map((i) : diffElemTuple<T> => [this._arrs[0][i], undefined]);
+    }
+
+    private getTargetItemsToAdd(nextMatchIndex:number) : diffElemTuple<T>[] {
+        const currentTargetIndex = this.getPositionTuple()[1];
+        const indexRange:number[] = this.getIndicesInRange(
+            currentTargetIndex, nextMatchIndex, this._arrs[1]);
+        return indexRange.map((i) : diffElemTuple<T> => [undefined, this._arrs[1][i]]);
+    }
+
+    private getIndicesInRange(min:number, max:number, arr:T[]) : number[] {
+        const [startIndex, endIndex] = [min, max === undefined ? arr.length : max];
+        if (startIndex > endIndex) { throw new Error(AlignmentPosition.invalidIndexRangeError); }
+        const rangeSize = endIndex - startIndex;
+        const indexRange = [...Array(rangeSize)].map((_, i) => startIndex + i);
+        return indexRange;
+    }
 }

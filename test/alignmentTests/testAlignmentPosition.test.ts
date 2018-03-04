@@ -84,16 +84,14 @@ import {
         assertArraysAreEqual(actualMatchPos, expectedMatchPos);
     }
 
-    @test public testGetNextMatchReturnsTailWhenNoMatchExists() {
+    @test public testGetNextMatchReturnsOutOfBoundsWhenNoMatchExists() {
         const arrs:[number[], number[]] = [
             [1, 2, 3],
             [4, 5, 6],
         ];
         const startPos = new AlignmentPosition(arrs);
         const matchPos:AlignmentPosition<number> = startPos.getNextMatchPosition();
-        const actualMatchPos:[number, number] = matchPos.getPositionTuple();
-        const expectedMatchPos = [2, 2];
-        assertArraysAreEqual(actualMatchPos, expectedMatchPos);
+        assert.isFalse(matchPos.somePositionInBounds());
     }
 
     @test public testGetNextMatchReturnsCurrentPositionIfAtMatch() {
