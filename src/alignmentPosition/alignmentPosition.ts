@@ -1,5 +1,11 @@
 import { IAlignmentPosition } from './IAlignmentPosition';
-import { arrTuple, boundsTuple, elemTuple, indexTuple } from '../alignmentTypes';
+import {
+    alignmentSequence,
+    arrTuple,
+    boundsTuple,
+    elemTuple,
+    indexTuple,
+} from '../alignmentTypes';
 
 export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     public static readonly undefinedParamError = 'AlignmentPosition constructor was given an undefined parameter!';
@@ -136,7 +142,7 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
         return pathMatches[bestPathIndex];
     }
 
-    public getAlignment() : elemTuple<T>[] {
+    public getAlignment() : alignmentSequence<T> {
         const alignment:elemTuple<T>[] = new Array();
         while (this.somePositionInBounds()) {
             if (this.atMatch()) { // Process a match.
