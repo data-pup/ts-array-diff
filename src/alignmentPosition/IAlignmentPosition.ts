@@ -1,4 +1,4 @@
-import { boundsTuple, diffElemTuple, indexTuple } from './positionTypes';
+import { boundsTuple, elemTuple, indexTuple } from './positionTypes';
 
 export interface IAlignmentPosition<T> {
 
@@ -11,7 +11,7 @@ export interface IAlignmentPosition<T> {
     // Accessor methods
     getPositionTuple() : indexTuple;
     getLengthTuple() : indexTuple;
-    getCurrentElems() : diffElemTuple<T>;
+    getCurrentElems() : elemTuple<T>;
     atMatch() : boolean;
     getBoundsTuple(positions?:indexTuple) : boundsTuple;
 

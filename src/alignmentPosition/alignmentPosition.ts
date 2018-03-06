@@ -1,14 +1,14 @@
 import { IAlignmentPosition } from './IAlignmentPosition';
-import { arrDiffTuple, boundsTuple, diffElemTuple, indexTuple } from './positionTypes';
+import { arrTuple, boundsTuple, elemTuple, indexTuple } from './positionTypes';
 
 export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     public static readonly undefinedParamError = 'AlignmentPosition constructor was given an undefined parameter!';
     public static readonly invalidIndexRangeError = 'getIndicesInRange given invalid parameters.';
 
-    private readonly _arrs:arrDiffTuple<T>;
+    private readonly _arrs:arrTuple<T>;
     private _positions:indexTuple;
 
-    constructor(arrs:arrDiffTuple<T>, positions:indexTuple=[0, 0]) {
+    constructor(arrs:arrTuple<T>, positions:indexTuple=[0, 0]) {
         if (arrs.some((arr) => arr == undefined)) {
             throw new Error(AlignmentPosition.undefinedParamError);
         }
@@ -61,17 +61,17 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     }
 
     // Fetch the elements in the base and target arrays at the current position.
-    public getCurrentElems() : diffElemTuple<T> {
+    public getCurrentElems() : elemTuple<T> {
         return [0, 1].map( // Check if the position is in bounds before accessing.
             (i) => this._positions[i] == undefined
                 ? undefined // Return undefined if the position is out of bounds.
                 : this._arrs[i][this._positions[i]], // Access the element.
-        ) as diffElemTuple<T>; // Cast into an element tuple and return.
+        ) as elemTuple<T>; // Cast into an element tuple and return.
     }
 
     public atMatch() : boolean {
         if (!this.bothPositionsInBounds()) { return false; }
-        const [currBaseElem, currTargetElem]:diffElemTuple<T> = this.getCurrentElems();
+        const [currBaseElem, currTargetElem]:elemTuple<T> = this.getCurrentElems();
         return currBaseElem === currTargetElem;
     }
 
@@ -136,8 +136,8 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
         return pathMatches[bestPathIndex];
     }
 
-    public getAlignment() : diffElemTuple<T>[] {
-        const alignment:diffElemTuple<T>[] = new Array();
+    public getAlignment() : elemTuple<T>[] {
+        const alignment:elemTuple<T>[] = new Array();
         while (this.somePositionInBounds()) {
             if (this.atMatch()) { // Process a match.
                 alignment.push(this.getCurrentElems());
@@ -151,7 +151,7 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
                     this.setPositions([bNextMatchIndex, tNextMatchIndex]);
                 } else { // Process the rest of an array if one position is out of bounds.
                     const [baseInBounds, targetInBounds]:boundsTuple = this.getBoundsTuple();
-                    const [currBaseElem, currTargetElem]:diffElemTuple<T> = this.getCurrentElems();
+                    const [currBaseElem, currTargetElem]:elemTuple<T> = this.getCurrentElems();
                     if (baseInBounds) {
                         alignment.push([currBaseElem, undefined]);
                         this.incrementBasePosition();
@@ -165,18 +165,18 @@ export class AlignmentPosition<T> implements IAlignmentPosition<T> {
         return alignment;
     }
 
-    private getBaseItemsToRemove(nextMatchIndex:number) : diffElemTuple<T>[] {
+    private getBaseItemsToRemove(nextMatchIndex:number) : elemTuple<T>[] {
         const currBaseIndex = this.getPositionTuple()[0];
         const indexRange:number[] = this.getIndicesInRange(
             currBaseIndex, nextMatchIndex, this._arrs[0]);
-        return indexRange.map((i) : diffElemTuple<T> => [this._arrs[0][i], undefined]);
+        return indexRange.map((i) : elemTuple<T> => [this._arrs[0][i], undefined]);
     }
 
-    private getTargetItemsToAdd(nextMatchIndex:number) : diffElemTuple<T>[] {
+    private getTargetItemsToAdd(nextMatchIndex:number) : elemTuple<T>[] {
         const currentTargetIndex = this.getPositionTuple()[1];
         const indexRange:number[] = this.getIndicesInRange(
             currentTargetIndex, nextMatchIndex, this._arrs[1]);
-        return indexRange.map((i) : diffElemTuple<T> => [undefined, this._arrs[1][i]]);
+        return indexRange.map((i) : elemTuple<T> => [undefined, this._arrs[1][i]]);
     }
 
     private getIndicesInRange(min:number, max:number, arr:T[]) : number[] {

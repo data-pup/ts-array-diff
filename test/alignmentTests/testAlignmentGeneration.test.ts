@@ -2,14 +2,14 @@
 import { suite, test } from 'mocha-typescript';
 import {
     AlignmentPosition,
-    arrDiffTuple,
+    arrTuple,
 } from '../importDependencies';
 import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual';
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestAlignmentPosition {
     @test public testAlignmentWhereTargetHasTail() {
-        const arrs:arrDiffTuple<number> = [
+        const arrs:arrTuple<number> = [
             [1   ],
             [1, 2],
         ];
@@ -23,7 +23,7 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual'
     }
 
     @test public testAlignmentWhereTargetHasHead() {
-        const arrs:arrDiffTuple<number> = [
+        const arrs:arrTuple<number> = [
             [   2],
             [1, 2],
         ];
@@ -37,7 +37,7 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual'
     }
 
     @test public testAlignmentWhereBaseHasHead() {
-        const arrs:arrDiffTuple<number> = [
+        const arrs:arrTuple<number> = [
             [1, 2],
             [   2],
         ];
@@ -51,7 +51,7 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual'
     }
 
     @test public testAlignmentWhereBaseHasTail() {
-        const arrs:arrDiffTuple<number> = [
+        const arrs:arrTuple<number> = [
             [1, 2],
             [1   ],
         ];
@@ -65,7 +65,7 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual'
     }
 
     @test public testAlignmentWhereBaseHasExtraMiddleElement() {
-        const arrs:arrDiffTuple<number> = [
+        const arrs:arrTuple<number> = [
             [1, 2, 3],
             [1,    3],
         ];
@@ -80,7 +80,7 @@ import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual'
     }
 
     @test public testAlignmentForBaseAndTargetWithVariousChanges() {
-        const arrs:arrDiffTuple<number> = [
+        const arrs:arrTuple<number> = [
             [   2, 3, 3, 4,    5, 6, 8   ],
             [1, 2, 3,    4, 4, 5, 7, 8, 9],
         ];

@@ -2,7 +2,7 @@ export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 
 export { AlignmentPosition } from '../src/alignmentPosition/alignmentPosition';
 export {
-    arrDiffTuple,
+    arrTuple,
     boundsTuple,
     indexTuple,
 } from '../src/alignmentPosition/positionTypes';

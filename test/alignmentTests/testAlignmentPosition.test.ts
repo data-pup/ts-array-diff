@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 import {
     AlignmentPosition,
-    arrDiffTuple,
+    arrTuple,
     assertArraysAreEqual,
 } from '../importDependencies';
 
@@ -10,7 +10,7 @@ import {
 @suite class TestAlignmentPosition {
     @test public testConstructorIdentifiesUndefinedParam() {
         const expectedError = AlignmentPosition.undefinedParamError;
-        const invalidArrTuples:arrDiffTuple<number>[] = [
+        const invalidArrTuples:arrTuple<number>[] = [
             [undefined, []],
             [[], undefined],
             [undefined, undefined],
