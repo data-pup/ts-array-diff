@@ -5,7 +5,7 @@ export {
     arrTuple,
     boundsTuple,
     indexTuple,
-} from '../src/alignmentPosition/positionTypes';
+} from '../src/positionTypes';
 
 export {
     PopDiffOp,
