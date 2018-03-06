@@ -1,5 +1,5 @@
 import { IAlignmentPosition } from './IAlignmentPosition';
-import { arrTuple, boundsTuple, elemTuple, indexTuple } from '../positionTypes';
+import { arrTuple, boundsTuple, elemTuple, indexTuple } from '../alignmentTypes';
 
 export class AlignmentPosition<T> implements IAlignmentPosition<T> {
     public static readonly undefinedParamError = 'AlignmentPosition constructor was given an undefined parameter!';

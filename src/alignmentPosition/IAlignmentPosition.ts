@@ -1,4 +1,4 @@
-import { boundsTuple, elemTuple, indexTuple } from '../positionTypes';
+import { boundsTuple, elemTuple, indexTuple } from '../alignmentTypes';
 
 export interface IAlignmentPosition<T> {
 
