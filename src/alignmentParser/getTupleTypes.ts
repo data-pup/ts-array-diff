@@ -9,7 +9,7 @@ export const getTupleTypes = <T>(alignment:alignmentSequence<T>)
     );
 };
 
-const getTupleType = <T>(tuple:elemTuple<T>) : tupleType => {
+export const getTupleType = <T>(tuple:elemTuple<T>) : tupleType => {
     if (tuple === undefined) {
         throw new Error(invalidTupleErrorMessage);
     } else if (tuple[0] === undefined && tuple[1] === undefined) {
