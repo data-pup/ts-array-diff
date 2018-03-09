@@ -18,7 +18,7 @@ export {
     invalidTupleErrorMessage,
 } from '../src/alignmentParser/getTupleTypes';
 
-export { AlignmentPosition } from '../src/alignmentPosition/alignmentPosition';
+export { AlignmentPosition } from '../src/./getAlignment/alignmentPosition';
 
 export {
     PopDiffOp,
