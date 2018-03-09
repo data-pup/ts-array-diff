@@ -3,6 +3,7 @@ import { suite, test } from 'mocha-typescript';
 import {
     alignmentSequence,
     assertAlignmentsAreEqual,
+    getEditGroups,
 } from '../importDependencies';
 
 /* tslint:disable-next-line:no-unused-variable */
@@ -14,17 +15,24 @@ import {
         }
     }
 
-    @test public placeholderTest() {
-        const a:alignmentSequence<number>[] = [
+    @test public basicEditGroupTest() {
+        const seq:alignmentSequence<number> = [
+            [undefined, 0],
+            [1, 1],
+            [2, undefined],
+            [3, undefined],
+            [4, 4],
+            [5, 5],
+            [undefined, 6],
+        ];
+        const actualGroups:alignmentSequence<number>[] = getEditGroups(seq);
+        const expectedGroups:alignmentSequence<number>[] = [
             [ [undefined, 0] ],
             [ [1, 1] ],
-            [ [2, undefined] ],
+            [ [2, undefined], [3, undefined] ],
+            [ [4, 4], [5, 5] ],
+            [ [undefined, 6] ],
         ];
-        const b:alignmentSequence<number>[] = [
-            [ [undefined, 0] ],
-            [ [1, 1] ],
-            [ [2, undefined] ],
-        ];
-        this.checkEditGroupsAreSame(a, b);
+        this.checkEditGroupsAreSame(actualGroups, expectedGroups);
     }
 }

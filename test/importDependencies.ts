@@ -10,6 +10,8 @@ export {
     tupleType,
 } from '../src/alignmentTypes';
 
+export { getEditGroups } from '../src/alignmentParser/alignmentParser';
+
 export {
     getTupleTypes,
     invalidTupleErrorMessage,
