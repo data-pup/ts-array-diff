@@ -1,5 +1,7 @@
 import { indexTuple } from '../../alignmentTypes';
 
 export const getDistance = (a:indexTuple, b:indexTuple) : number => {
-    throw new Error('Not Implemented Yet!');
+    return [0, 1]
+        .map((i:number) : number => b[i] - a[i])
+        .reduce((sum, curr) => sum += curr, 0);
 };

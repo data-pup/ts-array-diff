@@ -18,8 +18,7 @@ type CheckBoundsTestCase<T> = [T[], number, boolean, string];
     @test public boundsTests() {
         TestCheckBounds.testCases.forEach(
             <T>(currTest:CheckBoundsTestCase<T>) : void => {
-                const [arr, i, expectedResult, testDesc]:[T[], number, boolean, string] = [
-                    currTest[0], currTest[1], currTest[2], currTest[3]];
+                const [arr, i, expectedResult, testDesc]:[T[], number, boolean, string] = currTest;
                 const actualResult = checkBounds(i, arr);
                 assert.strictEqual(expectedResult, actualResult, `Failed test: ${testDesc}`);
         });
