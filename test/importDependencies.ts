@@ -13,6 +13,7 @@ export {
 export { getEditGroups } from '../src/alignmentParser/alignmentParser';
 
 export {
+    getIsEditTupleFlags,
     getTupleTypes,
     invalidTupleErrorMessage,
 } from '../src/alignmentParser/getTupleTypes';

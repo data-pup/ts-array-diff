@@ -4,6 +4,7 @@ import {
     alignmentSequence,
     assertArraysAreEqual,
     elemTuple,
+    getIsEditTupleFlags,
     getTupleTypes,
     invalidTupleErrorMessage,
     tupleType,
@@ -38,5 +39,16 @@ import {
                 invalidTupleErrorMessage,
             );
         });
+    }
+
+    @test public editTuplesCanBeIdentifiedCorrectly() {
+        const seq:alignmentSequence<number> = [
+            [undefined, 0],
+            [1, 1],
+            [2, undefined],
+        ];
+        const actualIsEditFlags = getIsEditTupleFlags(seq);
+        const expectedIsEditFlags = [true, false, true];
+        assertArraysAreEqual(actualIsEditFlags, expectedIsEditFlags);
     }
 }
