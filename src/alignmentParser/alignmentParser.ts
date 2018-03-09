@@ -12,20 +12,22 @@ export const parse = <T>(alignment:alignmentSequence<T>)
 
 export const getEditGroups = <T>(alignment:alignmentSequence<T>)
                                 : alignmentSequence<T>[] => {
+    const editTupleTypes:tupleType[] = ['add', 'remove'];
     const editGroups:alignmentSequence<T>[] = new Array();
     let group:alignmentSequence<T> = new Array();
-    let groupType:tupleType = undefined;
+    let [isEditGroup, isEditTuple]:[boolean, boolean] = [undefined, undefined];
 
     for (const currTuple of alignment) {
         const currType = getTupleType(currTuple);
-        if (groupType === undefined) { groupType = currType; }
+        isEditTuple = editTupleTypes.indexOf(currType) > -1;
+        if (isEditGroup === undefined) { isEditGroup = isEditTuple; }
 
-        if (currType === groupType) {
+        if (isEditTuple === isEditGroup) {
             group.push(currTuple);
         } else {
             editGroups.push(group);
             group = new Array(...[currTuple]);
-            groupType = currType;
+            isEditGroup = isEditTuple;
         }
     }
 
