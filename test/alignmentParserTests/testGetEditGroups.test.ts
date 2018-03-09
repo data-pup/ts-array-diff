@@ -63,4 +63,16 @@ import {
         ];
         this.checkEditGroupsAreSame(actualGroups, expectedGroups);
     }
+
+    @test public testPopAndPushAreIdentified() {
+        const base = [1, 2];
+        const target = [1, 3];
+        const seq:alignmentSequence<number> =
+            new AlignmentPosition([base, target]).getAlignment();
+        const actualGroups:alignmentSequence<number>[] = getEditGroups(seq);
+        const expectedGroups:alignmentSequence<number>[] = [
+            [ [1, 1] ], [ [2, undefined], [undefined, 3] ],
+        ];
+        this.checkEditGroupsAreSame(actualGroups, expectedGroups);
+    }
 }
