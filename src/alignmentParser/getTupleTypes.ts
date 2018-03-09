@@ -2,6 +2,10 @@ import { alignmentSequence, elemTuple, tupleType } from '../alignmentTypes';
 
 export const invalidTupleErrorMessage = 'Invalid value encountered while processing tuple!';
 
+export const getIsEditTupleFlags = <T>(alignment:alignmentSequence<T>) : boolean[] => {
+    return alignment.map((t:elemTuple<T>) : boolean => isEditTuple(t));
+};
+
 export const getTupleTypes = <T>(alignment:alignmentSequence<T>)
                                 : tupleType[] => {
     return alignment.map(
@@ -23,4 +27,9 @@ export const getTupleType = <T>(tuple:elemTuple<T>) : tupleType => {
     } else {
         throw new Error(invalidTupleErrorMessage);
     }
+};
+
+export const isEditTuple = <T>(tuple:elemTuple<T>) : boolean => {
+    const type = getTupleType(tuple);
+    return type === 'add' || type === 'remove';
 };

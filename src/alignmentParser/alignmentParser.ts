@@ -1,9 +1,8 @@
 import {
     alignmentSequence,
-    // elemTuple,
-    tupleType,
+    elemTuple,
 } from '../alignmentTypes';
-import { getTupleType } from './getTupleTypes';
+import { getIsEditTupleFlags } from './getTupleTypes';
 
 export const parse = <T>(alignment:alignmentSequence<T>)
                         : void => {
@@ -12,25 +11,25 @@ export const parse = <T>(alignment:alignmentSequence<T>)
 
 export const getEditGroups = <T>(alignment:alignmentSequence<T>)
                                 : alignmentSequence<T>[] => {
-    const editTupleTypes:tupleType[] = ['add', 'remove'];
-    const editGroups:alignmentSequence<T>[] = new Array();
-    let group:alignmentSequence<T> = new Array();
-    let [isEditGroup, isEditTuple]:[boolean, boolean] = [undefined, undefined];
+    const editFlags = getIsEditTupleFlags(alignment);
+    const results:alignmentSequence<T>[] = new Array();
+    let currGroup:alignmentSequence<T> = new Array();
+    let isEditGroup:boolean = undefined;
 
-    for (const currTuple of alignment) {
-        const currType = getTupleType(currTuple);
-        isEditTuple = editTupleTypes.indexOf(currType) > -1;
+    for (let i = 0; i < alignment.length; i++) {
+        const currTuple:elemTuple<T> = alignment[i];
+        const isEditTuple:boolean = editFlags[i];
         if (isEditGroup === undefined) { isEditGroup = isEditTuple; }
 
         if (isEditTuple === isEditGroup) {
-            group.push(currTuple);
+            currGroup.push(currTuple);
         } else {
-            editGroups.push(group);
-            group = new Array(...[currTuple]);
+            results.push(currGroup);
+            currGroup = new Array(...[currTuple]);
             isEditGroup = isEditTuple;
         }
     }
 
-    if (group.length > 0) { editGroups.push(group); }
-    return editGroups;
+    if (currGroup.length > 0) { results.push(currGroup); }
+    return results;
 };
