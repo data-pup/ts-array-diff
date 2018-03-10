@@ -1,8 +1,10 @@
-import { alignmentSequence, arrTuple, elemTuple, indexTuple } from '../alignmentTypes';
-import { bothInBounds, someInBounds, checkBounds } from './lib/checkBounds';
+import { atMatch } from './lib/atMatch';
+import { someInBounds, checkBounds } from './lib/checkBounds';
+import { incrementBaseAndTarget } from './lib/increment';
+import { getElems } from './lib/getCurrElems';
 import { getIndexRange } from './lib/getIndexRange';
 import { getNextMatch } from './lib/getNextMatch';
-import { incrementBaseAndTarget } from './lib/increment';
+import { alignmentSequence, arrTuple, elemTuple, indexTuple } from '../alignmentTypes';
 
 export const getAlignment = <T>(base:T[], target:T[]) : alignmentSequence<T> => {
     const alignment:alignmentSequence<T> = new Array();
@@ -26,16 +28,6 @@ export const getAlignment = <T>(base:T[], target:T[]) : alignmentSequence<T> => 
     }
 
     return alignment;
-};
-
-const getElems = <T>(pos:indexTuple, arrs:arrTuple<T>) : elemTuple<T> => {
-    return [0, 1].map((i) : T => arrs[i][pos[i]]) as elemTuple<T>;
-};
-
-const atMatch = <T>(pos:indexTuple, arrs:arrTuple<T>) : boolean => {
-    if (!bothInBounds(pos, arrs)) { return false; }
-    const [baseElem, targetElem]:elemTuple<T> = getElems(pos, arrs);
-    return baseElem === targetElem;
 };
 
 const getBaseItemsToRemove = <T>(startIndex:number, endIndex:number,

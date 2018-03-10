@@ -1,4 +1,5 @@
-import { checkBounds } from './checkBounds';
+import { atMatch } from './atMatch';
+import { bothInBounds } from './checkBounds';
 import { getDistance } from './distance';
 import { incrementBase, incrementTarget } from './increment';
 import { arrTuple, indexTuple } from '../../alignmentTypes';
@@ -8,12 +9,10 @@ import { arrTuple, indexTuple } from '../../alignmentTypes';
 // the given position. If no match exists, return the lengths of the arrays.
 export const getNextMatch = <T>(pos:indexTuple,
                                 arrs:arrTuple<T>) : indexTuple => {
-    const bothInBounds:boolean = [0, 1] // Bounds check each index.
-        .every((i:number) : boolean => checkBounds(pos[i], arrs[i]));
-    if (!bothInBounds) { // Handle if a position is out of bounds.
+    if (!bothInBounds(pos, arrs)) {
         return arrs.map((arr:T[]) => arr.length) as indexTuple;
-    } else if (arrs[0] === arrs[1]) {
-        return pos; // Return the current position if it is a match.
+    } else if (atMatch(pos, arrs)) {
+        return pos;
     }
 
     const paths:indexTuple[] = [incrementBase(pos), incrementTarget(pos)];

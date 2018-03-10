@@ -1,4 +1,3 @@
-import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 import { getNextMatch, indexTuple } from '../importDependencies';
 import { assertArraysAreEqual } from '../testUtils/assertArraysAreEqual';
@@ -17,15 +16,15 @@ type matchTestCase<T> = [T[], T[], indexTuple, indexTuple, string];
         [[0, 1], [0, 1], [3, 3], [2, 2], 'Lengths returned if out of bounds'],
     ];
 
-    private static assertTestCasePasses<T>(test:matchTestCase<T>) : void {
-        const [base, target, pos, expectedMatch, testDesc]:matchTestCase<T> = test;
+    private static assertTestCasePasses<T>(testCase:matchTestCase<T>) : void {
+        const [base, target, pos, expectedMatch, testDesc]:matchTestCase<T> = testCase;
         const actualMatch = getNextMatch(pos, [base, target]);
         assertArraysAreEqual(actualMatch, expectedMatch, `Test Failed: ${testDesc}`);
     }
 
     @test public runTests() {
         TestGetNextMatch.testCases.forEach(
-            (currCase) => TestGetNextMatch.assertTestCasePasses(currCase)
+            (currCase) => TestGetNextMatch.assertTestCasePasses(currCase),
         );
     }
 }
