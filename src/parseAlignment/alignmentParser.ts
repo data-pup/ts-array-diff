@@ -1,10 +1,10 @@
 import {
-    alignmentSequence,
+    alignmentSeq,
     // elemTuple,
 } from '../alignmentTypes';
 // import { getEditGroups } from './getEditGroups';
 
-export const parse = <T>(alignment:alignmentSequence<T>)
+export const parse = <T>(alignment:alignmentSeq<T>)
                         : void => {
     throw new Error('Not Implemented Yet!');
 };

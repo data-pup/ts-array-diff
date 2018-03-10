@@ -4,7 +4,7 @@ import {
     testCases,
 } from './testGetAlignmentTestCases';
 import {
-    alignmentSequence,
+    alignmentSeq,
     assertAlignmentsAreEqual,
     getAlignment,
 } from '../importDependencies';
@@ -13,7 +13,7 @@ import {
 @suite class TestGetAlignment {
     private static assertCorrectAlignmentIsCreated<T>(testCase:alignmentTestCase<T>) : void {
         const [base, target, expectedAlignment, testDesc] = testCase;
-        const actualAlignment:alignmentSequence<T> = getAlignment(base, target);
+        const actualAlignment:alignmentSeq<T> = getAlignment(base, target);
         assertAlignmentsAreEqual(actualAlignment, expectedAlignment,
                                  `Test Failed: ${testDesc}`);
     }

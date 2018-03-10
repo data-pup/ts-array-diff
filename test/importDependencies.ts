@@ -4,12 +4,12 @@ export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
 
 // Alignment type aliases.
 export {
-    alignmentSequence,
+    alignmentSeq,
+    alignmentSeqElem,
+    alignmentSeqElemType,
     arrTuple,
     boundsTuple,
-    elemTuple,
     indexTuple,
-    tupleType,
 } from '../src/alignmentTypes';
 
 // Alignment generation functions.
@@ -33,12 +33,7 @@ export { getIndexRange } from '../src/getAlignment/lib/getIndexRange';
 export { getNextMatch } from '../src/getAlignment/lib/getNextMatch';
 
 // Alignment parsing tuple types.
-export { getEditGroups } from '../src/parseAlignment/getEditGroups';
-export {
-    getIsEditTupleFlags,
-    getTupleTypes,
-    invalidTupleErrorMessage,
-} from '../src/parseAlignment/getTupleTypes';
+// export { getEditGroups } from '../src/parseAlignment/getEditGroups';
 
 // Array diff operations.
 export {

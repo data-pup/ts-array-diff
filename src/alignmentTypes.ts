@@ -1,7 +1,9 @@
-export type alignmentSequence<T> = elemTuple<T>[];
-export type alignmentSequenceElem<T> = elemTuple<T> | T;
+// Alignment generation types.
 export type arrTuple<T> = [T[], T[]];
 export type boundsTuple = [boolean, boolean];
-export type elemTuple<T> = [T, T];
 export type indexTuple = [number, number];
-export type tupleType = 'noop' | 'add' | 'remove';
+
+// Alignment sequence types.
+export type alignmentSeq<T> = alignmentSeqElem<T>[];
+export type alignmentSeqElem<T> = { val:T; elemType:alignmentSeqElemType };
+export type alignmentSeqElemType = 'noop' | 'add' | 'remove';

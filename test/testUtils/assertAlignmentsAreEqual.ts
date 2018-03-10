@@ -1,26 +1,40 @@
 import { assert } from 'chai';
-import { assertArraysAreEqual } from './assertArraysAreEqual';
+import {
+    alignmentSeq,
+    alignmentSeqElem,
+} from '../importDependencies';
 
-export const assertAlignmentsAreEqual = <T>(a:[T, T][], b:[T, T][], message?:string) : void => {
-    assertLengthsAreEqual(a, b, message);
-    const length = a.length;
+// Assert two alignments are equal using the helper functions defined below.
+export const assertAlignmentsAreEqual = <T>(actualAlignment:alignmentSeq<T>,
+                                            expectedAlignment:alignmentSeq<T>,
+                                            message?:string) : void => {
+    assertLengthsAreEqual(actualAlignment, expectedAlignment, message);
+    const length = actualAlignment.length;
     for (let i = 0; i < length; i++) {
-        assertSequenceElementsAreEqual(a[i], b[i], message);
+        assertSequenceElementsAreEqual(actualAlignment[i], expectedAlignment[i], message);
     }
 };
 
-const assertLengthsAreEqual = <T>(a:[T, T][], b:[T, T][], message?:string) : void => {
+// Assert the actual alignment's length matches the expected alignment's length.
+const assertLengthsAreEqual = <T>(actualAlignment:alignmentSeq<T>,
+                                  expectedAlignment:alignmentSeq<T>,
+                                  message?:string) : void => {
     if (message !== undefined) {
-        assert.equal(a.length, b.length, message);
+        assert.equal(actualAlignment.length, expectedAlignment.length, message);
     } else {
-        assert.equal(a.length, b.length);
+        assert.equal(actualAlignment.length, expectedAlignment.length);
     }
 };
 
-const assertSequenceElementsAreEqual = <T>(a:[T, T], b:[T, T], message?:string) : void => {
+// Assert two sequence elements are equal.
+const assertSequenceElementsAreEqual = <T>(actualAlignment:alignmentSeqElem<T>,
+                                           expectedAlignment:alignmentSeqElem<T>,
+                                           message?:string) : void => {
     if (message !== undefined) {
-        assertArraysAreEqual(a, b, message);
+        assert.equal(actualAlignment.elemType, expectedAlignment.elemType, message);
+        assert.equal(actualAlignment.val, expectedAlignment.val, message);
     } else {
-        assertArraysAreEqual(a, b);
+        assert.equal(actualAlignment.elemType, expectedAlignment.elemType);
+        assert.equal(actualAlignment.val, expectedAlignment.val);
     }
 };
