@@ -1,11 +1,8 @@
-import { AlignmentPosition } from './getAlignment/alignmentPosition';
+import { getAlignment } from './getAlignment/getAlignment';
 const temp = () => {
-    const arrs:[number[], number[]] = [
-        [   2],
-        [1, 2],
-    ];
-    const startPos = new AlignmentPosition(arrs);
-    const actualAlignment = startPos.getAlignment();
+    const base   = [   2];
+    const target = [1, 2];
+    const actualAlignment = getAlignment(base, target);
     process.stdout.write('Alignment:\n');
     for (const elem of actualAlignment) {
         process.stdout.write(`\t[${elem[0]}, ${elem[1]}]\n`);
