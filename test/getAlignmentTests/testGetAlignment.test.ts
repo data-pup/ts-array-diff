@@ -46,6 +46,30 @@ type alignmentTestCase<T> = [T[], T[], alignmentSequence<T>, string];
             [ [1, 1], [undefined, 2], [3, 3] ],
             'Target state has extra middle element',
         ],
+        [
+            [0, 2],
+            [1, 2],
+            [ [0, undefined], [undefined, 1], [2, 2] ],
+            'Different head element',
+        ],
+        [
+            [0, 1],
+            [0, 2],
+            [ [0, 0], [1, undefined], [undefined, 2] ],
+            'Different tail element',
+        ],
+        [
+            [   2, 3, 3, 4,    5, 6, 8   ],
+            [1, 2, 3,    4, 4, 5, 7, 8, 9],
+            [
+                [undefined, 1], [2, 2], [3, 3],
+                [3, undefined], [4, 4],
+                [undefined, 4], [5, 5],
+                [6, undefined], [undefined, 7],
+                [8, 8], [undefined, 9],
+            ],
+            'Complex example',
+        ],
     ];
 
     private static assertCorrectAlignmentIsCreated<T>(testCase:alignmentTestCase<T>) : void {
