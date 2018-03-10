@@ -10,13 +10,13 @@ export {
     tupleType,
 } from '../src/alignmentTypes';
 
-export { getEditGroups } from '../src/alignmentParser/alignmentParser';
+export { getEditGroups } from '../src/parseAlignment/alignmentParser';
 
 export {
     getIsEditTupleFlags,
     getTupleTypes,
     invalidTupleErrorMessage,
-} from '../src/alignmentParser/getTupleTypes';
+} from '../src/parseAlignment/getTupleTypes';
 
 export {
     PopDiffOp,
