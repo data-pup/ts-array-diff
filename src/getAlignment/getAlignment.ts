@@ -34,7 +34,7 @@ const getElems = <T>(pos:indexTuple, arrs:arrTuple<T>) : elemTuple<T> => {
 
 const atMatch = <T>(pos:indexTuple, arrs:arrTuple<T>) : boolean => {
     if (!bothInBounds(pos, arrs)) { return false; }
-    const [baseElem, targetElem]:T[] = getElems(pos, arrs);
+    const [baseElem, targetElem]:elemTuple<T> = getElems(pos, arrs);
     return baseElem === targetElem;
 };
 
