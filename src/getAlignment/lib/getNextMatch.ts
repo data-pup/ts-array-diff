@@ -3,6 +3,9 @@ import { getDistance } from './distance';
 import { incrementBase, incrementTarget } from './increment';
 import { arrTuple, indexTuple } from '../../alignmentTypes';
 
+// Return an index tuple containing the closest position at which the elements
+// in the base and target match. If the current position is a match, return
+// the given position. If no match exists, return the lengths of the arrays.
 export const getNextMatch = <T>(pos:indexTuple,
                                 arrs:arrTuple<T>) : indexTuple => {
     const bothInBounds:boolean = [0, 1] // Bounds check each index.
