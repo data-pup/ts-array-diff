@@ -2,9 +2,8 @@ import { suite, test } from 'mocha-typescript';
 import {
     alignmentSeq,
     assertEditGroupsAreSame,
-    // getAlignment,
-    getEditGroups,
     getAlignment,
+    getEditGroups,
 } from '../importDependencies';
 
 // [base array, target array, expected edit groups, test description]
