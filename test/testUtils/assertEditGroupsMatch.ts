@@ -7,7 +7,6 @@ import {
 export const assertEditGroupsAreSame = <T>(actualGroups:alignmentSeq<T>[],
                                            expectedGroups:alignmentSeq<T>[],
                                            message?:string) : void => {
-
     assertSameNumberOfEditGroups(actualGroups, expectedGroups, message);
     actualGroups.forEach(
         (actualGroup:alignmentSeq<T>, i:number) : void => {
