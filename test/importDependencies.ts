@@ -1,6 +1,7 @@
 // Test utilities.
 export { assertAlignmentsAreEqual } from './testUtils/assertAlignmentsAreEqual';
 export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
+export { assertEditGroupsAreSame } from './testUtils/assertEditGroupsMatch';
 
 // Alignment type aliases.
 export {
@@ -33,7 +34,7 @@ export { getIndexRange } from '../src/getAlignment/lib/getIndexRange';
 export { getNextMatch } from '../src/getAlignment/lib/getNextMatch';
 
 // Alignment parsing tuple types.
-// export { getEditGroups } from '../src/parseAlignment/getEditGroups';
+export { getEditGroups } from '../src/parseAlignment/getEditGroups';
 
 // Array diff operations.
 export {

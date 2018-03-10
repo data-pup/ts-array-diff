@@ -1,45 +1,46 @@
-import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-// import {
-//     // alignmentSeq,
-//     // assertAlignmentsAreEqual,
-//     // getAlignment,
-//     // getEditGroups,
-// } from '../importDependencies';
+import {
+    alignmentSeq,
+    assertEditGroupsAreSame,
+    // getAlignment,
+    getEditGroups,
+    getAlignment,
+} from '../importDependencies';
+
+// [base array, target array, expected edit groups, test description]
+type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestGetEditGroups {
-    // private checkEditGroupsAreSame<T>(a:alignmentSeq<T>[], b:alignmentSeq<T>[]) {
-    //     assert.equal(a.length, b.length);
-    //     for (let i = 0; i < a.length; i++) {
-    //         assertAlignmentsAreEqual(a[i], b[i]);
-    //     }
-    // }
 
-    @test public placeholder() {
-        assert.equal(1, 2, 'Todo!');
+    private static testCases:getEditGroupTestCase<any>[] = [
+        [
+            [   1, 2, 3, 4, 5],
+            [0, 1,       4, 5, 6],
+            [
+                [{val:0, elemType:'add'}],
+                [{val:1, elemType:'noop'}],
+                [{val:2, elemType:'remove'}, {val:3, elemType:'remove'}],
+                [{val:4, elemType:'noop'}, {val:5, elemType:'noop'}],
+                [{val:6, elemType:'add'}],
+            ],
+            'Basic Edit Group Test',
+        ],
+    ];
+
+    private static evaluateTestCase<T>(testCase:getEditGroupTestCase<T>) : void {
+        const [base, target, expectedEditGroups, testDesc] = testCase;
+        const alignment = getAlignment(base, target);
+        const actualEditGroups = getEditGroups(alignment);
+        assertEditGroupsAreSame(actualEditGroups, expectedEditGroups,
+                                `Test Failed: ${testDesc}`);
     }
 
-    // @test public basicEditGroupTest() {
-    //     const seq:alignmentSeq<number> = [
-    //         [undefined, 0],
-    //         [1, 1],
-    //         [2, undefined],
-    //         [3, undefined],
-    //         [4, 4],
-    //         [5, 5],
-    //         [undefined, 6],
-    //     ];
-    //     const actualGroups:alignmentSeq<number>[] = getEditGroups(seq);
-    //     const expectedGroups:alignmentSeq<number>[] = [
-    //         [ [undefined, 0] ],
-    //         [ [1, 1] ],
-    //         [ [2, undefined], [3, undefined] ],
-    //         [ [4, 4], [5, 5] ],
-    //         [ [undefined, 6] ],
-    //     ];
-    //     this.checkEditGroupsAreSame(actualGroups, expectedGroups);
-    // }
+    @test public runTests() {
+        TestGetEditGroups.testCases.forEach(
+            (currTest) => TestGetEditGroups.evaluateTestCase(currTest),
+        );
+    }
 
     // @test public testSpliceGroupIsIdentified() {
     //     const base = [1, 2, 4];
