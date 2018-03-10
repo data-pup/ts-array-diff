@@ -18,7 +18,7 @@ export const getAlignment = <T>(base:T[], target:T[]) : alignmentSeq<T> => {
 
     while (someInBounds(currPos, arrs)) { // Continue looping while some index is in bounds.
         if (atMatch(currPos, arrs)) { // Process a match, add the current item
-            alignment.push({val: base[currPos[0]], elemType:'noop'});
+            alignment.push({elemValue: base[currPos[0]], elemType:'noop'});
             currPos = incrementBaseAndTarget(currPos);
         } else { // Handle a position where the elements do not match.
             const newPos:indexTuple = getNextMatch(currPos, arrs);
@@ -38,7 +38,7 @@ const getBaseItemsToRemove = <T>(startIndex:number, endIndex:number,
                                  base:T[]) : alignmentSeqElem<T>[] => {
     const indexRange:number[] = getIndexRange(startIndex, endIndex);
     return indexRange.map((i) : alignmentSeqElem<T> => {
-        return {val:base[i], elemType:'remove'};
+        return {elemValue:base[i], elemType:'remove'};
     });
 };
 
@@ -46,6 +46,6 @@ const getTargetItemsToAdd = <T>(startIndex:number, endIndex:number,
                                 target:T[]) : alignmentSeqElem<T>[] => {
     const indexRange:number[] = getIndexRange(startIndex, endIndex);
     return indexRange.map((i) : alignmentSeqElem<T> => {
-        return {val:target[i], elemType:'add'};
+        return {elemValue:target[i], elemType:'add'};
     });
 };

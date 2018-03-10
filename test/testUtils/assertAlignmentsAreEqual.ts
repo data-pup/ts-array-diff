@@ -32,9 +32,9 @@ const assertSequenceElementsAreEqual = <T>(actualAlignment:alignmentSeqElem<T>,
                                            message?:string) : void => {
     if (message !== undefined) {
         assert.equal(actualAlignment.elemType, expectedAlignment.elemType, message);
-        assert.equal(actualAlignment.val, expectedAlignment.val, message);
+        assert.equal(actualAlignment.elemValue, expectedAlignment.elemValue, message);
     } else {
         assert.equal(actualAlignment.elemType, expectedAlignment.elemType);
-        assert.equal(actualAlignment.val, expectedAlignment.val);
+        assert.equal(actualAlignment.elemValue, expectedAlignment.elemValue);
     }
 };
