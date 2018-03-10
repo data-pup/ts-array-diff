@@ -1,5 +1,6 @@
 import { checkBounds } from './checkBounds';
 import { getDistance } from './distance';
+import { incrementBase, incrementTarget } from './increment';
 import { arrTuple, indexTuple } from '../../alignmentTypes';
 
 export const getNextMatch = <T>(pos:indexTuple,
@@ -12,12 +13,7 @@ export const getNextMatch = <T>(pos:indexTuple,
         return pos; // Return the current position if it is a match.
     }
 
-    const [currBasePos, currTargetPos]:[number, number] = pos;
-    const paths:indexTuple[] = [ // Initialize an array of paths forward.
-        [currBasePos + 1, currTargetPos],
-        [currBasePos, currTargetPos + 1],
-    ];
-
+    const paths:indexTuple[] = [incrementBase(pos), incrementTarget(pos)];
     const pathMatches:indexTuple[] = paths // Follow each path to its next match.
         .map((path:indexTuple) : indexTuple => getNextMatch(path, arrs));
     const distances:number[] = pathMatches // Calculate each path's match distance.
