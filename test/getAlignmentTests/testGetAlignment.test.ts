@@ -1,6 +1,9 @@
 import { suite, test } from 'mocha-typescript';
-import { alignmentSequence, getAlignment } from '../importDependencies';
-import { assertAlignmentsAreEqual } from '../testUtils/assertAlignmentsAreEqual';
+import {
+    alignmentSequence,
+    assertAlignmentsAreEqual,
+    getAlignment,
+} from '../importDependencies';
 
 // [ base state, target state, expected alignment sequence, test description ]
 type alignmentTestCase<T> = [T[], T[], alignmentSequence<T>, string];

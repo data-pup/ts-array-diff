@@ -1,6 +1,9 @@
 import { suite, test } from 'mocha-typescript';
-import { getNextMatch, indexTuple } from '../importDependencies';
-import { assertArraysAreEqual } from '../testUtils/assertArraysAreEqual';
+import {
+    assertArraysAreEqual,
+    getNextMatch,
+    indexTuple,
+} from '../importDependencies';
 
 // [ base state, target state, start pos, expected match, test description ]
 type matchTestCase<T> = [T[], T[], indexTuple, indexTuple, string];

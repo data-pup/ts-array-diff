@@ -1,11 +1,11 @@
 import { suite, test } from 'mocha-typescript';
 import {
+    assertArraysAreEqual,
     incrementBase,
     incrementBaseAndTarget,
     incrementTarget,
     indexTuple,
 } from '../importDependencies';
-import { assertArraysAreEqual } from '../testUtils/assertArraysAreEqual';
 
 // [ input, expected base result, expected target result, expected both result ]
 type incrementTestCase = [indexTuple, indexTuple, indexTuple, indexTuple, string];
