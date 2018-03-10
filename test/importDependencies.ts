@@ -37,7 +37,7 @@ export {
 
 // FIXUP: Refactoring work for getAlignment
 export { getAlignment } from '../src/getAlignment/getAlignment';
-export { checkBounds } from '../src/getAlignment/lib/checkBounds';
+export { bothInBounds, checkBounds, someInBounds } from '../src/getAlignment/lib/checkBounds';
 export { getDistance } from '../src/getAlignment/lib/distance';
 export { invalidIndexRangeError, undefinedParamError } from '../src/getAlignment/lib/errorMessages';
 export { getIndexRange } from '../src/getAlignment/lib/getIndexRange';
