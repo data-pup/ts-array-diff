@@ -35,6 +35,12 @@ type PushTestCase<T> = {
             ops:[new PushDiffOp<number>([1, 2])],
             desc:'Two elements can be pushed onto the array at once.',
         },
+        {
+            base:[1],
+            expectedResults:[1],
+            ops:[new PushDiffOp([])],
+            desc:'Empty push object is equivalent to no operation',
+        },
     ];
 
     private static runTest<T>(testCase:PushTestCase<T>) : void {
