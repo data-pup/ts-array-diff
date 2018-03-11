@@ -1,3 +1,4 @@
+import { unshiftOpGivenEmptyItemsArray } from './ErrorMessages';
 import { DiffOpName, IDiffOp } from './IDiffOp';
 
 // Insert items into the front of a given array.
@@ -13,6 +14,9 @@ export class UnshiftDiffOp<T> implements IDiffOp<T> {
         }
     }
     constructor(items:T[]) {
+        if (items === null || items === undefined || items.length === 0) {
+            throw new Error(unshiftOpGivenEmptyItemsArray);
+        }
         this.items = items;
         this.type = 'unshift';
     }

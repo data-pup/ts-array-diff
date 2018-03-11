@@ -21,3 +21,9 @@ export { PushDiffOp } from './diffOps/PushDiffOp';
 export { ShiftDiffOp } from './diffOps/ShiftDiffOp';
 export { SpliceDiffOp } from './diffOps/SpliceDiffOp';
 export { UnshiftDiffOp } from './diffOps/UnshiftDiffOp';
+
+// Error messages.
+export {
+    pushOpGivenEmptyItemsArray,
+    unshiftOpGivenEmptyItemsArray,
+} from './diffOps/ErrorMessages';

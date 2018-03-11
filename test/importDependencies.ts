@@ -45,6 +45,11 @@ export {
     UnshiftDiffOp,
     runOps,
 } from '../src/diffops';
+import { // Error messages.
+    pushOpGivenEmptyItemsArray,
+    unshiftOpGivenEmptyItemsArray,
+} from '../src/diffops';
+
 
 // Delta encoding functions.
 export {
