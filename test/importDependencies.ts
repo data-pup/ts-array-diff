@@ -41,6 +41,7 @@ export {
     PopDiffOp,
     PushDiffOp,
     ShiftDiffOp,
+    SpliceDiffOp,
     UnshiftDiffOp,
     runOps,
 } from '../src/diffops';

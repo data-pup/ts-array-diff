@@ -15,5 +15,6 @@ export class SpliceDiffOp<T> implements IDiffOp<T> {
         this.startIndex = start;
         this.count = count;
         this.items = (items || []);
+        this.type = 'splice';
     }
 }

@@ -5,7 +5,7 @@ export class UnshiftDiffOp<T> implements IDiffOp<T> {
     public readonly type:DiffOpName;
     public readonly items:T[];
     public runOp(arr:T[]) : void {
-        if (!this.items || this.items.length === 0) { return; }
+        if (this.items === undefined || this.items.length === 0) { return; }
         const loopMax = this.items.length - 1;
         for (let i = loopMax; i >= 0; i--) {
             const item = this.items[i];
