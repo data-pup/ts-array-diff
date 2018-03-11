@@ -1,3 +1,4 @@
+import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 import {
     assertArraysAreEqual,
@@ -45,5 +46,10 @@ type PopTestCase<T> = {
 
     @test public runTests() {
         TestDiffOpPop.testCases.forEach((currTest) => TestDiffOpPop.runTest(currTest));
+    }
+
+    @test public typeNameIsCorrect() {
+        const popPop = new PopDiffOp<number>();
+        assert.equal(popPop.type, 'pop');
     }
 }
