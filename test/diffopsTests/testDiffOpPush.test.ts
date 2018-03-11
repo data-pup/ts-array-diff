@@ -3,6 +3,7 @@ import { suite, test } from 'mocha-typescript';
 import {
     assertArraysAreEqual,
     PushDiffOp,
+    pushOpGivenEmptyItemsArray,
     runOps,
 } from '../importDependencies';
 
@@ -35,12 +36,6 @@ type PushTestCase<T> = {
             ops:[new PushDiffOp<number>([1, 2])],
             desc:'Two elements can be pushed onto the array at once.',
         },
-        {
-            base:[1],
-            expectedResults:[1],
-            ops:[new PushDiffOp([])],
-            desc:'Empty push object is equivalent to no operation',
-        },
     ];
 
     private static runTest<T>(testCase:PushTestCase<T>) : void {
@@ -55,7 +50,17 @@ type PushTestCase<T> = {
     }
 
     @test public typeNameIsCorrect() {
-        const pushOp = new PushDiffOp([]);
+        const pushOp = new PushDiffOp(['hello', 'world']);
         assert.equal(pushOp.type, 'push');
+    }
+
+    @test public emptyConstructorArgumentsThrowsException() {
+        assert.throws(
+            () => {
+                /* tslint:disable-next-line:no-unused-variable */
+                const invalidOp = new PushDiffOp([]);
+            },
+            pushOpGivenEmptyItemsArray,
+        );
     }
 }

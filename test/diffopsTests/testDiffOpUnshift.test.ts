@@ -4,6 +4,7 @@ import {
     assertArraysAreEqual,
     runOps,
     UnshiftDiffOp,
+    unshiftOpGivenEmptyItemsArray,
 } from '../importDependencies';
 
 type UnshiftTestCase<T> = {
@@ -35,12 +36,6 @@ type UnshiftTestCase<T> = {
             ops:[new UnshiftDiffOp([1, 2])],
             desc:'Two elements can be unshifted onto an array in two operations.',
         },
-        {
-            base:[1],
-            expectedResults:[1],
-            ops:[new UnshiftDiffOp([])],
-            desc:'Empty object is equivalent to no operation.',
-        },
     ];
 
     private static runTest<T>(testCase:UnshiftTestCase<T>) : void {
@@ -55,7 +50,17 @@ type UnshiftTestCase<T> = {
     }
 
     @test public typeNameIsCorrect() {
-        const op = new UnshiftDiffOp<number>([]);
+        const op = new UnshiftDiffOp(['hello', 'world']);
         assert.equal(op.type, 'unshift');
+    }
+
+    @test public emptyConstructorArgumentsThrowsException() {
+        assert.throws(
+            () => {
+                /* tslint:disable-next-line:no-unused-variable */
+                const invalidOp = new UnshiftDiffOp([]);
+            },
+            unshiftOpGivenEmptyItemsArray,
+        );
     }
 }
