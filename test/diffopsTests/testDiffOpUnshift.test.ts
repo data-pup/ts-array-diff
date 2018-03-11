@@ -35,6 +35,12 @@ type UnshiftTestCase<T> = {
             ops:[new UnshiftDiffOp([1, 2])],
             desc:'Two elements can be unshifted onto an array in two operations.',
         },
+        {
+            base:[1],
+            expectedResults:[1],
+            ops:[new UnshiftDiffOp([])],
+            desc:'Empty object is equivalent to no operation.',
+        },
     ];
 
     private static runTest<T>(testCase:UnshiftTestCase<T>) : void {
