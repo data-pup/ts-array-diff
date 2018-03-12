@@ -4,18 +4,17 @@ import {
 } from '../../alignmentTypes';
 
 export class NoOpGroup<T> {
-
-    // private static validateParams(..) : void // TODO
-
-    public static readonly noOpGroupConstructorGivenNoArguments:string =
+    public static readonly noOpGroupGivenInvalidArguments:string =
         'editGroup constructor was given no arguments.';
 
     public readonly type:seqGroupType;
-    public readonly size:number;
+    public readonly count:number;
 
     constructor(items:alignmentSeqElem<T>[]) {
-        // NoOpGroup.validateItems(items);
-        // this.items = items;
+        if (items === undefined || items === null) {
+            throw new Error(NoOpGroup.noOpGroupGivenInvalidArguments);
+        }
         this.type = 'noop';
+        this.count = items.length;
     }
 }
