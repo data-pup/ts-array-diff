@@ -8,7 +8,7 @@ Some brief conceptual examples will be covered as well, in order to help explain
 some contextual background for this, and what makes the case of delta encoding
 for ordered collections an interesting problem to solve.
 
-## Delta Encoding
+## Delta Encoding Overview
 
 Delta encoding, also called data differencing, refers to the practice of storing
 differences in two sequential states for some data. This means that the entire
@@ -22,7 +22,7 @@ to patch an initial state into a new target state.
 Before we consider arrays however, let's think about how this would work for
 a dictionary.
 
-### Basic Example (Dictionary)
+### Conceptual Example (Dictionary)
 
 A dictionary has the nice property that it is not ordered. There is a set of
 keys, and a corresponding value for each key. This means we can compare the
@@ -85,7 +85,7 @@ performance improvement in that case.
 This difference object could be used in a function to mutate another copy
 of the `base` dictionary into the `target` dictionary.
 
-### Complexities of Delta Encoding for Ordered Collections
+## Complexities of Delta Encoding for Ordered Collections
 
 Arrays have an important distinction from dictionaries in that they are
 ordered. This is functionally very similar to the string edit distance problem,
@@ -113,5 +113,27 @@ splice(..) : Remove a section of the array, optionally, place new values.
     - ...items? : items to insert in place of the removed items
 ```
 
-This means that we can use `shift` and `unshift` to adjust the beginning of
-an array,
+This means that we can use `shift` and `unshift` to edit the beginning of
+an array, `pop` and `push` to edit the end of an array, and the `splice`
+function will otherwise be needed to edit the body of an array.
+
+### Simple Array Delta Example:
+
+What might the difference of two arrays look like?
+
+```
+base state: [0, 1, 2]
+target state: [1, 2, 3, 4]
+diff: [
+    unshift()
+    push(3, 4)
+]
+```
+
+This means if we had a variable `arr` in the base state, we could run the
+following operations, resulting with `arr` in the desired target state:
+
+```javascript
+arr.unshift();
+arr.push(3, 4);
+```
