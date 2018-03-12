@@ -3,7 +3,7 @@ import { suite, test } from 'mocha-typescript';
 import { alignmentSeqElem, NoOpGroup } from '../importDependencies';
 
 type NoOpGroupTestCase<T> = {
-    group:alignmentSeqElem<T>[];
+    items:alignmentSeqElem<T>[];
     expectedCount:number;
     isValid:boolean;
     testDesc:string;
@@ -14,31 +14,31 @@ type NoOpGroupTestCase<T> = {
 
     private static readonly testCases:NoOpGroupTestCase<any>[] = [
         {
-            group:[],
+            items:[],
             expectedCount:undefined,
             isValid:false,
             testDesc:'Empty group is not valid.',
         },
         {
-            group:[{elemValue:0, elemType:'add'}],
+            items:[{elemValue:0, elemType:'add'}],
             expectedCount:undefined,
             isValid:false,
-            testDesc:'Group containing a add op is not valid.',
+            testDesc:'Group containing a single add op is not valid.',
         },
         {
-            group:[{elemValue:0, elemType:'remove'}],
+            items:[{elemValue:0, elemType:'remove'}],
             expectedCount:undefined,
             isValid:false,
-            testDesc:'Group containing a remove op is not valid.',
+            testDesc:'Group containing a single remove op is not valid.',
         },
         {
-            group:[{elemValue:0, elemType:'noop'}],
+            items:[{elemValue:0, elemType:'noop'}],
             expectedCount:1,
             isValid:true,
             testDesc:'Group containing a single noop is valid.',
         },
         {
-            group:[
+            items:[
                 {elemValue:0, elemType:'noop'},
                 {elemValue:0, elemType:'noop'},
             ],
@@ -47,7 +47,7 @@ type NoOpGroupTestCase<T> = {
             testDesc:'Group containing multiple noops is valid.',
         },
         {
-            group:[
+            items:[
                 {elemValue:0, elemType:'add'},
                 {elemValue:0, elemType:'noop'},
             ],
@@ -58,17 +58,17 @@ type NoOpGroupTestCase<T> = {
     ];
 
     private static runTest<T>(testCase:NoOpGroupTestCase<T>) {
-        const {group, expectedCount, isValid, testDesc} = testCase;
+        const {items, expectedCount, isValid, testDesc} = testCase;
         const failString = `Test Failed: ${testDesc}`;
         if (isValid) {
-            const testGroup = new NoOpGroup(group);
+            const testGroup = new NoOpGroup(items);
             assert.equal(testGroup.type, 'noop', failString);
             assert.strictEqual(testGroup.count, expectedCount, failString);
         } else {
             assert.throws(
-                (items:alignmentSeqElem<T>[]) : void => {
+                (invalidItems:alignmentSeqElem<T>[]) : void => {
                     /* tslint:disable-next-line:no-unused-variable */
-                    const invalidGroup = new NoOpGroup(items);
+                    const invalidGroup = new NoOpGroup(invalidItems);
                 },
                 NoOpGroup.noOpGroupGivenInvalidArguments,
             );
