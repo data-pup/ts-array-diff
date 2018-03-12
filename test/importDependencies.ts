@@ -34,7 +34,7 @@ export { getIndexRange } from '../src/getAlignment/lib/getIndexRange';
 export { getNextMatch } from '../src/getAlignment/lib/getNextMatch';
 
 // Alignment parsing tuple types.
-export { getAlignmentSeqElemGroups } from '../src/parseAlignment/lib/getGroups';
+export { getAlignmentSeqElemGroups } from '../src/parseAlignment/lib/getAlignmentSeqElemGroups';
 
 // Array diff operations.
 export {
