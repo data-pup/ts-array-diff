@@ -1,5 +1,5 @@
 import { getIsEditElem } from './isEditElem';
-import { seqGroupType } from './groupTypes';
+import { itemGroupTag } from './groupTypes';
 import { alignmentSeqElem } from '../../alignmentTypes';
 
 export class NoOpGroup<T> {
@@ -13,7 +13,7 @@ export class NoOpGroup<T> {
     public static readonly noOpGroupGivenInvalidArguments:string =
         'editGroup constructor was given no arguments.';
 
-    public readonly type:seqGroupType;
+    public readonly type:itemGroupTag;
     public readonly count:number;
 
     constructor(items:alignmentSeqElem<T>[]) {

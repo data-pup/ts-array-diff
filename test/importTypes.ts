@@ -1,13 +1,13 @@
 export {
     alignmentSeq,
     alignmentSeqElem,
-    alignmentSeqElemType,
+    alignmentSeqElemTag,
     arrTuple,
     boundsTuple,
     indexTuple,
 } from '../src/alignmentTypes';
 
 export {
-    seqGroup,
-    seqGroupType,
+    itemGroup,
+    itemGroupTag,
 } from '../src/itemGroupTypes';

@@ -5,5 +5,5 @@ export type indexTuple = [number, number];
 
 // Alignment sequence types.
 export type alignmentSeq<T> = alignmentSeqElem<T>[];
-export type alignmentSeqElem<T> = { elemValue:T; elemType:alignmentSeqElemType };
-export type alignmentSeqElemType = 'noop' | 'add' | 'remove';
+export type alignmentSeqElem<T> = { elemValue:T; elemType:alignmentSeqElemTag };
+export type alignmentSeqElemTag = 'noop' | 'add' | 'remove';

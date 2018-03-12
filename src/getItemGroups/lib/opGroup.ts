@@ -1,5 +1,5 @@
 import { getIsEditElem } from './isEditElem';
-import { seqGroupType } from './groupTypes';
+import { itemGroupTag } from './groupTypes';
 import { alignmentSeqElem } from '../../alignmentTypes';
 
 export class OpGroup<T> {
@@ -13,7 +13,7 @@ export class OpGroup<T> {
     public static readonly opGroupGivenInvalidArguments:string =
         'editGroup constructor was given no arguments.';
 
-    public readonly type:seqGroupType;
+    public readonly type:itemGroupTag;
     public readonly removeCount?:number;
     public readonly addItems?:T[];
 
