@@ -1,8 +1,6 @@
 import { getIsEditElem } from './isEditElem';
-import {
-    alignmentSeqElem,
-    seqGroupType,
-} from '../../alignmentTypes';
+import { alignmentSeqElem } from '../../alignmentTypes';
+import { seqGroupType } from '../../itemGroupTypes';
 
 export class NoOpGroup<T> {
     private static validateItems<T>(items:alignmentSeqElem<T>[]) : boolean {

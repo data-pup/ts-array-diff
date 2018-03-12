@@ -5,6 +5,9 @@ export {
     arrTuple,
     boundsTuple,
     indexTuple,
+} from '../src/alignmentTypes';
+
+export {
     seqGroup,
     seqGroupType,
-} from '../src/alignmentTypes';
+} from '../src/itemGroupTypes';
