@@ -9,7 +9,7 @@ export type alignmentSeqElem<T> = { elemValue:T; elemType:alignmentSeqElemType }
 export type alignmentSeqElemType = 'noop' | 'add' | 'remove';
 
 // Alignment sequence group types.
-import { NoOpGroup } from './parseAlignment/lib/noOpGroup';
-import { OpGroup } from './parseAlignment/lib/opGroup';
+import { NoOpGroup } from './getItemGroups/lib/noOpGroup';
+import { OpGroup } from './getItemGroups/lib/opGroup';
 export type seqGroupType = 'noop' | 'edit';
 export type seqGroup<T> = OpGroup<T> | NoOpGroup<T>;

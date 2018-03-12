@@ -36,10 +36,10 @@ export { getIndexRange } from '../src/getAlignment/lib/getIndexRange';
 export { getNextMatch } from '../src/getAlignment/lib/getNextMatch';
 
 // Alignment parsing function and types.
-export { getAlignmentSeqElemGroups } from '../src/parseAlignment/lib/getAlignmentSeqElemGroups';
-export { getIsEditElem } from '../src/parseAlignment/lib/isEditElem';
-export { NoOpGroup } from '../src/parseAlignment/lib/noOpGroup';
-export { OpGroup } from '../src/parseAlignment/lib/opGroup';
+export { getAlignmentSeqElemGroups } from '../src/getItemGroups/lib/getAlignmentSeqElemGroups';
+export { getIsEditElem } from '../src/getItemGroups/lib/isEditElem';
+export { NoOpGroup } from '../src/getItemGroups/lib/noOpGroup';
+export { OpGroup } from '../src/getItemGroups/lib/opGroup';
 
 // Array diff operations.
 export {
