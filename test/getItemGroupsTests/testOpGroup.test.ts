@@ -32,7 +32,7 @@ type OpGroupTestCase<T> = {
         },
         {
             items:[{elemValue:0, elemType:'remove'}],
-            expectedAddItems:undefined,
+            expectedAddItems:[],
             expectedRemoveCount:1,
             isValid:true,
             testDesc:'Group containing a single remove op is valid.',
@@ -68,11 +68,13 @@ type OpGroupTestCase<T> = {
 
     private static runTest<T>(testCase:OpGroupTestCase<T>) {
         const {items, expectedAddItems, expectedRemoveCount, isValid, testDesc} = testCase;
+        process.stdout.write('Running: ${testDesc}...\n');
         const failString = `Test Failed: ${testDesc}`;
         if (isValid) {
             const testGroup = new OpGroup(items);
             assert.equal(testGroup.type, 'edit', failString);
             assert.equal(testGroup.removeCount, expectedRemoveCount, failString);
+            assert.isDefined(testGroup.addItems, failString);
             assertArraysAreEqual(testGroup.addItems, expectedAddItems, failString);
         } else {
             assert.throws(

@@ -10,6 +10,16 @@ export class OpGroup<T> {
         return items.every((elem) => getIsEditElem(elem));
     }
 
+    private static getRemoveCount<T>(items:alignmentSeqElem<T>[]) : number {
+        return items.filter((elem) => elem.elemType === 'remove').length;
+    }
+
+    private static getAddItems<T>(items:alignmentSeqElem<T>[]) : T[] {
+        return items
+            .filter((elem) => elem.elemType === 'add')
+            .map((elem) => elem.elemValue);
+    }
+
     public static readonly opGroupGivenInvalidArguments:string =
         'editGroup constructor was given no arguments.';
 
@@ -22,5 +32,7 @@ export class OpGroup<T> {
             throw new Error(OpGroup.opGroupGivenInvalidArguments);
         }
         this.type = 'edit';
+        this.removeCount = OpGroup.getRemoveCount(items);
+        this.addItems = OpGroup.getAddItems(items);
     }
 }
