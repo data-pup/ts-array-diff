@@ -7,27 +7,37 @@ import {
     indexTuple,
 } from '../importDependencies';
 
-// [ input, expected base result, expected target result, expected both result ]
-type incrementTestCase = [indexTuple, indexTuple, indexTuple, indexTuple, string];
+type incrementTestCase = {
+    pos:indexTuple;
+    expectedBaseResult:indexTuple;
+    expectedTargetResult:indexTuple;
+    expectedBothResult:indexTuple;
+    testDesc:string;
+};
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestIncrement {
 
-    private static testCases:incrementTestCase[] = [
-        [ [0, 0], [1, 0], [0, 1], [1, 1], 'Simple Increment Test' ],
+    private static readonly testCases:incrementTestCase[] = [
+        {
+            pos:[0, 0],
+            expectedBaseResult:[1, 0],
+            expectedTargetResult:[0, 1],
+            expectedBothResult:[1, 1],
+            testDesc:'Simple Increment Test',
+        },
     ];
 
-    private static assertIncrementTestPasses(testCase:incrementTestCase) : void {
-        const [pos, expectedBaseResult, expectedTargetResult,
-               expectedBothResult, testDesc] = testCase;
-        const [actualBaseResult, actualTargetResult, actualBothResult] = [
-            incrementBase(pos), incrementTarget(pos), incrementBaseAndTarget(pos),
-        ];
+    private static runTest(testCase:incrementTestCase) : void {
+        // Destructure the test case, and get the actual results of each function.
+        const {pos, expectedBaseResult, expectedTargetResult,
+               expectedBothResult, testDesc} = testCase;
 
         const expectedResults:indexTuple[] = [
             expectedBaseResult, expectedTargetResult, expectedBothResult];
-        const actualResult:indexTuple[] = [
-            actualBaseResult, actualTargetResult, actualBothResult];
+        const actualResults:indexTuple[] = [
+            incrementBase(pos), incrementTarget(pos), incrementBaseAndTarget(pos),
+        ];
         const errorMessages:string[] = [
             `incrementBase failed test: ${testDesc}`,
             `incrementTarget failed test: ${testDesc}`,
@@ -35,14 +45,14 @@ type incrementTestCase = [indexTuple, indexTuple, indexTuple, indexTuple, string
         ];
 
         [0, 1, 2].forEach((i) : void =>
-            assertArraysAreEqual(actualResult[i], expectedResults[i], errorMessages[i]),
+            assertArraysAreEqual(actualResults[i], expectedResults[i], errorMessages[i]),
         );
     }
 
-    @test public runIncrementTests() {
+    @test public runTests() {
         TestIncrement.testCases.forEach(
             (currTest:incrementTestCase) : void =>
-                TestIncrement.assertIncrementTestPasses(currTest),
+                TestIncrement.runTest(currTest),
         );
     }
 }
