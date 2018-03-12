@@ -1,7 +1,7 @@
 import {
     alignmentSeq,
     alignmentSeqElem,
-} from '../alignmentTypes';
+} from '../../alignmentTypes';
 
 // Divide an alignment sequence into edit groups. This helps identify where
 // changes have been made, and where no operations are required.

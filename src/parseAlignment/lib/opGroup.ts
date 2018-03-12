@@ -1,11 +1,13 @@
-import { groupType } from './groupTypes';
+import { seqGroupType } from '../../alignmentTypes';
 
 export class OpGroup<T> {
+
+    // private static validateParams(..) : void // TODO
 
     public static readonly opGroupConstructorGivenNoArguments:string =
         'editGroup constructor was given no arguments.';
 
-    public readonly type:groupType;
+    public readonly type:seqGroupType;
     public readonly addItems?:T[];
     public readonly removeItems?:T[];
 
