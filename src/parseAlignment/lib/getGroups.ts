@@ -1,7 +1,5 @@
-import {
-    alignmentSeq,
-    alignmentSeqElem,
-} from '../../alignmentTypes';
+import { getIsEditElem } from './isEditElem';
+import { alignmentSeq } from '../../alignmentTypes';
 
 // Divide an alignment sequence into edit groups. This helps identify where
 // changes have been made, and where no operations are required.
@@ -26,14 +24,4 @@ export const getGroups = <T>(alignment:alignmentSeq<T>)
 
     if (currGroup.length > 0) { results.push(currGroup); }
     return results; // Add the remaining group if it is not empty and return.
-};
-
-// Identify whether an alignment sequence element corresponds with an edit.
-const getIsEditElem = <T>(elem:alignmentSeqElem<T>) : boolean => {
-    switch (elem.elemType) {
-        case 'noop':
-            return false;
-        default:
-            return true;
-    }
 };
