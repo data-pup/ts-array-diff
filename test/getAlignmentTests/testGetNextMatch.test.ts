@@ -1,6 +1,7 @@
 import { suite, test } from 'mocha-typescript';
-import { assertArraysAreEqual, indexTuple } from '../importDependencies';
 import { getNextMatch } from '../importGetAlignment';
+import { assertArraysAreEqual } from '../importTestUtils';
+import { indexTuple } from '../importTypes';
 
 type matchTestCase<T> = {
     base:T[];

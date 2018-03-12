@@ -1,8 +1,6 @@
 import { assert } from 'chai';
-import {
-    alignmentSeq,
-    assertAlignmentsAreEqual,
-} from '../importDependencies';
+import { assertAlignmentsAreEqual } from './assertAlignmentsAreEqual';
+import { alignmentSeq } from '../importTypes';
 
 export const assertGroupsAreSame = <T>(actualGroups:alignmentSeq<T>[],
                                        expectedGroups:alignmentSeq<T>[],

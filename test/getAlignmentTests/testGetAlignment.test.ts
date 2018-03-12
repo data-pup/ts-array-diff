@@ -3,11 +3,9 @@ import {
     alignmentTestCase,
     testCases,
 } from './testGetAlignmentTestCases';
-import {
-    alignmentSeq,
-    assertAlignmentsAreEqual,
-} from '../importDependencies';
 import { getAlignment } from '../importGetAlignment';
+import { assertAlignmentsAreEqual } from '../importTestUtils';
+import { alignmentSeq } from '../importTypes';
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestGetAlignment {

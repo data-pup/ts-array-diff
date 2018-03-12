@@ -1,4 +1,4 @@
-import { alignmentSeq } from '../importDependencies';
+import { alignmentSeq } from '../importTypes';
 
 // [ base state, target state, expected alignment sequence, test description ]
 export type alignmentTestCase<T> = {

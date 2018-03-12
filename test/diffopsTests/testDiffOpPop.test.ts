@@ -1,10 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import {
-    assertArraysAreEqual,
-    PopDiffOp,
-    runOps,
-} from '../importDependencies';
+import { PopDiffOp, runOps } from '../importDiffOps';
+import { assertArraysAreEqual } from '../importTestUtils';
 
 type PopTestCase<T> = {
     base:T[];

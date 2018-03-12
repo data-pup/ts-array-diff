@@ -1,10 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import {
-    assertArraysAreEqual,
-    runOps,
-    ShiftDiffOp,
-} from '../importDependencies';
+import { runOps, ShiftDiffOp } from '../importDiffOps';
+import { assertArraysAreEqual } from '../importTestUtils';
 
 type ShiftTestCase<T> = {
     base:T[];

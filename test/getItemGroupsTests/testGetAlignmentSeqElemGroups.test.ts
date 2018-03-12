@@ -1,10 +1,8 @@
 import { suite, test } from 'mocha-typescript';
-import {
-    alignmentSeq,
-    assertGroupsAreSame,
-    getAlignment,
-    getAlignmentSeqElemGroups,
-} from '../importDependencies';
+import { getAlignment } from '../importGetAlignment';
+import { getAlignmentSeqElemGroups } from '../importGetItemGroups';
+import { assertGroupsAreSame } from '../importTestUtils';
+import { alignmentSeq } from '../importTypes';
 
 // [base array, target array, expected edit groups, test description]
 // type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];

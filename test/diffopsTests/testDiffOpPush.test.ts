@@ -1,11 +1,11 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 import {
-    assertArraysAreEqual,
     PushDiffOp,
     pushOpGivenEmptyItemsArray,
     runOps,
-} from '../importDependencies';
+} from '../importDiffOps';
+import { assertArraysAreEqual } from '../importTestUtils';
 
 type PushTestCase<T> = {
     base:T[];

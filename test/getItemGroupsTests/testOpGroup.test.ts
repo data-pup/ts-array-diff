@@ -1,10 +1,8 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import {
-    alignmentSeqElem,
-    assertArraysAreEqual,
-    OpGroup,
-} from '../importDependencies';
+import { OpGroup } from '../importGetItemGroups';
+import { assertArraysAreEqual } from '../importTestUtils';
+import { alignmentSeqElem } from '../importTypes';
 
 type OpGroupTestCase<T> = {
     items:alignmentSeqElem<T>[];

@@ -1,8 +1,5 @@
 import { assert } from 'chai';
-import {
-    alignmentSeq,
-    alignmentSeqElem,
-} from '../importDependencies';
+import { alignmentSeq, alignmentSeqElem } from '../importTypes';
 
 // Assert two alignments are equal using the helper functions defined below.
 export const assertAlignmentsAreEqual = <T>(actualAlignment:alignmentSeq<T>,

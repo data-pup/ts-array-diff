@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import { alignmentSeqElem, NoOpGroup } from '../importDependencies';
+import { NoOpGroup } from '../importGetItemGroups';
+import { alignmentSeqElem } from '../importTypes';
 
 type NoOpGroupTestCase<T> = {
     items:alignmentSeqElem<T>[];

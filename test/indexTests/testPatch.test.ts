@@ -1,6 +1,5 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-// import { patch } from './importDependencies';
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestPatch {

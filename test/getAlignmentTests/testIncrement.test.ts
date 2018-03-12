@@ -1,5 +1,6 @@
 import { suite, test } from 'mocha-typescript';
-import { assertArraysAreEqual, indexTuple } from '../importDependencies';
+import { assertArraysAreEqual } from '../importTestUtils';
+import { indexTuple } from '../importTypes';
 import {
     incrementBase,
     incrementBaseAndTarget,

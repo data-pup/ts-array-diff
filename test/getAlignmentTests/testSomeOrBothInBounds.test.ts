@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import { arrTuple, indexTuple } from '../importDependencies';
 import { bothInBounds, someInBounds } from '../importGetAlignment';
+import { arrTuple, indexTuple } from '../importTypes';
 
 type SomeOrBothTestCase<T> = {
     arrs:arrTuple<T>;

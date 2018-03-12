@@ -1,10 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import {
-    assertArraysAreEqual,
-    runOps,
-    SpliceDiffOp,
-} from '../importDependencies';
+import { runOps, SpliceDiffOp } from '../importDiffOps';
+import { assertArraysAreEqual } from '../importTestUtils';
 
 type SpliceTestCase<T> = {
     base:T[];

@@ -1,5 +1,5 @@
 import { suite, test } from 'mocha-typescript';
-import { assertArraysAreEqual } from '../importDependencies';
+import { assertArraysAreEqual } from '../importTestUtils';
 import { getIndexRange } from '../importGetAlignment';
 
 // Test Case: [start, end, array, expected range, test description]

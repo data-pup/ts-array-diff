@@ -1,9 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import {
-    alignmentSeqElem,
-    getIsEditElem,
-} from '../importDependencies';
+import { getIsEditElem } from '../importGetItemGroups';
+import { alignmentSeqElem } from '../importTypes';
 
 type IsEditElemTestCase<T> = {
     elem:alignmentSeqElem<T>;
