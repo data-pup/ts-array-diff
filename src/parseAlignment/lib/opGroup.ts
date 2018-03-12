@@ -1,4 +1,7 @@
-import { seqGroupType } from '../../alignmentTypes';
+import {
+    alignmentSeqElem,
+    seqGroupType,
+} from '../../alignmentTypes';
 
 export class OpGroup<T> {
 
@@ -11,10 +14,10 @@ export class OpGroup<T> {
     public readonly addItems?:T[];
     public readonly removeItems?:T[];
 
-    constructor(add?:T[], remove?:T[]) {
+    constructor(items:alignmentSeqElem<T>[]) {
         // OpGroup.validateItems(..)
-        this.addItems = add;
-        this.removeItems = remove;
+        // this.addItems = TODO...
+        // this.removeItems = TODO...
         this.type = 'edit';
     }
 }

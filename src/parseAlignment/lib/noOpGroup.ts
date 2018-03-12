@@ -1,6 +1,6 @@
 import {
-    seqGroupType,
     alignmentSeqElem,
+    seqGroupType,
 } from '../../alignmentTypes';
 
 export class NoOpGroup<T> {
