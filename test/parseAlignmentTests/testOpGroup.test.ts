@@ -74,8 +74,8 @@ type OpGroupTestCase<T> = {
         if (isValid) {
             const testGroup = new OpGroup(items);
             assert.equal(testGroup.type, 'edit', failString);
-            assert.equal(testGroup.removeCount, expectedRemoveCount);
-            assertArraysAreEqual(testGroup.addItems, expectedAddItems);
+            assert.equal(testGroup.removeCount, expectedRemoveCount, failString);
+            assertArraysAreEqual(testGroup.addItems, expectedAddItems, failString);
         } else {
             assert.throws(
                 (invalidItems:alignmentSeqElem<T>[]) : void => {
