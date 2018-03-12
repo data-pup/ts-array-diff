@@ -117,7 +117,7 @@ This means that we can use `shift` and `unshift` to edit the beginning of
 an array, `pop` and `push` to edit the end of an array, and the `splice`
 function will otherwise be needed to edit the body of an array.
 
-### Simple Array Delta Example:
+### Simple Array Delta Encoding Conceptual Example:
 
 What might the difference of two arrays look like?
 
@@ -137,3 +137,47 @@ following operations, resulting with `arr` in the desired target state:
 arr.unshift();
 arr.push(3, 4);
 ```
+
+## Architectural Overview
+
+### Alignment Sequences
+
+The first step in serializing a difference is comparing the two states, and
+identifying the elements that should be added or removed. For example, a
+base state of `[0, 1]` and a target state of `[1, 2]` would result in the
+following alignment sequence:
+
+```javascript
+[
+    {elemValue:0, elemType:'remove'},
+    {elemValue:1, elemType:'noop'},
+    {elemValue:2, elemType:'add'},
+]
+```
+
+### Operations
+
+Some helper classes and functions used to serialize a diff as we have shown
+above. There is a set of `diffOp` classes which will represent each operation
+that can be run against an array.
+
+Each class implements a shared `IDiffOp` interface, which contains a
+`runOp(..)` method, which will accept an array as a parameter and perform its
+operation on the given array. This allows us to store a collection of different
+operations, and run each operation in sequence on the base state.
+
+### Parsing Alignment Sequences
+
+Once we have generated an alignment sequence like the one shown above, we group
+these elements together. This helps us identify which sections of the array
+changed, and which sections do not require editing. This is needed to build
+an operation sequence for a number of reasons.
+
+First, the operations that adjust the head, body, and tail of the array are
+different. If only the first element changed, we could call `shift` followed
+by `unshift` to place the new head value into the array.
+
+Second, the `splice` method requires a starting index. Note that this index may
+not be the same after operations are performed on the head of the array, so
+we will need to consider how the prior alterations would adjust the size of
+the array when serializing the `splice` parameters in an operation sequence.
