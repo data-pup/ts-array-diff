@@ -1,6 +1,6 @@
 import { suite, test } from 'mocha-typescript';
 import { getAlignment } from '../importGetAlignment';
-import { getAlignmentSeqElemGroups } from '../importGetItemGroups';
+import { getItemGroups } from '../importGetItemGroups';
 import { assertGroupsAreSame } from '../importTestUtils';
 import { alignmentSeq } from '../importTypes';
 
@@ -62,7 +62,7 @@ type getSeqElemGroupTestCase<T> = {
     private static runTest<T>(testCase:getSeqElemGroupTestCase<T>) : void {
         const {base, target, expectedGroups, testDesc} = testCase;
         const alignment = getAlignment(base, target);
-        const actualEditGroups = getAlignmentSeqElemGroups(alignment);
+        const actualEditGroups = getItemGroups(alignment);
         assertGroupsAreSame(actualEditGroups, expectedGroups, `Test Failed: ${testDesc}`);
     }
 
