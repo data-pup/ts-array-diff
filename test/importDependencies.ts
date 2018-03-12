@@ -11,6 +11,8 @@ export {
     arrTuple,
     boundsTuple,
     indexTuple,
+    seqGroup,
+    seqGroupType,
 } from '../src/alignmentTypes';
 
 // Alignment generation functions.
@@ -33,8 +35,10 @@ export {
 export { getIndexRange } from '../src/getAlignment/lib/getIndexRange';
 export { getNextMatch } from '../src/getAlignment/lib/getNextMatch';
 
-// Alignment parsing tuple types.
+// Alignment parsing function and types.
 export { getAlignmentSeqElemGroups } from '../src/parseAlignment/lib/getAlignmentSeqElemGroups';
+export { NoOpGroup } from '../src//parseAlignment/lib/noOpGroup';
+export { OpGroup } from '../src//parseAlignment/lib/opGroup';
 
 // Array diff operations.
 export {
