@@ -23,7 +23,7 @@ type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];
                 [{elemValue:4, elemType:'noop'}, {elemValue:5, elemType:'noop'}],
                 [{elemValue:6, elemType:'add'}],
             ],
-            'Basic Edit Group Test',
+            'Nontrivial Edit Group Test',
         ],
     ];
 
