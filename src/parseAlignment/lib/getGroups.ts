@@ -3,7 +3,7 @@ import { alignmentSeq } from '../../alignmentTypes';
 
 // Divide an alignment sequence into edit groups. This helps identify where
 // changes have been made, and where no operations are required.
-export const getGroups = <T>(alignment:alignmentSeq<T>)
+export const getAlignmentSeqElemGroups = <T>(alignment:alignmentSeq<T>)
                                 : alignmentSeq<T>[] => {
     const results:alignmentSeq<T>[] = new Array();
     let currGroup:alignmentSeq<T> = new Array();
