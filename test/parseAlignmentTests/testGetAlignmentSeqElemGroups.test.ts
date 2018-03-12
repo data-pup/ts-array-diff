@@ -10,7 +10,7 @@ import {
 type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];
 
 /* tslint:disable-next-line:no-unused-variable */
-@suite class TestGetEditGroups {
+@suite class TestGetAlignmentSeqElemGroups {
 
     private static testCases:getEditGroupTestCase<any>[] = [
         [
@@ -36,8 +36,8 @@ type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];
     }
 
     @test public runTests() {
-        TestGetEditGroups.testCases.forEach(
-            (currTest) => TestGetEditGroups.evaluateTestCase(currTest),
+        TestGetAlignmentSeqElemGroups.testCases.forEach(
+            (currTest) => TestGetAlignmentSeqElemGroups.evaluateTestCase(currTest),
         );
     }
 
