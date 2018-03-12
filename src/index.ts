@@ -14,10 +14,10 @@ export const clone = <T>(input:T[]) : T[] => {
 
 // Define the diff function.
 export const diff = <T>(base:T[], target:T[]) : void => {
-    process.stdout.write('Hello from diff!\n');
+    throw new Error('Not Implemented Yet!');
 };
 
 // Define the patch function.
 export const patch = <T>(base:T[], p:any) : void => {
-    process.stdout.write('Hello from patch!\n');
+    throw new Error('Not Implemented Yet!');
 };
