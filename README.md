@@ -82,4 +82,36 @@ apparent, but if imagine if these were the only changes in a dictionary that
 contained 1,000 other keys! Transmitting a set of 3 objects would be vast
 performance improvement in that case.
 
+This difference object could be used in a function to mutate another copy
+of the `base` dictionary into the `target` dictionary.
+
 ### Complexities of Delta Encoding for Ordered Collections
+
+Arrays have an important distinction from dictionaries in that they are
+ordered. This is functionally very similar to the string edit distance problem,
+commonly taught as an introduction to dynamic programming.
+
+NOTE: I will assume that the reader is familiar with edit distance calculation
+in the interest of brevity, as well as reverence for sources elsewhere that can
+explain this in better terms than I.
+
+The interesting distinction between delta encoding arrays and the string edit
+distance problem is that the operations available to mutate your state are
+different. If we would like to adjust an array in place in JavaScript, we have
+access to the following functions:
+
+```
+shift() : Remove an item from the beginning of the array.
+unshift(..items) : Place items at the beginning of the array.
+
+pop() : Remove an item from the end of the array.
+push(..items) : Add an item to the end of the array.
+
+splice(..) : Remove a section of the array, optionally, place new values.
+    - start : 0-based index from which to start deleting
+    - deleteCount? : number of items to delete
+    - ...items? : items to insert in place of the removed items
+```
+
+This means that we can use `shift` and `unshift` to adjust the beginning of
+an array,
