@@ -1,6 +1,6 @@
 import { getIsEditElem } from './isEditElem';
+import { seqGroupType } from './groupTypes';
 import { alignmentSeqElem } from '../../alignmentTypes';
-import { seqGroupType } from '../../itemGroupTypes';
 
 export class OpGroup<T> {
     private static validateItems<T>(items:alignmentSeqElem<T>[]) : boolean {

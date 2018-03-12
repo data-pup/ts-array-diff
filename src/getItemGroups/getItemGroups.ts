@@ -1,5 +1,8 @@
-import { getIsEditElem } from './isEditElem';
-import { alignmentSeq } from '../../alignmentTypes';
+import { getIsEditElem } from './lib/isEditElem';
+import { seqGroup, seqGroupType } from './lib/groupTypes';
+import { alignmentSeq } from '../alignmentTypes';
+
+export { seqGroup, seqGroupType };
 
 // Divide an alignment sequence into edit groups. This helps identify where
 // changes have been made, and where no operations are required.

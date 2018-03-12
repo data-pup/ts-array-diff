@@ -1,4 +1,3 @@
-import { NoOpGroup } from './getItemGroups/lib/noOpGroup';
-import { OpGroup } from './getItemGroups/lib/opGroup';
-export type seqGroupType = 'noop' | 'edit';
-export type seqGroup<T> = OpGroup<T> | NoOpGroup<T>;
+export { seqGroup, seqGroupType } from './getItemGroups/getItemGroups';
+export { NoOpGroup } from './getItemGroups/lib/noOpGroup';
+export { OpGroup } from './getItemGroups/lib/opGroup';
