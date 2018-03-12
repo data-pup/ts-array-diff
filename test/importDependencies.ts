@@ -37,8 +37,9 @@ export { getNextMatch } from '../src/getAlignment/lib/getNextMatch';
 
 // Alignment parsing function and types.
 export { getAlignmentSeqElemGroups } from '../src/parseAlignment/lib/getAlignmentSeqElemGroups';
-export { NoOpGroup } from '../src//parseAlignment/lib/noOpGroup';
-export { OpGroup } from '../src//parseAlignment/lib/opGroup';
+export { getIsEditElem } from '../src/parseAlignment/lib/isEditElem';
+export { NoOpGroup } from '../src/parseAlignment/lib/noOpGroup';
+export { OpGroup } from '../src/parseAlignment/lib/opGroup';
 
 // Array diff operations.
 export {
