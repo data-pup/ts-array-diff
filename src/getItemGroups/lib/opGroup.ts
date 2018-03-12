@@ -24,8 +24,8 @@ export class OpGroup<T> {
         'editGroup constructor was given no arguments.';
 
     public readonly type:itemGroupTag;
-    public readonly removeCount?:number;
-    public readonly addItems?:T[];
+    public readonly removeCount:number;
+    public readonly addItems:T[];
 
     constructor(items:alignmentSeqElem<T>[]) {
         if (!OpGroup.validateItems(items)) {

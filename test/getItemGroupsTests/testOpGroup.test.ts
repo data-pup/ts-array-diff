@@ -66,16 +66,20 @@ type OpGroupTestCase<T> = {
         },
     ];
 
-    private static runTest<T>(testCase:OpGroupTestCase<T>) {
-        const {items, expectedAddItems, expectedRemoveCount, isValid, testDesc} = testCase;
-        process.stdout.write('Running: ${testDesc}...\n');
+    private static checkGroupIsCorrect<T>(testCase:OpGroupTestCase<T>) {
+        const {items, expectedAddItems, expectedRemoveCount, testDesc} = testCase;
         const failString = `Test Failed: ${testDesc}`;
+        const group = new OpGroup(items);
+        assert.equal(group.type, 'edit', failString);
+        assert.equal(group.removeCount, expectedRemoveCount, failString);
+        assert.isDefined(group.addItems, failString);
+        assertArraysAreEqual(group.addItems, expectedAddItems, failString);
+    }
+
+    private static runTest<T>(testCase:OpGroupTestCase<T>) {
+        const {isValid} = testCase;
         if (isValid) {
-            const testGroup = new OpGroup(items);
-            assert.equal(testGroup.type, 'edit', failString);
-            assert.equal(testGroup.removeCount, expectedRemoveCount, failString);
-            assert.isDefined(testGroup.addItems, failString);
-            assertArraysAreEqual(testGroup.addItems, expectedAddItems, failString);
+            TestOpGroup.checkGroupIsCorrect(testCase);
         } else {
             assert.throws(
                 (invalidItems:alignmentSeqElem<T>[]) : void => {
