@@ -7,28 +7,34 @@ import {
 } from '../importDependencies';
 
 // [base array, target array, expected edit groups, test description]
-type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];
+// type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];
+type getEditGroupTestCase<T> = {
+    base:T[];
+    target:T[];
+    expectedEditGroups:alignmentSeq<T>[];
+    testDesc:string;
+};
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestGetAlignmentSeqElemGroups {
 
     private static testCases:getEditGroupTestCase<any>[] = [
-        [
-            [   1, 2, 3, 4, 5],
-            [0, 1,       4, 5, 6],
-            [
+        {
+            base:[   1, 2, 3, 4, 5],
+            target:[0, 1,       4, 5, 6],
+            expectedEditGroups:[
                 [{elemValue:0, elemType:'add'}],
                 [{elemValue:1, elemType:'noop'}],
                 [{elemValue:2, elemType:'remove'}, {elemValue:3, elemType:'remove'}],
                 [{elemValue:4, elemType:'noop'}, {elemValue:5, elemType:'noop'}],
                 [{elemValue:6, elemType:'add'}],
             ],
-            'Nontrivial Edit Group Test',
-        ],
+            testDesc:'Nontrivial Edit Group Test',
+        },
     ];
 
     private static evaluateTestCase<T>(testCase:getEditGroupTestCase<T>) : void {
-        const [base, target, expectedEditGroups, testDesc] = testCase;
+        const {base, target, expectedEditGroups, testDesc} = testCase;
         const alignment = getAlignment(base, target);
         const actualEditGroups = getAlignmentSeqElemGroups(alignment);
         assertEditGroupsAreSame(actualEditGroups, expectedEditGroups,
