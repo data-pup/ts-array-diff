@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import { alloc } from '../importDependencies';
+import { alloc } from '../importIndex';
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestAlloc {

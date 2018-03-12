@@ -6,8 +6,8 @@ import {
 import {
     alignmentSeq,
     assertAlignmentsAreEqual,
-    getAlignment,
 } from '../importDependencies';
+import { getAlignment } from '../importGetAlignment';
 
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestGetAlignment {

@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import { checkBounds } from '../importDependencies';
+import { checkBounds } from '../importGetAlignment';
 
 type CheckBoundsTestCase<T> = {
     pos:number;

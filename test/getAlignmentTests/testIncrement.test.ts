@@ -1,11 +1,10 @@
 import { suite, test } from 'mocha-typescript';
+import { assertArraysAreEqual, indexTuple } from '../importDependencies';
 import {
-    assertArraysAreEqual,
     incrementBase,
     incrementBaseAndTarget,
     incrementTarget,
-    indexTuple,
-} from '../importDependencies';
+} from '../importGetAlignment';
 
 type incrementTestCase = {
     pos:indexTuple;

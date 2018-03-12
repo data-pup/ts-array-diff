@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import { indexTuple, getDistance } from '../importDependencies';
+import { indexTuple } from '../importDependencies';
+import { getDistance } from '../importGetAlignment';
 
 type DistanceTestCase = {
     startPos:indexTuple;
