@@ -3,7 +3,7 @@ import {
     alignmentSeq,
     assertEditGroupsAreSame,
     getAlignment,
-    getEditGroups,
+    getGroups,
 } from '../importDependencies';
 
 // [base array, target array, expected edit groups, test description]
@@ -30,7 +30,7 @@ type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];
     private static evaluateTestCase<T>(testCase:getEditGroupTestCase<T>) : void {
         const [base, target, expectedEditGroups, testDesc] = testCase;
         const alignment = getAlignment(base, target);
-        const actualEditGroups = getEditGroups(alignment);
+        const actualEditGroups = getGroups(alignment);
         assertEditGroupsAreSame(actualEditGroups, expectedEditGroups,
                                 `Test Failed: ${testDesc}`);
     }
