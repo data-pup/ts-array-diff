@@ -14,7 +14,7 @@ type getSeqElemGroupTestCase<T> = {
 };
 
 /* tslint:disable-next-line:no-unused-variable */
-@suite class TestGetAlignmentSeqElemGroups {
+@suite class TestGetSeqElemGroups {
 
     private static readonly testCases:getSeqElemGroupTestCase<any>[] = [
         {
@@ -67,8 +67,8 @@ type getSeqElemGroupTestCase<T> = {
     }
 
     @test public runTests() {
-        TestGetAlignmentSeqElemGroups.testCases.forEach(
-            (currTest) => TestGetAlignmentSeqElemGroups.runTest(currTest),
+        TestGetSeqElemGroups.testCases.forEach(
+            (currTest) => TestGetSeqElemGroups.runTest(currTest),
         );
     }
 }
