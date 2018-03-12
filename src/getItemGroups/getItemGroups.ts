@@ -1,5 +1,9 @@
 import { itemGroup, itemGroupTag } from './lib/groupTypes';
-import { alignmentSeq } from '../alignmentTypes';
+// import { getSeqElemGroups } from './lib/getSeqElemGroups';
+import {
+    alignmentSeq,
+    // alignmentSeqElem,
+} from '../alignmentTypes';
 
 export { itemGroup, itemGroupTag };
 
@@ -7,5 +11,6 @@ export { itemGroup, itemGroupTag };
 // changes have been made, and where no operations are required.
 export const getItemGroups = <T>(alignment:alignmentSeq<T>)
                                 : itemGroup<T>[] => {
-    throw new Error('Not Implemented');
+    // const seqElemGroups:alignmentSeqElem<T>[][] = getSeqElemGroups(alignment);
+    throw new Error('');
 };

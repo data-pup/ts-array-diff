@@ -4,8 +4,6 @@ import { getSeqElemGroups } from '../importGetItemGroups';
 import { assertGroupsAreSame } from '../importTestUtils';
 import { alignmentSeq } from '../importTypes';
 
-// [base array, target array, expected edit groups, test description]
-// type getEditGroupTestCase<T> = [T[], T[], alignmentSeq<T>[], string];
 type getSeqElemGroupTestCase<T> = {
     base:T[];
     target:T[];
