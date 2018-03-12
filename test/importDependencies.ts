@@ -1,7 +1,7 @@
 // Test utilities.
 export { assertAlignmentsAreEqual } from './testUtils/assertAlignmentsAreEqual';
 export { assertArraysAreEqual } from './testUtils/assertArraysAreEqual';
-export { assertEditGroupsAreSame } from './testUtils/assertEditGroupsMatch';
+export { assertGroupsAreSame } from './testUtils/assertAlignmentSeqElemGroupsMatch';
 
 // Alignment type aliases.
 export {

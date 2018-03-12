@@ -1,7 +1,7 @@
 import { suite, test } from 'mocha-typescript';
 import {
     alignmentSeq,
-    assertEditGroupsAreSame,
+    assertGroupsAreSame,
     getAlignment,
     getAlignmentSeqElemGroups,
 } from '../importDependencies';
@@ -18,7 +18,7 @@ type getSeqElemGroupTestCase<T> = {
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestGetAlignmentSeqElemGroups {
 
-    private static testCases:getSeqElemGroupTestCase<any>[] = [
+    private static readonly testCases:getSeqElemGroupTestCase<any>[] = [
         {
             base:[0, 2, 3],
             target:[1, 2, 3],
@@ -61,17 +61,16 @@ type getSeqElemGroupTestCase<T> = {
         },
     ];
 
-    private static evaluateTestCase<T>(testCase:getSeqElemGroupTestCase<T>) : void {
+    private static runTest<T>(testCase:getSeqElemGroupTestCase<T>) : void {
         const {base, target, expectedGroups, testDesc} = testCase;
         const alignment = getAlignment(base, target);
         const actualEditGroups = getAlignmentSeqElemGroups(alignment);
-        assertEditGroupsAreSame(actualEditGroups, expectedGroups,
-                                `Test Failed: ${testDesc}`);
+        assertGroupsAreSame(actualEditGroups, expectedGroups, `Test Failed: ${testDesc}`);
     }
 
     @test public runTests() {
         TestGetAlignmentSeqElemGroups.testCases.forEach(
-            (currTest) => TestGetAlignmentSeqElemGroups.evaluateTestCase(currTest),
+            (currTest) => TestGetAlignmentSeqElemGroups.runTest(currTest),
         );
     }
 }

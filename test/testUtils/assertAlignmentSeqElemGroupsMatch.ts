@@ -4,10 +4,10 @@ import {
     assertAlignmentsAreEqual,
 } from '../importDependencies';
 
-export const assertEditGroupsAreSame = <T>(actualGroups:alignmentSeq<T>[],
-                                           expectedGroups:alignmentSeq<T>[],
-                                           message?:string) : void => {
-    assertSameNumberOfEditGroups(actualGroups, expectedGroups, message);
+export const assertGroupsAreSame = <T>(actualGroups:alignmentSeq<T>[],
+                                       expectedGroups:alignmentSeq<T>[],
+                                       message?:string) : void => {
+    assertSameNumberOfGroups(actualGroups, expectedGroups, message);
     actualGroups.forEach(
         (actualGroup:alignmentSeq<T>, i:number) : void => {
             const expectedGroup:alignmentSeq<T> = expectedGroups[i];
@@ -16,9 +16,9 @@ export const assertEditGroupsAreSame = <T>(actualGroups:alignmentSeq<T>[],
     );
 };
 
-const assertSameNumberOfEditGroups =  <T>(actualGroups:alignmentSeq<T>[],
-                                          expectedGroups:alignmentSeq<T>[],
-                                          message?:string) : void => {
+const assertSameNumberOfGroups =  <T>(actualGroups:alignmentSeq<T>[],
+                                      expectedGroups:alignmentSeq<T>[],
+                                      message?:string) : void => {
     if (message !== undefined) {
         assert.equal(actualGroups.length, expectedGroups.length, message);
     } else {
