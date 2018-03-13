@@ -138,9 +138,9 @@ arr.unshift();
 arr.push(3, 4);
 ```
 
-## Architectural Overview
+# Architectural Overview
 
-### Alignment Sequences
+## Alignment Sequences
 
 The first step in serializing a difference is comparing the two states, and
 identifying the elements that should be added or removed. For example, a
@@ -155,7 +155,14 @@ following alignment sequence:
 ]
 ```
 
-### Operations
+We can visualize this in our heads as the following:
+
+```
+0 - 1 - X
+X - 1 - 2
+```
+
+## Diff Operations
 
 Some helper classes and functions used to serialize a diff as we have shown
 above. There is a set of `diffOp` classes which will represent each operation
@@ -166,7 +173,13 @@ Each class implements a shared `IDiffOp` interface, which contains a
 operation on the given array. This allows us to store a collection of different
 operations, and run each operation in sequence on the base state.
 
-### Parsing Alignment Sequences
+An example of this would be the `PushDiffOp` class, which represents a call
+to `arr.push(...items)`, and stores the items to be pushed onto the array.
+Other operation classes such as `PopDiffOp` store only the number of items
+to be popped from the array, because the items themselves are not relevant
+to the `arr.pop()` method.
+
+## Grouping Alignment Sequence Elements
 
 Once we have generated an alignment sequence like the one shown above, we group
 these elements together. This helps us identify which sections of the array
@@ -181,3 +194,44 @@ Second, the `splice` method requires a starting index. Note that this index may
 not be the same after operations are performed on the head of the array, so
 we will need to consider how the prior alterations would adjust the size of
 the array when serializing the `splice` parameters in an operation sequence.
+
+### Example
+
+Let's step through an example of what the grouping stage looks like. Imagine
+we have the following base and target states:
+
+```
+base:   [0, 2, 3, 4]
+target: [1, 2, 3, 4, 5]
+```
+
+This would result in the following alignment sequence:
+
+```
+[
+    {elemValue:0, elemType:'remove'},
+    {elemValue:1, elemType:'add'},
+    {elemValue:2, elemType:'noop'},
+    {elemValue:3, elemType:'noop'},
+    {elemValue:4, elemType:'noop'},
+    {elemValue:5, elemType:'add'},
+]
+```
+
+These can be grouped together like so:
+
+```
+[
+    OpGroup: { type:'edit', addItems:[1], removeCount:1 },
+    NoOpGroup: { type:'noop', count:3 },
+    OpGroup: { type:'edit', addItems:[5], removeCount:0 },
+]
+```
+
+This will help us create our `IDiffOp` items more easily, becuase each region
+of the array that should be edited or left unchanged is represented
+sequentially by these objects.
+
+## Parsing Item Groups
+
+To do...
