@@ -4,10 +4,12 @@ import { NoOpGroup, OpGroup, getItemGroups } from '../importGetItemGroups';
 import { assertArraysAreEqual } from '../importTestUtils';
 import { alignmentSeq, itemGroup } from '../importTypes';
 
+// These types represent expected properties of different item groups.
 type expectedNoOpGroup = { type:'noop'; count:number; };
 type expectedOpGroup<T> = { type:'edit'; removeCount:number; addItems:T[] };
 type expectedItemGroup<T> = expectedNoOpGroup | expectedOpGroup<T>;
 
+// Test case type storing input, expected results, and description of the test.
 type getItemGroupsTestCase<T> = {
     alignment:alignmentSeq<T>;
     expectedResults:expectedItemGroup<T>[];
@@ -22,6 +24,35 @@ type getItemGroupsTestCase<T> = {
             alignment:[{elemValue:0, elemType:'noop'}],
             expectedResults:[{type:'noop', count:1}],
             testDesc:'Single noop results in one NoOpGroup.',
+        },
+        {
+            alignment:[{elemValue:0, elemType:'add'}],
+            expectedResults:[{type:'edit', addItems:[0], removeCount:0}],
+            testDesc:'Single add results in one OpGroup.',
+        },
+        {
+            alignment:[{elemValue:0, elemType:'remove'}],
+            expectedResults:[{type:'edit', addItems:[], removeCount:1}],
+            testDesc:'Single remove results in one OpGroup.',
+        },
+        {
+            alignment:[
+                {elemValue:1, elemType:'remove'},
+                {elemValue:0, elemType:'add'},
+            ],
+            expectedResults:[{type:'edit', addItems:[0], removeCount:1}],
+            testDesc:'Add and remove results in one OpGroup.',
+        },
+        {
+            alignment:[
+                {elemValue:1, elemType:'remove'},
+                {elemValue:0, elemType:'noop'},
+            ],
+            expectedResults:[
+                {type:'edit', addItems:[], removeCount:1},
+                {type:'noop', count:1},
+            ],
+            testDesc:'Edit and noop results in two item groups.',
         },
     ];
 
