@@ -22,7 +22,7 @@ type getItemGroupsTestCase<T> = {
     private static readonly testCases:getItemGroupsTestCase<any>[] = [
         {
             alignment:[],
-            expectedResults:[{type:'noop', count:0}],
+            expectedResults:[],
             testDesc:'Empty array can be nooped.',
         },
         {

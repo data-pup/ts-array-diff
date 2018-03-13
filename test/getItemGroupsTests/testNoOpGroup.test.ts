@@ -18,7 +18,7 @@ type NoOpGroupTestCase<T> = {
             items:[],
             expectedCount:undefined,
             isValid:false,
-            testDesc:'Empty group is not valid.',
+            testDesc:'Empty noop group is not valid.',
         },
         {
             items:[{elemValue:0, elemType:'add'}],
