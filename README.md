@@ -240,12 +240,10 @@ classes. The final step in serializing the delta between two states is
 converting this sequence of item groups into a sequence of diff operation
 objects.
 
-For the groups above, this parsing function would create an output that looks
-like so:
+For the groups above, with `base:[0, 2, 3, 4]` and `target: [1, 2, 3, 4, 5]`
+this parsing function would create an output that looks like so:
 
 ```
-base:   [0, 2, 3, 4]
-target: [1, 2, 3, 4, 5]
 operations:[
     ShiftDiffOp(1),
     UnshiftDiffOp([1]),
