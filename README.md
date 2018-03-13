@@ -249,7 +249,6 @@ target: [1, 2, 3, 4, 5]
 operations:[
     ShiftDiffOp(1),
     UnshiftDiffOp([1]),
-    NoOp(3),
     PushDiffOp([5]),
 ]
 ```
