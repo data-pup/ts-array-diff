@@ -1,6 +1,7 @@
-// import { alignmentSeq } from '../alignmentTypes';
-// import { seqGroup } from '../itemGroupTypes';
+import { itemGroup } from '../itemGroupTypes';
+import { IDiffOp } from '../diffops';
 
-// export const parse = <T>(alignment:alignmentSeq<T>) : seqGroup<T>[] => {
-//     throw new Error('Not Implemented Yet!');
-// };
+// Parse a sequence of item groups, and return an array of diff operations.
+export const parse = <T>(itemGroups:itemGroup<T>[]) : IDiffOp<T>[] => {
+    throw new Error('Not Implemented Yet!');
+};

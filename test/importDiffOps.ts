@@ -1,4 +1,5 @@
 export {
+    IDiffOp,
     PopDiffOp,
     PushDiffOp,
     ShiftDiffOp,
@@ -6,6 +7,7 @@ export {
     UnshiftDiffOp,
     runOps,
 } from '../src/diffops';
+
 export {
     pushOpGivenEmptyItemsArray,
     unshiftOpGivenEmptyItemsArray,
