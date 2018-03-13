@@ -164,7 +164,7 @@ X - 1 - 2
 
 ## Diff Operations
 
-Some helper classes and functions used to serialize a diff as we have shown
+Some helper classes and functions are used to serialize a diff as we have shown
 above. There is a set of `diffOp` classes which will represent each operation
 that can be run against an array.
 
