@@ -125,7 +125,7 @@ What might the difference of two arrays look like?
 base state: [0, 1, 2]
 target state: [1, 2, 3, 4]
 diff: [
-    unshift()
+    shift()
     push(3, 4)
 ]
 ```
@@ -134,7 +134,7 @@ This means if we had a variable `arr` in the base state, we could run the
 following operations, resulting with `arr` in the desired target state:
 
 ```javascript
-arr.unshift();
+arr.shift();
 arr.push(3, 4);
 ```
 
@@ -234,4 +234,26 @@ sequentially by these objects.
 
 ## Parsing Item Groups
 
-To do...
+As we saw in the previous section, the grouping phase creates a sequence of
+`itemGroup` objects, which is a type union of the `OpGroup` and `NoOpGroup`
+classes. The final step in serializing the delta between two states is
+converting this sequence of item groups into a sequence of diff operation
+objects.
+
+For the groups above, this parsing function would create an output that looks
+like so:
+
+```
+base:   [0, 2, 3, 4]
+target: [1, 2, 3, 4, 5]
+operations:[
+    ShiftDiffOp(1),
+    UnshiftDiffOp([1]),
+    NoOp(3),
+    PushDiffOp([5]),
+]
+```
+
+This operations array, along with the base state, can then be passed to a
+`runOps(arr, ops)` function, such that `runOps(base, operations)` would result
+in the base array matching the target array.
