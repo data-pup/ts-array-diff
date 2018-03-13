@@ -3,6 +3,7 @@ import { itemGroupTag } from './groupTypes';
 import { alignmentSeqElem } from '../../alignmentTypes';
 
 export class NoOpGroup<T> {
+
     private static validateItems<T>(items:alignmentSeqElem<T>[]) : boolean {
         if (items === undefined || items === null || items.length === 0) {
             return false; // Check that items is not undefined, null, or empty.
