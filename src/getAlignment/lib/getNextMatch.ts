@@ -15,6 +15,7 @@ export const getNextMatch = <T>(pos:indexTuple,
         return pos;
     }
 
+    // Initialize an array of the possible paths forward.
     const paths:indexTuple[] = [incrementBase(pos), incrementTarget(pos)];
     const pathMatches:indexTuple[] = paths // Follow each path to its next match.
         .map((path:indexTuple) : indexTuple => getNextMatch(path, arrs));

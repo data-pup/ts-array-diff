@@ -18,6 +18,8 @@ export const getItemGroups = <T>(alignment:alignmentSeq<T>)
     return seqElemGroups.map((currElems) => createItemGroupFromSeqGroup(currElems));
 };
 
+// Helper function, this is used to determind which kind of group should be
+// created, and return the results.
 const createItemGroupFromSeqGroup = <T>(elemGroup:alignmentSeqElem<T>[])
                                         : itemGroup<T> => {
     const firstGroupElem:alignmentSeqElem<T> = elemGroup[0];

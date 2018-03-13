@@ -1,3 +1,5 @@
+// This is a helper script used for debugging different issues.
+
 import {
     UnshiftDiffOp,
 } from './diffops';
