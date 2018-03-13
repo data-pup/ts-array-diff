@@ -92,8 +92,8 @@ ordered. This is functionally very similar to the string edit distance problem,
 commonly taught as an introduction to dynamic programming.
 
 NOTE: I will assume that the reader is familiar with edit distance calculation
-in the interest of brevity, as well as reverence for sources elsewhere that can
-explain this in better terms than I.
+in the interest of brevity. You can read more about creating alignments to
+calculate minimum edit distance [here](https://web.stanford.edu/class/cs124/lec/med.pdf).
 
 The interesting distinction between delta encoding arrays and the string edit
 distance problem is that the operations available to mutate your state are
@@ -155,12 +155,15 @@ following alignment sequence:
 ]
 ```
 
-We can visualize this in our heads as the following:
+We can visualize this in our heads in terms of an alignment sequence like this:
 
 ```
-0 - 1 - X
-X - 1 - 2
+base:   0 - 1 - X
+target: X - 1 - 2
 ```
+
+Here the 0 should be removed, 1 should stay the same, and a 2 should be added
+at the end.
 
 ## Diff Operations
 
