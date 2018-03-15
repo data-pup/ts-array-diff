@@ -1,55 +1,33 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 
-import { IDiffOp, SpliceDiffOp } from '../importDiffOps';
+// Import test case type and test case arrays.
+import { parseItemGroupTestCase } from './ParseItemGroupsTestCases';
+import {
+    complexTestCases,
+    pushAndPopTestCases,
+    shiftAndUnshiftTestCases,
+    spliceSimpleTestCases,
+} from './ParseItemGroupsTestCases';
+
+// Import diff operation interface and classes.
+import { IDiffOp } from '../importDiffOps';
 import {
     ShiftDiffOp,
     UnshiftDiffOp,
     PopDiffOp,
     PushDiffOp,
+    SpliceDiffOp,
 } from '../importDiffOps';
 
+// Import test utility functions, as well as the parse function itself.
 import { getAlignment } from '../importGetAlignment';
 import { getItemGroups } from '../importGetItemGroups';
 import { parse } from '../importParseItemGroups';
 import { assertArraysAreEqual } from '../importTestUtils';
 
-type parseItemGroupTestCase<T> = {
-    base:T[];
-    target:T[];
-    expectedOps:IDiffOp<T>[];
-    testDesc:string;
-};
-
 /* tslint:disable-next-line:no-unused-variable */
 @suite class TestParseItemGroups {
-
-    private static readonly testCases:parseItemGroupTestCase<any>[] = [
-        {
-            base:[0, 1, 2, 3],
-            target:[1, 2, 3],
-            expectedOps:[new ShiftDiffOp(1)],
-            testDesc:'Basic shift test.',
-        },
-        {
-            base:[1, 2, 3],
-            target:[0, 1, 2, 3],
-            expectedOps:[new UnshiftDiffOp([0])],
-            testDesc:'Basic unshift test.',
-        },
-        {
-            base:[1, 2, 3],
-            target:[1, 2, 3, 4],
-            expectedOps:[new PushDiffOp([4])],
-            testDesc:'Basic push test.',
-        },
-        {
-            base:[1, 2, 3, 4],
-            target:[1, 2, 3],
-            expectedOps:[new PopDiffOp(1)],
-            testDesc:'Basic push test.',
-        },
-    ];
 
     private static compareDiffOps<T>(actualOp:IDiffOp<T>,
                                      expectedOp:IDiffOp<T>,
@@ -95,7 +73,8 @@ type parseItemGroupTestCase<T> = {
 
     private static runTest<T>(testCase:parseItemGroupTestCase<T>) {
         const {base, target, expectedOps, testDesc} = testCase;
-        const alignment = getAlignment(base, target);
+        const baseClone = base.slice();
+        const alignment = getAlignment(baseClone, target);
         const itemGroups = getItemGroups(alignment);
         const actualOps = parse(itemGroups);
 
@@ -106,9 +85,19 @@ type parseItemGroupTestCase<T> = {
         }
     }
 
-    @test public runTests() {
-        TestParseItemGroups.testCases.forEach(
-            (currTest) => TestParseItemGroups.runTest(currTest),
-        );
+    @test public shiftAndUnshiftTests() { // Test the shift and unshift operations pass each test.
+        shiftAndUnshiftTestCases.forEach((currTest) => TestParseItemGroups.runTest(currTest));
+    }
+
+    @test public pushAndPopTests() { // Test the push and pop operations pass each test.
+        pushAndPopTestCases.forEach((currTest) => TestParseItemGroups.runTest(currTest));
+    }
+
+    @test public spliceTests() { // Test the splice operation passes each test.
+        spliceSimpleTestCases.forEach((currTest) => TestParseItemGroups.runTest(currTest));
+    }
+
+    @test public complexTests() { // Test all of the operations together.
+        complexTestCases.forEach((currTest) => TestParseItemGroups.runTest(currTest));
     }
 }
