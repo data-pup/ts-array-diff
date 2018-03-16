@@ -49,16 +49,12 @@ export const parse = <T>(itemGroups:itemGroup<T>[]) : IDiffOp<T>[] => {
 };
 
 const processHead = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => {
-    let delta = 0;
-    const ops:IDiffOp<T>[] = new Array();
-    if (group.removeCount > 0) {
-        delta -= group.removeCount;
-        ops.push(new ShiftDiffOp(group.removeCount));
-    }
-    if (group.addItems.length > 0) {
-        delta += group.addItems.length;
-        ops.push(new UnshiftDiffOp(group.addItems.slice()));
-    }
+    const {removeCount, addItems} = group;
+    const addCount = addItems.length;
+    const delta = addCount - removeCount;
+    const shiftOp = removeCount > 0 ? new ShiftDiffOp(removeCount) : undefined;
+    const unshiftOp = addCount > 0 ? new UnshiftDiffOp(addItems.slice()) : undefined;
+    const ops = [shiftOp, unshiftOp].filter((op) => op !== undefined);
     return {delta, ops};
 };
 
