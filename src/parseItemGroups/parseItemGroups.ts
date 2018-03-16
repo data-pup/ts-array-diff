@@ -13,48 +13,36 @@ import {
 
 // Parse a sequence of item groups, and return an array of diff operations.
 export const parse = <T>(itemGroups:itemGroup<T>[]) : IDiffOp<T>[] => {
+    const tailGroup:itemGroup<T> = itemGroups.pop();   // Divide the item groups
+    const headGroup:itemGroup<T> = itemGroups.shift(); // into a head, tail, and
+    const bodyGroups:itemGroup<T>[] = itemGroups;      // array of body elements.
 
-    const opSeq:IDiffOp<T>[] = new Array(); // Initialize the op sequence array.
+    const {index, ops} = processHeadGroup(headGroup);  // Process the head, body,
+    ops.push(...processBodyGroups(bodyGroups, index)); // and tail of the groups
+    ops.push(...processTailGroup(tailGroup));          // array in sequence.
 
-    let currBaseStatePos = 0;
-    for (let i = 0; i < itemGroups.length; i++) {
-        const currGroup = itemGroups[i];
-        switch (currGroup.type) {
-            case 'edit': // Process an edit group.
-                const currEditGroup = currGroup as OpGroup<T>;
-                if (i === itemGroups.length - 1) { // Process the tail.
-                    opSeq.push(...processTailOp(currEditGroup));
-                    break;
-                } else if (i === 0) { // Process the head.
-                    const {delta, ops} = processHeadOp(currEditGroup);
-                    opSeq.push(...ops);
-                    currBaseStatePos += delta;
-                    break;
-                } else { // Process splice operations in the body.
-                    const {delta, op} = processBodyOp(currEditGroup, currBaseStatePos);
-                    opSeq.push(op);
-                    currBaseStatePos += delta;
-                    break;
-                }
-            case 'noop': // Process a NoOpGroup.
-                const currNoopGroup = currGroup as NoOpGroup<T>;
-                currBaseStatePos += processNoOp(currNoopGroup);
-                break;
-            default:
-                throw new Error('Unexpected group type!');
-        }
-    }
-
-    return opSeq; // Return the op sequence array.
+    return ops; // Return the diff operation sequence.
 };
 
-const processNoOp = <T>(group:NoOpGroup<T>) : number => group.count;
+const processHeadGroup = <T>(group:itemGroup<T>) : {index:number, ops:IDiffOp<T>[]} => {
+    if (group === undefined) { return {index:0, ops:new Array()}; }
+    switch (group.type) {
+        case 'edit': return processHeadOp(group as OpGroup<T>);
+        case 'noop':
+            return {
+                index:(group as NoOpGroup<T>).count,
+                ops: new Array(),
+            };
+        default:
+            throw new Error('Unexpected group type found in body!');
+    }
+};
 
-const processHeadOp = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => {
+const processHeadOp = <T>(group:OpGroup<T>) : {index:number, ops:IDiffOp<T>[]} => {
     const {removeCount, addItems} = group;
     const addCount = addItems.length;
     return {
-        delta:(addCount - removeCount),
+        index:(addCount - removeCount),
         ops:[
             removeCount > 0 ? new ShiftDiffOp(removeCount) : undefined,
             addCount > 0 ? new UnshiftDiffOp(addItems.slice()) : undefined,
@@ -62,13 +50,12 @@ const processHeadOp = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} =
     };
 };
 
-const processBodyOp = <T>(group:OpGroup<T>, pos:number) : {delta:number, op:IDiffOp<T>} => {
-    const {removeCount, addItems} = group;
-    const addCount = addItems.length;
-    return {
-        delta:(addCount - removeCount),
-        op:new SpliceDiffOp(pos, removeCount, addItems.slice()),
-    };
+const processTailGroup = <T>(group:itemGroup<T>) : IDiffOp<T>[] => {
+    if (group === undefined) { return new Array(); }
+    switch (group.type) {
+        case 'edit': return processTailOp(group as OpGroup<T>);
+        case 'noop': return new Array();
+    }
 };
 
 const processTailOp = <T>(group:OpGroup<T>) : IDiffOp<T>[] => {
@@ -77,4 +64,26 @@ const processTailOp = <T>(group:OpGroup<T>) : IDiffOp<T>[] => {
         removeCount > 0 ? new PopDiffOp(removeCount) : undefined,
         addItems.length > 0 ? new PushDiffOp(addItems.slice()) : undefined,
     ].filter((op) => op !== undefined);
+};
+
+const processBodyGroups = <T>(groups:itemGroup<T>[], index:number) : IDiffOp<T>[] =>  {
+    const ops:IDiffOp<T>[] = new Array();
+    if (groups === undefined) { return ops; }
+    for (const group of groups) {
+        switch (group.type) {
+            case 'edit':
+                const op = group as OpGroup<T>;
+                const {removeCount, addItems} = op;
+                ops.push(new SpliceDiffOp(index, removeCount, addItems.slice()));
+                index += (addItems.length - removeCount);
+                break;
+            case 'noop':
+                const noop = group as NoOpGroup<T>;
+                index += noop.count;
+                break;
+            default:
+                throw new Error('Unexpected group type found in body!');
+        }
+    }
+    return ops;
 };
