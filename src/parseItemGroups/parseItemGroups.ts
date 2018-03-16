@@ -52,9 +52,12 @@ const processHead = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => 
     const {removeCount, addItems} = group;
     const addCount = addItems.length;
     const delta = addCount - removeCount;
-    const shiftOp = removeCount > 0 ? new ShiftDiffOp(removeCount) : undefined;
-    const unshiftOp = addCount > 0 ? new UnshiftDiffOp(addItems.slice()) : undefined;
-    const ops = [shiftOp, unshiftOp].filter((op) => op !== undefined);
+
+    const ops = [
+        removeCount > 0 ? new ShiftDiffOp(removeCount) : undefined,
+        addCount > 0 ? new UnshiftDiffOp(addItems.slice()) : undefined,
+    ].filter((op) => op !== undefined);
+
     return {delta, ops};
 };
 
