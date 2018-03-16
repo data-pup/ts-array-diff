@@ -44,7 +44,7 @@ export const shiftAndUnshiftTestCases:parseItemGroupTestCase<any>[] = [
         target:[   1, 2, 3],
         expectedOps:[
             new ShiftDiffOp(1),        // Result: [2, 3]
-            new UnshiftDiffOp([0]),    // Result: [1, 2, 3]
+            new UnshiftDiffOp([1]),    // Result: [1, 2, 3]
         ],
         testDesc:'[Shift/Unshift test]: Shift, then unshift element from head.',
     },
