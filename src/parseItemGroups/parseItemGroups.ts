@@ -60,18 +60,15 @@ const processHead = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => 
 
 const processBody = <T>(group:OpGroup<T>, position:number) : {delta:number, op:IDiffOp<T>} => {
     const {removeCount, addItems} = group;
-    const delta = addItems.length - removeCount;
-    const op = new SpliceDiffOp(position, removeCount, addItems.slice());
-    return {delta, op};
+    return {
+        delta:addItems.length - removeCount,
+        op:new SpliceDiffOp(position, removeCount, addItems.slice()),
+    };
 };
 
 const processTail = <T>(group:OpGroup<T>) : IDiffOp<T>[] => {
-    const results = [];
-    if (group.removeCount > 0) {
-        results.push(new PopDiffOp(group.removeCount));
-    }
-    if (group.addItems.length > 0) {
-        results.push(new PushDiffOp(group.addItems.slice()));
-    }
-    return results;
+    const {removeCount, addItems} = group;
+    const popOp = removeCount > 0 ? new PopDiffOp(removeCount) : undefined;
+    const pushOp = addItems.length > 0 ? new PushDiffOp(addItems.slice()) : undefined;
+    return [popOp, pushOp].filter((op) => op !== undefined);
 };
