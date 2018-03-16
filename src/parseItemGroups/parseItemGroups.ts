@@ -23,22 +23,22 @@ export const parse = <T>(itemGroups:itemGroup<T>[]) : IDiffOp<T>[] => {
             case 'edit': // Process an edit group.
                 const currEditGroup = currGroup as OpGroup<T>;
                 if (i === itemGroups.length - 1) { // Process the tail.
-                    opSeq.push(...processTail(currEditGroup));
+                    opSeq.push(...processTailOp(currEditGroup));
                     break;
                 } else if (i === 0) { // Process the head.
-                    const {delta, ops} = processHead(currEditGroup);
+                    const {delta, ops} = processHeadOp(currEditGroup);
                     opSeq.push(...ops);
                     currBaseStatePos += delta;
                     break;
                 } else { // Process splice operations in the body.
-                    const {delta, op} = processBody(currEditGroup, currBaseStatePos);
+                    const {delta, op} = processBodyOp(currEditGroup, currBaseStatePos);
                     opSeq.push(op);
                     currBaseStatePos += delta;
                     break;
                 }
             case 'noop': // Process a NoOpGroup.
                 const currNoopGroup = currGroup as NoOpGroup<T>;
-                currBaseStatePos += currNoopGroup.count;
+                currBaseStatePos += processNoOp(currNoopGroup);
                 break;
             default:
                 throw new Error('Unexpected group type!');
@@ -48,7 +48,9 @@ export const parse = <T>(itemGroups:itemGroup<T>[]) : IDiffOp<T>[] => {
     return opSeq; // Return the op sequence array.
 };
 
-const processHead = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => {
+const processNoOp = <T>(group:NoOpGroup<T>) : number => group.count;
+
+const processHeadOp = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => {
     const {removeCount, addItems} = group;
     const addCount = addItems.length;
     return {
@@ -60,7 +62,7 @@ const processHead = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => 
     };
 };
 
-const processBody = <T>(group:OpGroup<T>, pos:number) : {delta:number, op:IDiffOp<T>} => {
+const processBodyOp = <T>(group:OpGroup<T>, pos:number) : {delta:number, op:IDiffOp<T>} => {
     const {removeCount, addItems} = group;
     const addCount = addItems.length;
     return {
@@ -69,7 +71,7 @@ const processBody = <T>(group:OpGroup<T>, pos:number) : {delta:number, op:IDiffO
     };
 };
 
-const processTail = <T>(group:OpGroup<T>) : IDiffOp<T>[] => {
+const processTailOp = <T>(group:OpGroup<T>) : IDiffOp<T>[] => {
     const {removeCount, addItems} = group;
     return [
         removeCount > 0 ? new PopDiffOp(removeCount) : undefined,
