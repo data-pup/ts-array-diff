@@ -69,7 +69,8 @@ const processBody = <T>(group:OpGroup<T>, pos:number) : {delta:number, op:IDiffO
 
 const processTail = <T>(group:OpGroup<T>) : IDiffOp<T>[] => {
     const {removeCount, addItems} = group;
-    const popOp = removeCount > 0 ? new PopDiffOp(removeCount) : undefined;
-    const pushOp = addItems.length > 0 ? new PushDiffOp(addItems.slice()) : undefined;
-    return [popOp, pushOp].filter((op) => op !== undefined);
+    return [
+        removeCount > 0 ? new PopDiffOp(removeCount) : undefined,
+        addItems.length > 0 ? new PushDiffOp(addItems.slice()) : undefined,
+    ].filter((op) => op !== undefined);
 };
