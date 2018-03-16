@@ -58,11 +58,12 @@ const processHead = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => 
     return {delta, ops};
 };
 
-const processBody = <T>(group:OpGroup<T>, position:number) : {delta:number, op:IDiffOp<T>} => {
+const processBody = <T>(group:OpGroup<T>, pos:number) : {delta:number, op:IDiffOp<T>} => {
     const {removeCount, addItems} = group;
+    const addCount = addItems.length;
     return {
-        delta:addItems.length - removeCount,
-        op:new SpliceDiffOp(position, removeCount, addItems.slice()),
+        delta:(addCount - removeCount),
+        op:new SpliceDiffOp(pos, removeCount, addItems.slice()),
     };
 };
 
