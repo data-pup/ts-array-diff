@@ -1,16 +1,3 @@
-import { itemGroup } from './itemGroupTypes';
-// import {
-//     itemGroupTag,
-//     NoOpGroup,
-//     OpGroup
-// } from './itemGroupTypes';
-import { IDiffOp } from './diffops';
-// import {
-    // ShiftDiffOp, UnshiftDiffOp,
-    // SpliceDiffOp,
-    // PopDiffOp, PushDiffOp,
-// } from './diffops';
-
 import { getAlignment } from './getAlignment/getAlignment';
 import { getItemGroups } from './getItemGroups/getItemGroups';
 import { parse } from './parseItemGroups/parseItemGroups';
@@ -21,12 +8,12 @@ import {
 
 const temp = () => {
     const testCase = pushAndPopTestCases[0];
-    const {base, target, expectedOps, testDesc} = testCase;
+    const {base, target} = testCase;
     const baseClone = base.slice();
     const alignment = getAlignment(baseClone, target);
     const itemGroups = getItemGroups(alignment);
     const actualOps = parse(itemGroups);
-    process.stdout.write('All Done!');
+    process.stdout.write(`${actualOps}`); // Won't print useful info, use as debug breakpoint.
 };
 
 temp();

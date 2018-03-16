@@ -99,7 +99,7 @@ export const spliceSimpleTestCases:parseItemGroupTestCase<any>[] = [
         base:  ['I', 'would',        'a', 'dog'],
         target:['I', 'would', 'pet', 'a', 'dog'],
         expectedOps:[
-            new SpliceDiffOp(2, 1, ['pet']),
+            new SpliceDiffOp(2, 0, ['pet']),
         ],
         testDesc:'[Splice test]: Add single element in body of array.',
     },
