@@ -51,14 +51,13 @@ export const parse = <T>(itemGroups:itemGroup<T>[]) : IDiffOp<T>[] => {
 const processHead = <T>(group:OpGroup<T>) : {delta:number, ops:IDiffOp<T>[]} => {
     const {removeCount, addItems} = group;
     const addCount = addItems.length;
-    const delta = addCount - removeCount;
-
-    const ops = [
-        removeCount > 0 ? new ShiftDiffOp(removeCount) : undefined,
-        addCount > 0 ? new UnshiftDiffOp(addItems.slice()) : undefined,
-    ].filter((op) => op !== undefined);
-
-    return {delta, ops};
+    return {
+        delta:(addCount - removeCount),
+        ops:[
+            removeCount > 0 ? new ShiftDiffOp(removeCount) : undefined,
+            addCount > 0 ? new UnshiftDiffOp(addItems.slice()) : undefined,
+        ].filter((op) => op !== undefined),
+    };
 };
 
 const processBody = <T>(group:OpGroup<T>, pos:number) : {delta:number, op:IDiffOp<T>} => {
