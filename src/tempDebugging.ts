@@ -1,19 +1,32 @@
-// This is a helper script used for debugging different issues.
+import { itemGroup } from './itemGroupTypes';
+// import {
+//     itemGroupTag,
+//     NoOpGroup,
+//     OpGroup
+// } from './itemGroupTypes';
+import { IDiffOp } from './diffops';
+// import {
+    // ShiftDiffOp, UnshiftDiffOp,
+    // SpliceDiffOp,
+    // PopDiffOp, PushDiffOp,
+// } from './diffops';
+
+import { getAlignment } from './getAlignment/getAlignment';
+import { getItemGroups } from './getItemGroups/getItemGroups';
+import { parse } from './parseItemGroups/parseItemGroups';
 
 import {
-    UnshiftDiffOp,
-} from './diffops';
+    pushAndPopTestCases,
+ } from '../test/parseItemGroupsTests/ParseItemGroupsTestCases';
 
-const temp = () : void => {
-    const arr = [1];
-    const emptyOp = new UnshiftDiffOp<number>([]);
-    emptyOp.runOp(arr);
-    if (arr === undefined) {
-        process.stdout.write('Wtf?');
-    } else {
-        for (const curr of arr) {
-           process.stdout.write(`${curr}\n`);
-        }
-    }
+const temp = () => {
+    const testCase = pushAndPopTestCases[0];
+    const {base, target, expectedOps, testDesc} = testCase;
+    const baseClone = base.slice();
+    const alignment = getAlignment(baseClone, target);
+    const itemGroups = getItemGroups(alignment);
+    const actualOps = parse(itemGroups);
+    process.stdout.write('All Done!');
 };
+
 temp();
