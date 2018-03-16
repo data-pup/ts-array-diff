@@ -5,18 +5,27 @@ export const processBodyGroups = <T>(groups:itemGroup<T>[], index:number) : IDif
     const ops:IDiffOp<T>[] = new Array();
     if (groups === undefined) { return ops; }
     for (const group of groups) {
-        switch (group.type) {
-            case 'edit':
-                const {removeCount, addItems} = (group as OpGroup<T>);
-                ops.push(new SpliceDiffOp(index, removeCount, addItems.slice()));
-                index += (addItems.length - removeCount);
-                break;
-            case 'noop':
-                index += (group as NoOpGroup<T>).count;
-                break;
-            default:
-                throw new Error('Unexpected group type found in body!');
-        }
+        const {delta, op} = processBodyGroup(group, index);
+        if (op !== undefined) { ops.push(op); }
+        index += delta;
     }
     return ops;
+};
+
+const processBodyGroup = <T>(group:itemGroup<T>, index:number) : {delta:number, op:SpliceDiffOp<T>} => {
+    switch (group.type) {
+        case 'edit':
+            const {removeCount, addItems} = (group as OpGroup<T>);
+            return {
+                delta:(addItems.length - addItems.length),
+                op:new SpliceDiffOp(index, removeCount, addItems.slice()),
+            };
+        case 'noop':
+            return {
+                delta:(group as NoOpGroup<T>).count,
+                op:undefined,
+            };
+        default:
+            throw new Error('Unexpected group type found in body!');
+    }
 };
