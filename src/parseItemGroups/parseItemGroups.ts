@@ -34,6 +34,7 @@ export const parse = <T>(itemGroups:itemGroup<T>[]) : IDiffOp<T>[] => {
                     const {delta, op} = processBody(currEditGroup, currBaseStatePos);
                     opSeq.push(op);
                     currBaseStatePos += delta;
+                    break;
                 }
             case 'noop': // Process a NoOpGroup.
                 const currNoopGroup = currGroup as NoOpGroup<T>;
